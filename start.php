@@ -35,12 +35,13 @@ function group_events_export_pagesetup()
     //if we can edit the group
     $page_owner = elgg_get_page_owner_entity();
     //add the group statistics button to the group admin menu
-    if(elgg_in_context("groups")&& ($page_owner instanceof ElggGroup) && $page_owner->canEdit()) {
-        elgg_register_menu_item("page", array(
-            "name" => "group_events_export",
-            "text" => elgg_echo('group_events_export:export'),
-            "href" => "group_events_export/export_events/" . $page_owner->getGUID(),
-        ));
+    if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
+      elgg_register_menu_item('title', array(
+								'name' => "new",
+								'href' => "events/event/new/" . $page_owner->getGUID(),
+								'text' => "Export Group Events",
+								'link_class' => 'elgg-button elgg-button-action',
+								));
     }
 }
 

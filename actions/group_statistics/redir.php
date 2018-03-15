@@ -1,11 +1,7 @@
 <?php
-
-
-$subtype = filter_var(get_input('subtype'),FILTER_SANITIZE_STRING);
-$groupGuid = filter_var(get_input('groupGuid'),FILTER_SANITIZE_STRING);
-
-$_SESSION['subtype'] = $subtype;
-if($groupGuid != NULL){
-    forward("/group_statistics/dashboard/".$groupGuid);
-}
-
+$groupGuid = (int) get_input("groupGuid");
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: Attachment; filename=export.csv");
+header('Pragma: public');
+echo generate_group_events_spreadsheet($groupGuid);
+exit;
