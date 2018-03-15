@@ -115,12 +115,6 @@ function group_events_export_comma($event) {
     				$dataString .= $EOL;
     			}
     		}
-
-      }
-
-
-
-
     }
 
 
