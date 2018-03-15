@@ -9,7 +9,7 @@ $listEvents = $vars['listEvents'];
 <?php
  elgg_view("output/url",
  array("is_action" => true,
- "href" => "action/group_events_export/group_events_export/csv?groupGuid=" . $event->getGUID(),
+ "href" => "action/group_events_export/group_events_export/csv?groupGuid=1742051",
  "text" => "Export to CSV"));
 ?>
 
