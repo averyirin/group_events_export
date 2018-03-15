@@ -15,7 +15,7 @@ function generate_group_events_spreadsheet($groupGuid = NULL){
   $eventGuids = array();
   $csvExportString = "";
 
-  $headerString .= '"'."Event Title".'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"'."\r\n";
+  $headerString .= '"'."Event Title".'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Relationship').'"'."\r\n";
 
   $csvExportString.=$headerString;
 
@@ -83,7 +83,7 @@ function group_events_export_comma($event) {
           reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
-    				$dataString .= '"'.$event->title.'","'.$attendee->guid.'","'.$attendee->name.'","'.$attendee->email.'","'.$attendee->username.'","'.$relationship.'"';
+    				$dataString .= '"'.$event->title.'","'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
 	          if($event->registration_needed) {
     					if($registration_form = $event->getRegistrationFormQuestions()) {
     						foreach($registration_form as $question) {
