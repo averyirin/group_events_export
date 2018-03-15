@@ -74,7 +74,7 @@ function group_events_export_comma($event) {
 
         $old_ia = elgg_set_ignore_access(true);
         $peopleResponded = elgg_get_entities_from_relationship(array(
-          'relationship' => $rel,
+          'relationship' => EVENT_MANAGER_RELATION_ATTENDING,
           'relationship_guid' => $event->getGUID(),
           'inverse_relationship' => FALSE,
           'site_guids' => false,
