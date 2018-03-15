@@ -36,8 +36,8 @@ function group_events_export_pagesetup()
     $page_owner = elgg_get_page_owner_entity();
     //add the group statistics button to the group admin menu
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
-      elgg_register_menu_item('export', array(
-								'name' => "new",
+      elgg_register_menu_item('title', array(
+								'name' => "export",
 								'href' => "events/event/new/" . $page_owner->getGUID(),
 								'text' => "Export Group Events",
 								'link_class' => 'elgg-button elgg-button-action',
