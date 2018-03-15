@@ -1,6 +1,6 @@
 <?php
 
-
+require_once('/group_events_export/lib/group_events_export.php');
 $groupGuid = (int) get_input("groupGuid");
 
 $csvExportString = generate_group_events_spreadsheet($groupGuid);
