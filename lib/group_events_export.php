@@ -11,7 +11,7 @@ function get_events_from_group($groupGuid = NULL)
 
     $return = array();
 
-    $listEvents = array();
+    $listEvents =  get_events_by_group_guid($groupGuid);
 
     $return['title'] = "Group Events Export";
     $return['content'] .= elgg_view('group_events_export/list_events',

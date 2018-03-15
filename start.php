@@ -68,7 +68,7 @@ function group_events_export_page_handler($page)
             //if we have itemID, go to item view with back btn
             if ($groupID!= NULL) {
                 $params = get_events_from_group($groupID);
-                $body = elgg_view_layout('content', $params);
+                $body = elgg_view_layout('admin', $params);
             }
             break;
         default:
