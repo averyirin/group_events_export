@@ -65,17 +65,7 @@ function group_events_export_comma($event) {
     $event_relationship_options = event_manager_event_get_relationship_options();
     reset($event_relationship_options);
     foreach($event_relationship_options as $relationship) {
-      if($relationship == EVENT_MANAGER_RELATION_ATTENDING){
-                $dataString .= "Found ".$relationship;
-      }
-
-      $dataString .= "Looking for ".$relationship;
-
-      if($event->$relationship){
-
-            				$dataString .= " Has ".$relationship;
-            				$dataString .= $EOL;
-
+        $dataString .= "Looking for ".$relationship;
         $old_ia = elgg_set_ignore_access(true);
         $peopleResponded = elgg_get_entities_from_relationship(array(
           'relationship' => $relationship,
@@ -87,6 +77,8 @@ function group_events_export_comma($event) {
         elgg_set_ignore_access($old_ia);
 
         if($peopleResponded) {
+          $dataString .= " Has ".$relationship;
+          $dataString .= $EOL;
           reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
