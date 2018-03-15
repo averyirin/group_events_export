@@ -17,13 +17,12 @@ function group_events_export_init()
 {
     //page setup handler to add the group export events button
     elgg_register_event_handler("pagesetup", "system", "group_events_export_pagesetup", 550);
+    //register group_statistics library
+    elgg_register_library('group_events_export:lib', elgg_get_plugins_path() . 'group_events_export/lib/group_events_export.php');
+    //register page handler
 
     //if we are in the group statistics register libraries
     if (get_context() == 'group_events_export') {
-
-        //register group_statistics library
-        elgg_register_library('group_events_export:lib', elgg_get_plugins_path() . 'group_events_export/lib/group_events_export.php');
-      //register page handler
         elgg_register_page_handler('group_events_export', 'group_events_export_page_handler');
     }
 }
@@ -38,7 +37,7 @@ function group_events_export_pagesetup()
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
       elgg_register_menu_item('title', array(
 								'name' => "export",
-								'href' => "group_events_export/actions/group_events_export/csv.php?groupGuid=" . $page_owner->getGUID(),
+								'href' => "action/group_events_export/csv?groupGuid=1742051",
 								'text' => "Export Group Events",
 								'link_class' => 'elgg-button elgg-button-action',
                 'is_action' => true
