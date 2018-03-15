@@ -31,7 +31,8 @@ function group_events_export_pagesetup()
     //if we can edit the group
     $page_owner = elgg_get_page_owner_entity();
     $who_create_group_events = elgg_get_plugin_setting('who_create_group_events', 'event_manager'); // group_admin, members
-  if((($who_create_group_events == "group_admin") && $page_owner->canEdit()) || (($who_create_group_events == "members") && $page_owner->isMember(elgg_get_logged_in_user_guid()))){
+    $user = elgg_get_logged_in_user();
+    if((($who_create_group_events == "group_admin") && $page_owner->canEdit()) || (($who_create_group_events == "members") && $page_owner->isMember($user))){
     //add the group statistics button to the group events menu
     //! Does this need security?
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
