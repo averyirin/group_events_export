@@ -43,7 +43,7 @@ function get_events_from_group($groupGuid = NULL)
     $return['title'] = "Group Events Export";
     $return['content'].=elgg_view("output/url",
     array("is_action" => true,
-    "href" => "action/group_events_export/group_events_export/csv?groupGuid=1742051",
+    "href" => "action/group_events_export/csv?groupGuid=1742051",
     "text" => "Export to CSV"));
     $return['content'] .= elgg_view('group_events_export/list_events',
         array('listEvents' => $csvExportString));
