@@ -6,6 +6,21 @@
  * Time: 10:17 AM
  */
 
+function generate_group_events_spreadsheet($groupGuid = NULL){
+
+  $event_options = array();
+  $event_options["container_guid"] =$groupGuid;
+  $events = event_manager_search_events($event_options);
+  $entities = $events["entities"];
+  $eventGuids = array();
+  $csvExportString = "";
+  foreach ($entities as $event) {
+    array_push($eventGuids, $event->guid);
+    $csvExportString .= event_manager_export_attendees_comma($event, true);
+  }
+  return $csvExportString;
+}
+
 function get_events_from_group($groupGuid = NULL)
 {
 
