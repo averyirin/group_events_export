@@ -64,9 +64,12 @@ function group_events_export_comma($event) {
     //Loop Through relationship options
     $event_relationship_options = event_manager_event_get_relationship_options();
     foreach($event_relationship_options as $rel) {
+
+        $dataString .= "Looking for ".$rel;
+
       if($event->$rel){
 
-            				$dataString .= "Has ".$rel;
+            				$dataString .= " Has ".$rel;
             				$dataString .= $EOL;
 
         $old_ia = elgg_set_ignore_access(true);
