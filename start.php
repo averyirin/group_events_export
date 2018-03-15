@@ -6,7 +6,7 @@
 //redirect action handler
 $action_path = elgg_get_plugins_path() . 'group_events_export/actions/group_events_export';
 //register redirection and forms
-elgg_register_action("group_events_export/redir", $action_path . "/redir.php");
+elgg_register_action("group_events_export/csv", $action_path . "/csv.php");
 elgg_register_action("subtypeForm", $action_path . "/subtypeForm.php");
 //register plugin init
 elgg_register_event_handler('init', 'system', 'group_events_export_init');
@@ -38,9 +38,10 @@ function group_events_export_pagesetup()
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
       elgg_register_menu_item('title', array(
 								'name' => "export",
-								'href' => "events/event/new/" . $page_owner->getGUID(),
+								'href' => "group_events_export/action/csv.php?groupGuid=" . $page_owner->getGUID(),
 								'text' => "Export Group Events",
 								'link_class' => 'elgg-button elgg-button-action',
+                'is_action' => true
 								));
     }
 }
