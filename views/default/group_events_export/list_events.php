@@ -5,7 +5,7 @@ $listEvents = $vars['listEvents'];
 
     <div  class="col col-xs-12">
       <?php
-        echo $listEvents;
+        echo var_dump($listEvents);
       ?>
     </div>
 
