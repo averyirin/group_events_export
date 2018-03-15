@@ -38,7 +38,7 @@ function group_events_export_pagesetup()
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
       elgg_register_menu_item('title', array(
 								'name' => "export",
-								'href' => "group_events_export/action/csv.php?groupGuid=" . $page_owner->getGUID(),
+								'href' => "group_events_export/actions/group_events_export/csv.php?groupGuid=" . $page_owner->getGUID(),
 								'text' => "Export Group Events",
 								'link_class' => 'elgg-button elgg-button-action',
                 'is_action' => true
