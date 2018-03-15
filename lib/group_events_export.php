@@ -13,9 +13,16 @@ function get_events_from_group($groupGuid = NULL)
 
     $listEvents =  get_events_by_group_guid($groupGuid);
 
+    $event_options = array();
+    $event_options["container_guid"] =$groupGuid;
+    $events = event_manager_search_events($event_options);
+	  $entities = $events["entities"];
+
+
+
     $return['title'] = "Group Events Export";
     $return['content'] .= elgg_view('group_events_export/list_events',
-        array('listEvents' => $listEvents));
+        array('listEvents' => $entities));
     return $return;
 }
 
