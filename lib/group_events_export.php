@@ -14,6 +14,11 @@ function generate_group_events_spreadsheet($groupGuid = NULL){
   $entities = $events["entities"];
   $eventGuids = array();
   $csvExportString = "";
+
+  $headerString .= '"'."Event Title".'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"'."\r\n";
+
+  $csvExportString.=$headerString;
+
   foreach ($entities as $event) {
     array_push($eventGuids, $event->guid);
     $csvExportString .= group_events_export_comma($event);
@@ -26,8 +31,6 @@ function group_events_export_comma($event) {
 		elgg_set_ignore_access(true);
 
     $EOL = "\r\n";
-    $headerString = $event->title.$EOL;
-		$headerString .= '"'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"';
 
 
     //To do, see what register event and with program are needed
@@ -80,7 +83,7 @@ function group_events_export_comma($event) {
           reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
-    				$dataString .= '"'.$attendee->guid.'","'.$attendee->name.'","'.$attendee->email.'","'.$attendee->username.'","'.$relationship.'"';
+    				$dataString .= '"'.$event->title.'","'.$attendee->guid.'","'.$attendee->name.'","'.$attendee->email.'","'.$attendee->username.'","'.$relationship.'"';
 	          if($event->registration_needed) {
     					if($registration_form = $event->getRegistrationFormQuestions()) {
     						foreach($registration_form as $question) {
@@ -115,10 +118,9 @@ function group_events_export_comma($event) {
 
 
 
-		$headerString .= $EOL;
 		elgg_set_ignore_access($old_ia);
 
-		return $headerString . $dataString;
+		return $dataString;
 	}
 
 
