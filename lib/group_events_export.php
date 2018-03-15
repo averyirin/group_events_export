@@ -16,8 +16,11 @@ function get_events_from_group($groupGuid = NULL)
     $events = event_manager_search_events($event_options);
 	  $entities = $events["entities"];
     $eventGuids = array();
+    $csvExportString = "";
+
     foreach ($entities as $event) {
       array_push($eventGuids, $event->guid);
+      $csvExportString .= event_manager_export_attendees_original($event, true);
     }
     //echo event_manager_export_attendees_original($event, true);
 
@@ -25,7 +28,7 @@ function get_events_from_group($groupGuid = NULL)
 
     $return['title'] = "Group Events Export";
     $return['content'] .= elgg_view('group_events_export/list_events',
-        array('listEvents' => $eventGuids));
+        array('listEvents' => $csvExportString));
     return $return;
 }
 
