@@ -26,7 +26,8 @@ function group_events_export_comma($event) {
 		elgg_set_ignore_access(true);
 
     $EOL = "\r\n";
-		$headerString .= '"'.$event->title.'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"';
+    $headerString = $event->title.$EOL;
+		$headerString .= '"'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"';
 
 
     //To do, see what register event and with program are needed
@@ -53,7 +54,7 @@ function group_events_export_comma($event) {
 							$end_time_hour = date('H', $end_time);
 							$end_time_minutes = date('i', $end_time);
 
-							$headerString .= ';"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
+							$headerString .= ',"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
 						}
 					}
 				}
