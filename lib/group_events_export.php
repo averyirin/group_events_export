@@ -63,6 +63,7 @@ function group_events_export_comma($event) {
 
     //Loop Through relationship options
     $event_relationship_options = event_manager_event_get_relationship_options();
+    reset($event_relationship_options);
     foreach($event_relationship_options as $relationship) {
       if($relationship == EVENT_MANAGER_RELATION_ATTENDING){
                 $dataString .= "Found ".$relationship;
@@ -86,6 +87,7 @@ function group_events_export_comma($event) {
         elgg_set_ignore_access($old_ia);
 
         if($peopleResponded) {
+          reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
 
