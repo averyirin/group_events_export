@@ -20,6 +20,9 @@ function group_events_export_init()
     //register group_statistics library
     elgg_register_library('group_events_export:lib', elgg_get_plugins_path() . 'group_events_export/lib/group_events_export.php');
     //register page handler
+    //load library
+    elgg_load_library('group_events_export:lib');
+
 
     //if we are in the group statistics register libraries
     if (get_context() == 'group_events_export') {
@@ -55,8 +58,6 @@ function group_events_export_pagesetup()
  */
 function group_events_export_page_handler($page)
 {
-    //load library
-    elgg_load_library('group_events_export:lib');
 
     //set page, groupID and itemID
     $pageNav = $page[0];
