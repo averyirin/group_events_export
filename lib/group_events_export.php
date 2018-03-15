@@ -26,7 +26,7 @@ function group_events_export_comma($event) {
 		elgg_set_ignore_access(true);
 
     $EOL = "\r\n";
-		$headerString .= '"'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('"Relationship').'"';
+		$headerString .= '"'.$event->title.'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('"Relationship').'"';
 
 
     //To do, see what register event and with program are needed
@@ -65,6 +65,10 @@ function group_events_export_comma($event) {
     $event_relationship_options = event_manager_event_get_relationship_options();
     foreach($event_relationship_options as $rel) {
       if($event->$rel){
+
+            				$dataString .= "Has ".$rel;
+            				$dataString .= $EOL;
+
         $old_ia = elgg_set_ignore_access(true);
         $peopleResponded = elgg_get_entities_from_relationship(array(
           'relationship' => $rel,
