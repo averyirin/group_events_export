@@ -79,6 +79,9 @@ function group_events_export_comma($event) {
           reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
+            $dataString .= var_dump($attendee);
+                				$dataString .= $EOL;
+
     				$dataString .= '"'.$event->title.'","'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
 /*
             if($event->registration_needed) {
