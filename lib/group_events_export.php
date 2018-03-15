@@ -26,7 +26,7 @@ function group_events_export_comma($event) {
 		elgg_set_ignore_access(true);
 
     $EOL = "\r\n";
-		$headerString .= '"'.$event->title.'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('"Relationship').'"';
+		$headerString .= '"'.$event->title.'","'.elgg_echo('guid').'","'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('username').'","'.elgg_echo('Relationship').'"';
 
 
     //To do, see what register event and with program are needed
