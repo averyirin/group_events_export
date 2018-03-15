@@ -65,7 +65,6 @@ function group_events_export_comma($event) {
     $event_relationship_options = event_manager_event_get_relationship_options();
     reset($event_relationship_options);
     foreach($event_relationship_options as $relationship) {
-        $dataString .= "Looking for ".$relationship;
         $old_ia = elgg_set_ignore_access(true);
         $peopleResponded = elgg_get_entities_from_relationship(array(
           'relationship' => $relationship,
@@ -77,15 +76,11 @@ function group_events_export_comma($event) {
         elgg_set_ignore_access($old_ia);
 
         if($peopleResponded) {
-          $dataString .= " Has ".$relationship;
-          $dataString .= $EOL;
           reset($peopleResponded);
     			foreach($peopleResponded as $attendee) {
     				$answerString = '';
-
     				$dataString .= '"'.$attendee->guid.'","'.$attendee->name.'","'.$attendee->email.'","'.$attendee->username.'","'.$relationship.'"';
-
-    				if($event->registration_needed) {
+	          if($event->registration_needed) {
     					if($registration_form = $event->getRegistrationFormQuestions()) {
     						foreach($registration_form as $question) {
     							$answer = $question->getAnswerFromUser($attendee->getGUID());
