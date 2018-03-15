@@ -11,49 +11,107 @@ function get_events_from_group($groupGuid = NULL)
 
     $return = array();
 
-    $listEvents =  get_events_by_group_guid($groupGuid);
-
     $event_options = array();
     $event_options["container_guid"] =$groupGuid;
     $events = event_manager_search_events($event_options);
 	  $entities = $events["entities"];
+    $eventGuids = array();
+    foreach ($entities as $event) {
+      array_push($eventGuids, $event->guid);
+    }
+    //echo event_manager_export_attendees_original($event, true);
 
 
 
     $return['title'] = "Group Events Export";
     $return['content'] .= elgg_view('group_events_export/list_events',
-        array('listEvents' => $entities));
+        array('listEvents' => $eventGuids));
     return $return;
 }
 
-function get_events_by_group_guid($groupGuid)
-{
-    //Loop through subtypes of what content group has
-    $groupSubtypes = elgg_get_entities(array(
-        'type' => 'object',
-        'container_guid' => $groupGuid,
-        'group_by' => 'e.subtype',
-        count => false,
-        limit => 0
-    ));
 
-    $groupSubtypesClean = array();
-    foreach ($groupSubtypes as $subtype) {
-        array_push($groupSubtypesClean, get_subtype_from_id($subtype->subtype));
-    }
-    //filter out invalid subtypes
-    $invalidSubtypeArray = array('widget', 'folder', 'task_top', 'messages', 'hjcategory');
-    $validSubtypeArray = array_diff($groupSubtypesClean, $invalidSubtypeArray);
+function event_manager_export_attendees_original($event, $file = false) {
+		$old_ia = elgg_get_ignore_access();
+		elgg_set_ignore_access(true);
 
+		if($file) {
+			$EOL = "\r\n";
+		} else {
+			$EOL = PHP_EOL;
+		}
 
-    $subtypeToTop = 'page_top';
-    //put the page at the top of the list
-    if (in_array($subtypeToTop, $validSubtypeArray)) {
-        $validSubtypeArray = array_diff($validSubtypeArray, [$subtypeToTop]);
-        array_unshift($validSubtypeArray, $subtypeToTop);
-    }
+		$headerString .= '"'.elgg_echo('guid').'";"'.elgg_echo('name').'";"'.elgg_echo('email').'";"'.elgg_echo('username').'"';
 
-    return $validSubtypeArray;
-}
+		if($event->registration_needed) {
+			if($registration_form = $event->getRegistrationFormQuestions()) {
+				foreach($registration_form as $question) {
+					$headerString .= ';"'.$question->title.'"';
+				}
+			}
+		}
 
+		if($event->with_program) {
+			if($eventDays = $event->getEventDays()) {
+				foreach($eventDays as $eventDay) {
+					$date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
+					if($eventSlots = $eventDay->getEventSlots()) {
+						foreach($eventSlots as $eventSlot) {
+							$start_time = $eventSlot->start_time;
+							$end_time = $eventSlot->end_time;
+
+							$start_time_hour = date('H', $start_time);
+							$start_time_minutes = date('i', $start_time);
+
+							$end_time_hour = date('H', $end_time);
+							$end_time_minutes = date('i', $end_time);
+
+							$headerString .= ';"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
+						}
+					}
+				}
+			}
+		}
+
+		if($attendees = $event->exportAttendees()) {
+			foreach($attendees as $attendee) {
+				$answerString = '';
+
+				$dataString .= '"'.$attendee->guid.'";"'.$attendee->name.'";"'.$attendee->email.'";"'.$attendee->username.'"';
+
+				if($event->registration_needed) {
+					if($registration_form = $event->getRegistrationFormQuestions()) {
+						foreach($registration_form as $question) {
+							$answer = $question->getAnswerFromUser($attendee->getGUID());
+
+							$answerString .= '"'.addslashes($answer->value).'";';
+						}
+					}
+					$dataString .= ';'.substr($answerString, 0, (strlen($answerString) -1));
+				}
+
+				if($event->with_program) {
+					if($eventDays = $event->getEventDays()) {
+						foreach($eventDays as $eventDay) {
+							if($eventSlots = $eventDay->getEventSlots()) {
+								foreach($eventSlots as $eventSlot) {
+									if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
+										$dataString .= ';"V"';
+									} else {
+										$dataString .= ';""';
+									}
+								}
+							}
+						}
+					}
+				}
+
+				$dataString .= $EOL;
+			}
+		}
+
+		$headerString .= $EOL;
+		elgg_set_ignore_access($old_ia);
+
+		return $headerString . $dataString;
+	}
 ?>
