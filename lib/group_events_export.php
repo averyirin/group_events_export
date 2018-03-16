@@ -93,7 +93,7 @@ function group_events_export_sheet($event){
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
     <Names>
-     <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Sheet1!R1C1:R2C4"
+     <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="='.$event->title.'!R1C1:R2C4"
       ss:Hidden="1"/>
     </Names>
     <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="2" x:FullColumns="1"
@@ -222,10 +222,12 @@ function group_events_export_sheet($event){
          <ProtectObjects>False</ProtectObjects>
          <ProtectScenarios>False</ProtectScenarios>
         </WorksheetOptions>
-        <AutoFilter x:Range="R1C1:R2C4" xmlns="urn:schemas-microsoft-com:office:excel">
-        </AutoFilter>
+
        </Worksheet>';
-  return $headerXml.$dataXml;
+       /*
+
+      */
+  return $headerXml.$dataXml.$endXml;
 }
 
 
