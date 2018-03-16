@@ -124,7 +124,7 @@ function group_events_export_sheet($event){
   <Data ss:Type="String">molly@katzen.com</Data></Cell>
   </Row>
   ';
-  $worksheetXml =  '
+  $worksheetXml .=  '
   <Row>
   <Cell><Data ss:Type="String">Molly</Data></Cell>
   <Cell><Data ss:Type="String">Polly</Data></Cell>
