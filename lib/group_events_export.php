@@ -28,7 +28,7 @@ function group_events_export_sheet($event){
   //Title
   $headerString .= $event->title.$EOL;
   //Fields
-  $headerString .= '"'.elgg_echo('guid').'";"'.elgg_echo('name').'";"'.elgg_echo('email').'";"'.elgg_echo('username').'"';
+  $headerString .= '"'.elgg_echo('name').'";"'.elgg_echo('email').'";"'.elgg_echo('Relationship').'";"'.elgg_echo('Time created').'"';
   if($event->registration_needed) {
     if($registration_form = $event->getRegistrationFormQuestions()) {
       foreach($registration_form as $question) {
