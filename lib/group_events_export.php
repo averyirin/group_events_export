@@ -67,7 +67,19 @@ function generate_export_spreadsheet($event){
   ss:Type="String">Katzen</Data></Cell>
   <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
   <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>
+  </Row>';
+  $spreadsheetExportString .='
+  <Row>
+  <Cell><Data ss:Type="String">Molly</Data></Cell>
+  <Cell ss:Index="3"><Data
+  ss:Type="String">Katzen</Data></Cell>
+  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+  <Data ss:Type="String">molly@katzen.com</Data></Cell>
+  </Row>';
+
+
+
+  $spreadsheetExportString .='
   </Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
