@@ -48,30 +48,22 @@ function generate_export_spreadsheet($event){
   <Style ss:ID="s23">
   <Font x:Family="Swiss" ss:Bold="1"/>
   </Style>
-  </Styles>';
+  </Styles>
+  <Worksheet ss:Name="Sheet1">
+    <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+     x:FullRows="1">
+     ';
 
   foreach ($eventEntities as $event) {
     $spreadsheetExportString .= group_events_export_sheet($event);
   }
   $spreadsheetExportString .= '
-     <Worksheet ss:Name="Sheet2">
-      <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
-       x:FullRows="1">
-      </Table>
-      <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-       <ProtectObjects>False</ProtectObjects>
-       <ProtectScenarios>False</ProtectScenarios>
-      </WorksheetOptions>
-     </Worksheet>
-     <Worksheet ss:Name="Sheet3">
-      <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
-       x:FullRows="1">
-      </Table>
-      <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-       <ProtectObjects>False</ProtectObjects>
-       <ProtectScenarios>False</ProtectScenarios>
-      </WorksheetOptions>
-     </Worksheet>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
     </Workbook>
   ';
 
@@ -88,15 +80,20 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml =  '<Worksheet ss:Name="'.$event->title.'">
-    <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
-     x:FullRows="1">
-    </Table>
-    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-     <ProtectObjects>False</ProtectObjects>
-     <ProtectScenarios>False</ProtectScenarios>
-    </WorksheetOptions>
-   </Worksheet>';
+  $worksheetXml =  '<Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+  <Row ss:StyleID="s23">
+  <Cell><Data ss:Type="String">First</Data></Cell>
+  <Cell><Data ss:Type="String">Middle</Data></Cell>
+  <Cell><Data ss:Type="String">Last</Data></Cell>
+  <Cell><Data ss:Type="String">Email</Data></Cell>
+  </Row>
+  <Row>
+  <Cell><Data ss:Type="String">Molly</Data></Cell>
+  <Cell ss:Index="3"><Data
+  ss:Type="String">Katzen</Data></Cell>
+  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+  <Data ss:Type="String">molly@katzen.com</Data></Cell>
+  </Row>';
 
 
 
