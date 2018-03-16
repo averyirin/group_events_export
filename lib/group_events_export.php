@@ -60,88 +60,45 @@ function generate_export_spreadsheet($event){
   <Cell><Data ss:Type="String">Last</Data></Cell>
   <Cell><Data ss:Type="String">Email</Data></Cell>
   </Row>';
-  $spreadsheetExportString .='
-  <Row>
-  <Cell><Data ss:Type="String">Molly</Data></Cell>
-  <Cell ss:Index="3"><Data
-  ss:Type="String">Katzen</Data></Cell>
-  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-  <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>';
-  $spreadsheetExportString .='
-  <Row>
-  <Cell><Data ss:Type="String">Molly</Data></Cell>
-  <Cell ss:Index="3"><Data
-  ss:Type="String">Katzen</Data></Cell>
-  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-  <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>';
-
-
-
-  $spreadsheetExportString .='
-  </Table>
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <Print>
-  <ValidPrinterInfo/>
-  <HorizontalResolution>300</HorizontalResolution>
-  <VerticalResolution>300</VerticalResolution>
-  </Print>
-  <Selected/>
-  <Panes>
-  <Pane>
-  <Number>3</Number>
-  <ActiveRow>5</ActiveRow>
-  </Pane>
-  </Panes>
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  </Worksheet>
-  <Worksheet ss:Name="Sheet2">
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  </Worksheet>
-  <Worksheet ss:Name="Sheet3">
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  </Worksheet>
-  </Workbook>
-     ';
-
   foreach ($eventEntities as $event) {
-  //  $spreadsheetExportString .= group_events_export_sheet($event);
+    $spreadsheetExportString .= group_events_export_sheet($event);
   }
-  /*$spreadsheetExportString .= '
-  </Table>
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <Print>
-  <ValidPrinterInfo/>
-  <HorizontalResolution>300</HorizontalResolution>
-  <VerticalResolution>300</VerticalResolution>
-  </Print>
-  <Selected/>
-  <Panes>
-  <Pane>
-  <Number>3</Number>
-  <ActiveRow>5</ActiveRow>
-  </Pane>
-  </Panes>
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
- </Worksheet>
+  $spreadsheetExportString .='
+    </Table>
+    <WorksheetOptions
+    xmlns="urn:schemas-microsoft-com:office:excel">
+    <Print>
+    <ValidPrinterInfo/>
+    <HorizontalResolution>300</HorizontalResolution>
+    <VerticalResolution>300</VerticalResolution>
+    </Print>
+    <Selected/>
+    <Panes>
+    <Pane>
+    <Number>3</Number>
+    <ActiveRow>5</ActiveRow>
+    </Pane>
+    </Panes>
+    <ProtectObjects>False</ProtectObjects>
+    <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+    </Worksheet>
+    <Worksheet ss:Name="Sheet2">
+    <WorksheetOptions
+    xmlns="urn:schemas-microsoft-com:office:excel">
+    <ProtectObjects>False</ProtectObjects>
+    <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+    </Worksheet>
+    <Worksheet ss:Name="Sheet3">
+    <WorksheetOptions
+    xmlns="urn:schemas-microsoft-com:office:excel">
+    <ProtectObjects>False</ProtectObjects>
+    <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+    </Worksheet>
     </Workbook>
-  ';
-  */
+       ';
 
   return $spreadsheetExportString;
 }
@@ -156,14 +113,7 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml =  '
-  <Row ss:StyleID="s23">
-  <Cell><Data ss:Type="String">First</Data></Cell>
-  <Cell><Data ss:Type="String">Middle</Data></Cell>
-  <Cell><Data ss:Type="String">Last</Data></Cell>
-  <Cell><Data ss:Type="String">Email</Data></Cell>
-  </Row>
-  <Row>
+  $worksheetXml =  '<Row>
   <Cell><Data ss:Type="String">Molly</Data></Cell>
   <Cell ss:Index="3"><Data
   ss:Type="String">Katzen</Data></Cell>
