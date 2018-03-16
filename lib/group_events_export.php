@@ -11,47 +11,44 @@ function generate_export_spreadsheet($event){
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
   $spreadsheetExportString = '<?xml version="1.0"?>
-  <?mso-application progid="Excel.Sheet"?>
-  <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
-   xmlns:o="urn:schemas-microsoft-com:office:office"
-   xmlns:x="urn:schemas-microsoft-com:office:excel"
-   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
-   xmlns:html="http://www.w3.org/TR/REC-html40">
-   <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-    <Author>Irin Avery</Author>
-    <LastAuthor>Irin A</LastAuthor>
-    <Created>2005-08-02T04:06:26Z</Created>
-    <LastSaved>2005-08-02T04:30:11Z</LastSaved>
-    <Company>MPG LSC</Company>
-    <Version>14.00</Version>
-   </DocumentProperties>
-   <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
-    <AllowPNG/>
-   </OfficeDocumentSettings>
-   <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-    <WindowHeight>8535</WindowHeight>
-    <WindowWidth>12345</WindowWidth>
-    <WindowTopX>480</WindowTopX>
-    <WindowTopY>90</WindowTopY>
-    <ProtectStructure>False</ProtectStructure>
-    <ProtectWindows>False</ProtectWindows>
-   </ExcelWorkbook>
-   <Styles>
-    <Style ss:ID="Default" ss:Name="Normal">
-     <Alignment ss:Vertical="Bottom"/>
-     <Borders/>
-     <Font ss:FontName="Arial"/>
-     <Interior/>
-     <NumberFormat/>
-     <Protection/>
-    </Style>
-    <Style ss:ID="s62" ss:Name="Hyperlink">
-     <Font ss:FontName="Arial" ss:Color="#0000FF" ss:Underline="Single"/>
-    </Style>
-    <Style ss:ID="s63">
-     <Font ss:FontName="Arial" x:Family="Swiss" ss:Bold="1"/>
-    </Style>
-   </Styles>';
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Jack Herrington</Author>
+  <LastAuthor>Jack Herrington</LastAuthor>
+  <Created>2005-08-02T04:06:26Z</Created>
+  <LastSaved>2005-08-02T04:30:11Z</LastSaved>
+  <Company>My Software Company, Inc.</Company>
+  <Version>11.6360</Version>
+  </DocumentProperties>
+  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8535</WindowHeight>
+  <WindowWidth>12345</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>90</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+  </ExcelWorkbook>
+  <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+  <Alignment ss:Vertical="Bottom"/>
+  <Borders/>
+  <Font/>
+  <Interior/>
+  <NumberFormat/>
+  <Protection/>
+  </Style>
+  <Style ss:ID="s21" ss:Name="Hyperlink">
+  <Font ss:Color="#0000FF" ss:Underline="Single"/>
+  </Style>
+  <Style ss:ID="s23">
+  <Font x:Family="Swiss" ss:Bold="1"/>
+  </Style>
+  </Styles>';
 
   foreach ($eventEntities as $event) {
     $spreadsheetExportString .= group_events_export_sheet($event);
@@ -242,7 +239,7 @@ function group_events_export_sheet($event){
 
       */
   //return $headerXml.$dataXml.$endXml;
-  return $worksheetXml;
+  return '';
 }
 
 
