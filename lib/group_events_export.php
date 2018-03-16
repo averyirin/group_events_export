@@ -75,6 +75,8 @@ function group_events_export_sheet($event){
         'site_guids' => false,
         'limit' => false
       ));
+
+      echo var_dump($peopleResponded);
       elgg_set_ignore_access($old_ia);
 
       if($peopleResponded) {
