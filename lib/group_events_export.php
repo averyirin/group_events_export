@@ -73,9 +73,22 @@ function generate_export_spreadsheet($event){
   }
   $spreadsheetExportString .= '
   </Table>
-  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-   <ProtectObjects>False</ProtectObjects>
-   <ProtectScenarios>False</ProtectScenarios>
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <Print>
+  <ValidPrinterInfo/>
+  <HorizontalResolution>300</HorizontalResolution>
+  <VerticalResolution>300</VerticalResolution>
+  </Print>
+  <Selected/>
+  <Panes>
+  <Pane>
+  <Number>3</Number>
+  <ActiveRow>5</ActiveRow>
+  </Pane>
+  </Panes>
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
  </Worksheet>
     </Workbook>
