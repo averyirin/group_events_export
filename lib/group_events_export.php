@@ -195,11 +195,11 @@ function group_events_export_sheet($event){
         foreach($peopleResponded as $attendee) {
 
           $dataXml =  '<Row>
-          <Cell><Data ss:Type="String">'.$attendee->name.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
           <Cell ss:Index="3"><Data
-          ss:Type="String">'.$relationship.'</Data></Cell>
+          ss:Type="String">'.(string)$relationship.'</Data></Cell>
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-          <Data ss:Type="String">'.$attendee->email.'</Data></Cell>
+          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           </Row>';
           $worksheetXml .= $dataXml;
 
