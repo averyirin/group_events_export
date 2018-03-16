@@ -76,14 +76,9 @@ function group_events_export_sheet($event){
         'limit' => false
       ));
 
-      $metadata = elgg_get_metadata_from_relationship(array(
-        'relationship' => $relationship,
-        'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => FALSE,
-        'site_guids' => false,
-        'limit' => false
-      ));
-      echo var_dump($metadata);
+      $rel = elgg_get_relationship($event->getGUID());
+
+     echo var_dump($rel);
 
 
       //Todo get joined event date from metadata
