@@ -42,6 +42,7 @@ function group_events_export_sheet($event){
         $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
         if($eventSlots = $eventDay->getEventSlots()) {
           foreach($eventSlots as $eventSlot) {
+
             $start_time = $eventSlot->start_time;
             $end_time = $eventSlot->end_time;
 
@@ -80,7 +81,14 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
         foreach($peopleResponded as $attendee) {
 //time_updated
-          $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'","'.$attendee->time_created.'"';
+            //format time
+            $joinDate = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $attendee->time_created);
+            $join_time = $attendee->time_created;
+            $join_time_hour = date('H', $join_time);
+            $join_time_minutes = date('i', $join_time);
+;
+
+          $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'","'.$joinDate. ' ('.$join_time_hour.':'.$join_time_minutes.')'.'"';
 
           //Registration question answers
           $answerString = '';
