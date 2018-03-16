@@ -26,7 +26,7 @@ function group_events_export_sheet($event){
   $EOL = "\r\n";
 
   //Title
-  $titleString .= $event->title;
+  $titleString .= '"'.$event->title.'"';
   //Fields
   $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
   if($event->registration_needed) {
@@ -82,8 +82,7 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
 
         //Title roll up status stats
-        $titleString .= '","'.$relationship.'","'.count($peopleResponded);
-        $titleString .= $EOL;
+        $titleString .= '","'.$relationship.'","'.count($peopleResponded).'"';
 
         foreach($peopleResponded as $attendee) {
           /*
@@ -133,6 +132,8 @@ function group_events_export_sheet($event){
         }
       }
   }
+
+  $titleString .= $EOL;
   elgg_set_ignore_access($old_ia);
   return $titleString.$headerString.$dataString;
 }
