@@ -52,6 +52,7 @@ function generate_export_spreadsheet($event){
   <Worksheet ss:Name="Sheet1">
     <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
      x:FullRows="1">
+     <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
      ';
 
   foreach ($eventEntities as $event) {
@@ -80,7 +81,7 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml =  '<Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+  $worksheetXml =  '
   <Row ss:StyleID="s23">
   <Cell><Data ss:Type="String">First</Data></Cell>
   <Cell><Data ss:Type="String">Middle</Data></Cell>
