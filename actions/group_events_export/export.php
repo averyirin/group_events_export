@@ -10,9 +10,9 @@ echo $csvExportString;
 exit;
 */
 
-$csvExportString = generate_export_xml($groupGuid);
+$spreadsheetExportString = generate_export_spreadsheet($groupGuid);
 header("Content-type: text/xml");
 header("Content-Disposition: Attachment; filename=export.xml");
 header('Pragma: public');
-echo $csvExportString;
+echo $spreadsheetExportString;
 exit;

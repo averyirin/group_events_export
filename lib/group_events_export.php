@@ -10,7 +10,7 @@ function generate_export_spreadsheet($event){
   $event_options["container_guid"] =$groupGuid;
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
-  $csvExportString = '<?xml version="1.0"?>
+  $spreadsheetExportString = '<?xml version="1.0"?>
   <?mso-application progid="Excel.Sheet"?>
   <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
    xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -54,9 +54,9 @@ function generate_export_spreadsheet($event){
    </Styles>';
 
   foreach ($eventEntities as $event) {
-    $csvExportString .= group_events_export_sheet($event);
+    $spreadsheetExportString .= group_events_export_sheet($event);
   }
-  $csvExportString .= '
+  $spreadsheetExportString .= '
       </Table>
       <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
        <Print>
@@ -92,7 +92,7 @@ function generate_export_spreadsheet($event){
     </Workbook>
   ';
 
-  return $csvExportString;
+  return $spreadsheetExportString;
 }
 
 

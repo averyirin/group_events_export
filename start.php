@@ -6,7 +6,7 @@
 //group events export action handler
 $action_path = elgg_get_plugins_path() . 'group_events_export/actions/group_events_export';
 //register export action
-elgg_register_action("group_events_export/csv", $action_path . "/csv.php");
+elgg_register_action("group_events_export/export", $action_path . "/export.php");
 //register plugin init
 elgg_register_event_handler('init', 'system', 'group_events_export_init');
 
@@ -36,10 +36,10 @@ function group_events_export_pagesetup()
     //! Does this need security?
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
       if((($who_create_group_events == "group_admin") && $page_owner->canEdit()) || (($who_create_group_events == "members") && $page_owner->isMember($user))){
-    
+
       elgg_register_menu_item('title', array(
                 'name' => "export",
-                'href' => "action/group_events_export/csv?groupGuid=".$page_owner->getGuid(),
+                'href' => "action/group_events_export/export?groupGuid=".$page_owner->getGuid(),
                 'text' => "Export Group Events",
                 'link_class' => 'elgg-button elgg-button-action',
                 'is_action' => true
