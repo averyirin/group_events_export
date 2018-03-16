@@ -55,20 +55,6 @@ function generate_export_spreadsheet($event){
     $spreadsheetExportString .= $xml;
   }
   $spreadsheetExportString .='
-    <Worksheet ss:Name="Sheet2">
-    <WorksheetOptions
-    xmlns="urn:schemas-microsoft-com:office:excel">
-    <ProtectObjects>False</ProtectObjects>
-    <ProtectScenarios>False</ProtectScenarios>
-    </WorksheetOptions>
-    </Worksheet>
-    <Worksheet ss:Name="Sheet3">
-    <WorksheetOptions
-    xmlns="urn:schemas-microsoft-com:office:excel">
-    <ProtectObjects>False</ProtectObjects>
-    <ProtectScenarios>False</ProtectScenarios>
-    </WorksheetOptions>
-    </Worksheet>
     </Workbook>
        ';
 
