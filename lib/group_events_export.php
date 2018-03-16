@@ -80,10 +80,9 @@ function group_events_export_sheet($event){
    x:FullRows="1">
    <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
    <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">First</Data></Cell>
-   <Cell><Data ss:Type="String">Middle</Data></Cell>
-   <Cell><Data ss:Type="String">Last</Data></Cell>
+   <Cell><Data ss:Type="String">Name</Data></Cell>
    <Cell><Data ss:Type="String">Email</Data></Cell>
+   <Cell><Data ss:Type="String">Status</Data></Cell>
    </Row>';
 
 
@@ -147,17 +146,12 @@ function group_events_export_sheet($event){
 
           $dataXml .=  '<Row>
           <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
           </Row>';
 
 
-
-
-          $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
-          $dataString .= $EOL;
 
           /*
           //Registration question answers
