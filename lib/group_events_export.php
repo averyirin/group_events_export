@@ -113,7 +113,7 @@ function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
-  $worksheetXml = '';
+  
 
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
