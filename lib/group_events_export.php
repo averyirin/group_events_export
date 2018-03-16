@@ -50,28 +50,63 @@ function generate_export_spreadsheet($event){
   </Style>
   </Styles>
   <Worksheet ss:Name="Sheet1">
-    <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
-     x:FullRows="1">
-     <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
-     <Row ss:StyleID="s23">
-     <Cell><Data ss:Type="String">First</Data></Cell>
-     <Cell><Data ss:Type="String">Middle</Data></Cell>
-     <Cell><Data ss:Type="String">Last</Data></Cell>
-     <Cell><Data ss:Type="String">Email</Data></Cell>
-     </Row>
-     <Row>
-     <Cell><Data ss:Type="String">Molly</Data></Cell>
-     <Cell ss:Index="3"><Data
-     ss:Type="String">Katzen</Data></Cell>
-     <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-     <Data ss:Type="String">molly@katzen.com</Data></Cell>
-     </Row>
+  <Table ss:ExpandedColumnCount="4"
+  ss:ExpandedRowCount="5" x:FullColumns="1"
+  x:FullRows="1">
+  <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+  <Row ss:StyleID="s23">
+  <Cell><Data ss:Type="String">First</Data></Cell>
+  <Cell><Data ss:Type="String">Middle</Data></Cell>
+  <Cell><Data ss:Type="String">Last</Data></Cell>
+  <Cell><Data ss:Type="String">Email</Data></Cell>
+  </Row>
+  <Row>
+  <Cell><Data ss:Type="String">Molly</Data></Cell>
+  <Cell ss:Index="3"><Data
+  ss:Type="String">Katzen</Data></Cell>
+  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+  <Data ss:Type="String">molly@katzen.com</Data></Cell>
+  </Row>
+  </Table>
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <Print>
+  <ValidPrinterInfo/>
+  <HorizontalResolution>300</HorizontalResolution>
+  <VerticalResolution>300</VerticalResolution>
+  </Print>
+  <Selected/>
+  <Panes>
+  <Pane>
+  <Number>3</Number>
+  <ActiveRow>5</ActiveRow>
+  </Pane>
+  </Panes>
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="Sheet2">
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="Sheet3">
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>
+  </Workbook>
      ';
 
   foreach ($eventEntities as $event) {
   //  $spreadsheetExportString .= group_events_export_sheet($event);
   }
-  $spreadsheetExportString .= '
+  /*$spreadsheetExportString .= '
   </Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
@@ -93,6 +128,7 @@ function generate_export_spreadsheet($event){
  </Worksheet>
     </Workbook>
   ';
+  */
 
   return $spreadsheetExportString;
 }
