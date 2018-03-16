@@ -71,7 +71,7 @@ function group_events_export_sheet($event){
       $peopleResponded = elgg_get_entities_from_relationship(array(
         'relationship' => $relationship,
         'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => FALSE.ll'l;',
+        'inverse_relationship' => FALSE,
         'site_guids' => false,
         'limit' => false
       ));
@@ -83,6 +83,7 @@ function group_events_export_sheet($event){
       GROUP BY elgg_entity_relationships.guid_one,
       elgg_entity_relationships.relationship,
       SUBSTRING(relationship,22)
+      WHERE group_guid = 1742051
       LIMIT 20";
 
       $result_recordsets = get_data ($query);
