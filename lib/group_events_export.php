@@ -61,7 +61,8 @@ function generate_export_spreadsheet($event){
   <Cell><Data ss:Type="String">Email</Data></Cell>
   </Row>';
   foreach ($eventEntities as $event) {
-    $spreadsheetExportString .= group_events_export_sheet($event);
+    $xml = group_events_export_sheet($event);
+    $spreadsheetExportString .= $xml;
   }
   $spreadsheetExportString .='
     </Table>
@@ -120,15 +121,6 @@ function group_events_export_sheet($event){
   <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
   <Data ss:Type="String">molly@katzen.com</Data></Cell>
   </Row>';
-
-    $worksheetXml .=  '<Row>
-    <Cell><Data ss:Type="String">Molly</Data></Cell>
-    <Cell ss:Index="3"><Data
-    ss:Type="String">Katzen</Data></Cell>
-    <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-    <Data ss:Type="String">molly@katzen.com</Data></Cell>
-    </Row>';
-
 
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
