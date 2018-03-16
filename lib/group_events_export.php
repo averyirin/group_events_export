@@ -50,8 +50,8 @@ function generate_export_spreadsheet($event){
   </Style>
   </Styles>
   <Worksheet ss:Name="Sheet1">
-  <Table ss:ExpandedColumnCount="4"
-  ss:ExpandedRowCount="5" x:FullColumns="1"
+  <Table
+  x:FullColumns="1"
   x:FullRows="1">
   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
   <Row ss:StyleID="s23">
