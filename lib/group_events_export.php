@@ -194,12 +194,14 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
         foreach($peopleResponded as $attendee) {
 
-          $dataXml .= '<Row>
-          <Cell><Data ss:Type="String">'.$attendee->name.'</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-          <Cell><Data ss:Type="String">'.$relationship.'</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-          <Cell ss:StyleID="s62" ss:HRef="mailto:'.$attendee->email.'">
-          <Data ss:Type="String">'.$attendee->email.'</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-           </Row>';
+          $dataXml =  '<Row>
+          <Cell><Data ss:Type="String">'.$attendee->name.'</Data></Cell>
+          <Cell ss:Index="3"><Data
+          ss:Type="String">'.$relationship.'</Data></Cell>
+          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+          <Data ss:Type="String">'.$attendee->email.'</Data></Cell>
+          </Row>';
+          $worksheetXml .= $dataXml;
 
           $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
           $dataString .= $EOL;
