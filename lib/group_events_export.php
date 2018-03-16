@@ -88,15 +88,15 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml = '<Worksheet ss:Name="'.$event->title.'">
-   <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
-    x:FullRows="1">
-   </Table>
-   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-    <ProtectObjects>False</ProtectObjects>
-    <ProtectScenarios>False</ProtectScenarios>
-   </WorksheetOptions>
-  </Worksheet>';
+  $worksheetXml =  '<Worksheet ss:Name="'.$event->title.'">
+    <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+     x:FullRows="1">
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+     <ProtectObjects>False</ProtectObjects>
+     <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+   </Worksheet>';
 
 
 
@@ -239,7 +239,7 @@ function group_events_export_sheet($event){
 
       */
   //return $headerXml.$dataXml.$endXml;
-  return '';
+  return $worksheetXml;
 }
 
 
