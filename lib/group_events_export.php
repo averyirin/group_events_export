@@ -57,20 +57,6 @@ function generate_export_spreadsheet($event){
     $spreadsheetExportString .= group_events_export_sheet($event);
   }
   $spreadsheetExportString .= '
-      </Table>
-      <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-       <Print>
-        <ValidPrinterInfo/>
-        <HorizontalResolution>300</HorizontalResolution>
-        <VerticalResolution>300</VerticalResolution>
-       </Print>
-       <Selected/>
-       <ProtectObjects>False</ProtectObjects>
-       <ProtectScenarios>False</ProtectScenarios>
-      </WorksheetOptions>
-      <AutoFilter x:Range="R1C1:R2C4" xmlns="urn:schemas-microsoft-com:office:excel">
-      </AutoFilter>
-     </Worksheet>
      <Worksheet ss:Name="Sheet2">
       <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
        x:FullRows="1">
@@ -224,6 +210,21 @@ function group_events_export_sheet($event){
 
 //  $titleString .= $EOL;
   elgg_set_ignore_access($old_ia);
+
+  $endXml = '</Table>
+        <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+         <Print>
+          <ValidPrinterInfo/>
+          <HorizontalResolution>300</HorizontalResolution>
+          <VerticalResolution>300</VerticalResolution>
+         </Print>
+         <Selected/>
+         <ProtectObjects>False</ProtectObjects>
+         <ProtectScenarios>False</ProtectScenarios>
+        </WorksheetOptions>
+        <AutoFilter x:Range="R1C1:R2C4" xmlns="urn:schemas-microsoft-com:office:excel">
+        </AutoFilter>
+       </Worksheet>';
   return $headerXml.$dataXml;
 }
 
