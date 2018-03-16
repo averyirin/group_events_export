@@ -49,41 +49,12 @@ function generate_export_spreadsheet($event){
   <Font x:Family="Swiss" ss:Bold="1"/>
   </Style>
   </Styles>
-  <Worksheet ss:Name="Sheet1">
-  <Table
-  x:FullColumns="1"
-  x:FullRows="1">
-  <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
-  <Row ss:StyleID="s23">
-  <Cell><Data ss:Type="String">First</Data></Cell>
-  <Cell><Data ss:Type="String">Middle</Data></Cell>
-  <Cell><Data ss:Type="String">Last</Data></Cell>
-  <Cell><Data ss:Type="String">Email</Data></Cell>
-  </Row>';
+  ';
   foreach ($eventEntities as $event) {
     $xml = group_events_export_sheet($event);
     $spreadsheetExportString .= $xml;
   }
   $spreadsheetExportString .='
-    </Table>
-    <WorksheetOptions
-    xmlns="urn:schemas-microsoft-com:office:excel">
-    <Print>
-    <ValidPrinterInfo/>
-    <HorizontalResolution>300</HorizontalResolution>
-    <VerticalResolution>300</VerticalResolution>
-    </Print>
-    <Selected/>
-    <Panes>
-    <Pane>
-    <Number>3</Number>
-    <ActiveRow>5</ActiveRow>
-    </Pane>
-    </Panes>
-    <ProtectObjects>False</ProtectObjects>
-    <ProtectScenarios>False</ProtectScenarios>
-    </WorksheetOptions>
-    </Worksheet>
     <Worksheet ss:Name="Sheet2">
     <WorksheetOptions
     xmlns="urn:schemas-microsoft-com:office:excel">
@@ -114,41 +85,22 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml .=  '
-  <Row>
-  <Cell><Data ss:Type="String">Molly</Data></Cell>
-  <Cell><Data ss:Type="String">Polly</Data></Cell>
-  <Cell><Data
-  ss:Type="String">Katzen</Data></Cell>
-  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-  <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>
-  ';
-  $worksheetXml .=  '
-    <Row>
-    <Cell><Data ss:Type="String">Molly</Data></Cell>
-    <Cell><Data ss:Type="String">Polly</Data></Cell>
-    <Cell><Data
-    ss:Type="String">Katzen</Data></Cell>
-    <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-    <Data ss:Type="String">molly@katzen.com</Data></Cell>
-    </Row>
-    ';
+
 
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
-    <Names>
-     <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="='.$event->title.'!R1C1:R2C4"
-      ss:Hidden="1"/>
-    </Names>
-    <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="2" x:FullColumns="1"
-     x:FullRows="1">
-     <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
-     <Row ss:StyleID="s63">
-      <Cell><Data ss:Type="String">Name</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-      <Cell><Data ss:Type="String">Relationship</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-      <Cell><Data ss:Type="String">Email</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
-     </Row>';
+   <Table
+   x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+   <Row ss:StyleID="s23">
+   <Cell><Data ss:Type="String">First</Data></Cell>
+   <Cell><Data ss:Type="String">Middle</Data></Cell>
+   <Cell><Data ss:Type="String">Last</Data></Cell>
+   <Cell><Data ss:Type="String">Email</Data></Cell>
+   </Row>';
+
+
 /*
   //Title
   $titleString .= '"'.$event->title.'"';
@@ -206,10 +158,10 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
         foreach($peopleResponded as $attendee) {
 
-          $dataXml =  '<Row>
+          $dataXml .=  '<Row>
           <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-          <Cell ss:Index="3"><Data
-          ss:Type="String">'.(string)$relationship.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           </Row>';
@@ -261,24 +213,29 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access($old_ia);
 
   $endXml = '</Table>
-        <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
-         <Print>
-          <ValidPrinterInfo/>
-          <HorizontalResolution>300</HorizontalResolution>
-          <VerticalResolution>300</VerticalResolution>
-         </Print>
-         <Selected/>
-         <ProtectObjects>False</ProtectObjects>
-         <ProtectScenarios>False</ProtectScenarios>
-        </WorksheetOptions>
-        <AutoFilter x:Range="R1C1:R2C4" xmlns="urn:schemas-microsoft-com:office:excel">
-        </AutoFilter>
-       </Worksheet>';
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <Print>
+  <ValidPrinterInfo/>
+  <HorizontalResolution>300</HorizontalResolution>
+  <VerticalResolution>300</VerticalResolution>
+  </Print>
+  <Selected/>
+  <Panes>
+  <Pane>
+  <Number>3</Number>
+  <ActiveRow>5</ActiveRow>
+  </Pane>
+  </Panes>
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>';
        /*
 
       */
   //return $headerXml.$dataXml.$endXml;
-  return $worksheetXml;
+  return $headerXml.$dataXml.$endXml;
 }
 
 
