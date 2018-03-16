@@ -76,20 +76,6 @@ function group_events_export_sheet($event){
         'limit' => false
       ));
 
-      $query = "SELECT
-      elgg_entity_relationships.guid_one, elgg_entity_relationships.guid_two,
-      SUBSTRING(relationship,22) AS group_guid
-      FROM elgg_entity_relationships
-      GROUP BY elgg_entity_relationships.guid_one,
-      elgg_entity_relationships.relationship,
-      SUBSTRING(relationship,22)
-      WHERE SUBSTRING(relationship,22) = '1742051'
-      LIMIT 20";
-
-      $result_recordsets = get_data ($query);
-      echo var_dump($result_recordsets);
-      exit;
-
       //Todo get joined event date from metadata
       elgg_set_ignore_access($old_ia);
 
@@ -97,9 +83,6 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
 
         //Title roll up status stats
-
-
-
         //Goes to summary
         //    $titleString .= ',"'.$relationship.'","'.count($peopleResponded).'"';
 
