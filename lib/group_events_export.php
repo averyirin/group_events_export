@@ -76,11 +76,6 @@ function group_events_export_sheet($event){
         'limit' => false
       ));
 
-      $rel = get_relationship($event->getGUID());
-
-     echo var_dump($rel);
-
-
       //Todo get joined event date from metadata
       elgg_set_ignore_access($old_ia);
 
