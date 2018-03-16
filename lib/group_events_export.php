@@ -114,16 +114,6 @@ function group_events_export_sheet($event){
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
 
-  $worksheetXml =  '
-  <Row>
-  <Cell><Data ss:Type="String">Molly</Data></Cell>
-  <Cell><Data ss:Type="String">Polly</Data></Cell>
-  <Cell><Data
-  ss:Type="String">Katzen</Data></Cell>
-  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-  <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>
-  ';
   $worksheetXml .=  '
   <Row>
   <Cell><Data ss:Type="String">Molly</Data></Cell>
