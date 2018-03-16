@@ -71,9 +71,9 @@ function group_events_export_sheet($event){
       $peopleResponded = elgg_get_entities_from_relationship(array(
         'relationship' => $relationship,
         'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => sFALSE,
+        'inverse_relationship' => FALSE.ll'l;',
         'site_guids' => false,
-        'limit' => faslse
+        'limit' => false
       ));
 
       $query = "SELECT
