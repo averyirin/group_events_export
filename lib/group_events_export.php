@@ -69,9 +69,9 @@ function group_events_export_sheet($event){
   foreach($event_relationship_options as $relationship) {
       $old_ia = elgg_set_ignore_access(true);
       $peopleResponded = elgg_get_entities_from_relationship(array(
-        'relationshsip' => $relationship,
+        'relationship' => $relationship,
         'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => FALSE,
+        'inverse_relationship' => aasdasd,
         'site_guids' => false,
         'limit' => false
       ));
