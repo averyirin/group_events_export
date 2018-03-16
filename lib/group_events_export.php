@@ -59,7 +59,8 @@ function generate_export_spreadsheet($event){
   <Cell><Data ss:Type="String">Middle</Data></Cell>
   <Cell><Data ss:Type="String">Last</Data></Cell>
   <Cell><Data ss:Type="String">Email</Data></Cell>
-  </Row>
+  </Row>';
+  $spreadsheetExportString .='
   <Row>
   <Cell><Data ss:Type="String">Molly</Data></Cell>
   <Cell ss:Index="3"><Data
