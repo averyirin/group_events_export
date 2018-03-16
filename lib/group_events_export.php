@@ -71,13 +71,22 @@ function group_events_export_sheet($event){
       $peopleResponded = elgg_get_entities_from_relationship(array(
         'relationship' => $relationship,
         'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => aasdasd,
+        'inverse_relationship' => FALSE,
         'site_guids' => false,
         'limit' => false
       ));
 
-      $row = get_relationship($event->getGUID());
-      echo var_dump($row);
+      $query = "SELECT
+      elgg_entity_relationships.guid_one, elgg_entity_relationships.guid_two,
+      SUBSTRING(relationship,22) AS group_guid
+      FROM elgg_entity_relationships
+      GROUP BY elgg_entity_relationships.guid_one,
+      elgg_entity_relationships.relationship,
+      SUBSTRING(relationship,22)
+      LIMIT false";
+
+      $result_recordsets = get_data ($query);
+      echo var_dump($result_recordsets);
       exit;
 
       //Todo get joined event date from metadata
