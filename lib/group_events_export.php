@@ -83,7 +83,7 @@ function group_events_export_sheet($event){
       GROUP BY elgg_entity_relationships.guid_one,
       elgg_entity_relationships.relationship,
       SUBSTRING(relationship,22)
-      WHERE group_guid = '1742051'
+      WHERE SUBSTRING(relationship,22) = '1742051'
       LIMIT 20";
 
       $result_recordsets = get_data ($query);
