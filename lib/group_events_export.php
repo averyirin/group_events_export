@@ -138,7 +138,7 @@ function group_events_export_sheet($event){
   //End Fields
   $headerString .= $EOL;
 */
-
+  $includeEvent = false;
   //generate event data
   //Loop Through relationship options
   $event_relationship_options = event_manager_event_get_relationship_options();
@@ -155,6 +155,7 @@ function group_events_export_sheet($event){
       elgg_set_ignore_access($old_ia);
 
       if($peopleResponded) {
+        $includeEvent = true;
         reset($peopleResponded);
         foreach($peopleResponded as $attendee) {
 
@@ -235,7 +236,12 @@ function group_events_export_sheet($event){
 
       */
   //return $headerXml.$dataXml.$endXml;
+  if($includeEvent){
   return $headerXml.$dataXml.$endXml;
+  }
+  else{
+    return '';
+  }
 }
 
 
