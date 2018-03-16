@@ -76,6 +76,10 @@ function group_events_export_sheet($event){
         'limit' => false
       ));
 
+      $row = elgg_get_relationship_row($event->getGUID());
+      echo var_dump($row);
+      exit;
+
       //Todo get joined event date from metadata
       elgg_set_ignore_access($old_ia);
 
@@ -83,6 +87,8 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
 
         //Title roll up status stats
+
+
 
         //Goes to summary
         //    $titleString .= ',"'.$relationship.'","'.count($peopleResponded).'"';
