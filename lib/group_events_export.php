@@ -83,7 +83,9 @@ function group_events_export_sheet($event){
         reset($peopleResponded);
 
         //Title roll up status stats
-        $titleString .= ',"'.$relationship.'","'.count($peopleResponded).'"';
+
+        //Goes to summary
+        //    $titleString .= ',"'.$relationship.'","'.count($peopleResponded).'"';
 
         foreach($peopleResponded as $attendee) {
           /*
