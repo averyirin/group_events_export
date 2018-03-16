@@ -76,7 +76,7 @@ function group_events_export_sheet($event){
         'limit' => false
       ));
 
-      $row = elgg_get_relationship_row($event->getGUID());
+      $row = get_relationship($event->getGUID());
       echo var_dump($row);
       exit;
 
