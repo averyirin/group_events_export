@@ -113,17 +113,8 @@ function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
+  $worksheetXml = '';
 
-  $worksheetXml .=  '
-  <Row>
-  <Cell><Data ss:Type="String">Molly</Data></Cell>
-  <Cell><Data ss:Type="String">Polly</Data></Cell>
-  <Cell><Data
-  ss:Type="String">Katzen</Data></Cell>
-  <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-  <Data ss:Type="String">molly@katzen.com</Data></Cell>
-  </Row>
-  ';
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
     <Names>
@@ -203,7 +194,16 @@ function group_events_export_sheet($event){
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           </Row>';
 
-
+          $worksheetXml .=  '
+          <Row>
+          <Cell><Data ss:Type="String">Molly</Data></Cell>
+          <Cell><Data ss:Type="String">Polly</Data></Cell>
+          <Cell><Data
+          ss:Type="String">Katzen</Data></Cell>
+          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+          <Data ss:Type="String">molly@katzen.com</Data></Cell>
+          </Row>
+          ';
 
 
           $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
