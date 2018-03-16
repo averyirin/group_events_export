@@ -127,11 +127,11 @@ function getGroupEventXML(){
  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
  xmlns:html="http://www.w3.org/TR/REC-html40">
  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-  <Author>Jack Herrington</Author>
-  <LastAuthor>Jack Herrington</LastAuthor>
+  <Author>Irin Avery</Author>
+  <LastAuthor>Irin Avery</LastAuthor>
   <Created>2005-08-02T04:06:26Z</Created>
   <LastSaved>2005-08-02T04:30:11Z</LastSaved>
-  <Company>My Software Company, Inc.</Company>
+  <Company>MPG LSC</Company>
   <Version>11.6360</Version>
   </DocumentProperties>
   <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
@@ -157,7 +157,7 @@ function getGroupEventXML(){
   <Style ss:ID="s23">
   <Font x:Family="Swiss" ss:Bold="1"/>
   </Style>
-  </Styles>
+  </Styles>  
   <Worksheet ss:Name="Sheet1">
   <Table ss:ExpandedColumnCount="4"
   ss:ExpandedRowCount="5" x:FullColumns="1"
