@@ -26,9 +26,9 @@ function group_events_export_sheet($event){
   $EOL = "\r\n";
 
   //Title
-  $headerString .= $event->title.$EOL;
+  $titleString .= $event->title;
   //Fields
-  $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Relationship').'","'.elgg_echo('Time created').'"';
+  $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
   if($event->registration_needed) {
     if($registration_form = $event->getRegistrationFormQuestions()) {
       foreach($registration_form as $question) {
@@ -75,22 +75,28 @@ function group_events_export_sheet($event){
         'site_guids' => false,
         'limit' => false
       ));
-
-      echo var_dump($peopleResponded);
+      //Todo get joined event date from metadata
       elgg_set_ignore_access($old_ia);
 
       if($peopleResponded) {
         reset($peopleResponded);
+
+        //Title roll up status stats
+        $titleString .= '","'.$relationship.'","'.count($peopleResponded);
+        $titleString .= $EOL;
+
         foreach($peopleResponded as $attendee) {
-//time_updated
+          /*
+            //time_updated
             //format time
             $joinDate = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $attendee->time_created);
             $join_time = $attendee->time_created;
             $join_time_hour = date('H', $join_time);
             $join_time_minutes = date('i', $join_time);
-;
+            $joinDate. ' ('.$join_time_hour.':'.$join_time_minutes.')'
+            */
 
-          $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'","'.$joinDate. ' ('.$join_time_hour.':'.$join_time_minutes.')'.'"';
+          $dataString .= '"'.$attendee->name.'","'.$attendee->email.'","'.$relationship.'"';
 
           //Registration question answers
           $answerString = '';
@@ -112,7 +118,7 @@ function group_events_export_sheet($event){
                 if($eventSlots = $eventDay->getEventSlots()) {
                   foreach($eventSlots as $eventSlot) {
                     if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
-                      $dataString .= ',"V"';
+                      $dataString .= ',"joined"';
                     } else {
                       $dataString .= ',""';
                     }
@@ -128,7 +134,7 @@ function group_events_export_sheet($event){
       }
   }
   elgg_set_ignore_access($old_ia);
-  return $headerString.$dataString;
+  return $titleString.$headerString.$dataString;
 }
 
 
