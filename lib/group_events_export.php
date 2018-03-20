@@ -161,7 +161,7 @@ exit();
           <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)htmlentities($event->description).'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
           </Row>';
 
 
