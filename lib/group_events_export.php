@@ -68,11 +68,22 @@ function generate_export_spreadsheet($event){
 
 function group_events_export_sheet($event){
 
+
+  $data = (string)($event->description);
+
+
   $dom = new DOMDocument();
-  $html = (string)($event->description);
+@$dom->loadHTML($data);
+$dom->preserveWhiteSpace = false;
+$tables = $dom->getElementsByTagName('table');
+
+echo var_dump($tables);
+exit();
+
+  /*
 
 $xml = new DOMDocument();
-$xml->validateOnParse = true;
+//$xml->validateOnParse = true;
 $xml->loadHTML($html);
 
 $xpath = new DOMXPath($xml);
@@ -80,6 +91,7 @@ $table =$xpath->query("table")->item(0);
 echo var_dump($table);
 
 exit();
+*/
 
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
