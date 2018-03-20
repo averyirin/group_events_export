@@ -77,7 +77,7 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Venue</Data></Cell>
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
-   </row>';
+   </Row>';
 
    $dataXml = '';
 
