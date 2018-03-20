@@ -179,7 +179,7 @@ exit();
 
         //  $results = $xpath->query('/html/body/table/tbody/tr');
           $results = $xpath->query('/html/body/table/tbody/tr[not(/td//table)]');
-          echo htmlentities($results);
+        //  echo htmlentities($results);
           foreach ($results as $result)
           {
 
