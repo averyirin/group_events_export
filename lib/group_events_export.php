@@ -179,6 +179,8 @@ exit();
             echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
 
+          echo "End Parent Table <br/>";
+
 
 
 
