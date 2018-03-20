@@ -76,7 +76,7 @@ $xml->validateOnParse = true;
 $xml->loadHTML($html);
 
 $xpath = new DOMXPath($xml);
-$table =$xpath->query("/")->item(0);
+$table =$xpath->query("table")->item(0);
 echo $table;
 
 exit();
