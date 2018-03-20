@@ -172,15 +172,13 @@ exit();
           @$dom->loadHTML($data);
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
-          $nodeList = $xpath->query("(/table) and not (//table)");
 
-                foreach ($nodeList as $node) {
-                    echo $node->nodeName ." ". $node->nodeValue. "\n";
-                }
+          $res = $xpath->query('./table');
+          $sub = $xpath->query('./table', $res->item(1));//paragraphs of second table
+          echo trim($sub->item(0)->nodeValue);//first paragraph
+
 
           $tables = $dom->getElementsByTagName('table');
-
-
           foreach($tables as $table){
             $rows = $table->getElementsByTagName("tr");
             //var_dump($tables->item(1));
