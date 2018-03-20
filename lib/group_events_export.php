@@ -123,8 +123,7 @@ function group_events_export_overview($event){
 
             if(sizeof($internalTables) > 0){
               $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
-              echo ($cells->item(0)->nodeValue)." , ".$cells->item(1)->nodeValue)."<br/>";
-
+            //  echo ($cells->item(0)->nodeValue)." , ".($cells->item(1)->nodeValue)."<br/>";
                 foreach ($internalTables as $it) {
                       $icells = $it -> getElementsByTagName('tr');
                       foreach($icells as $val){
