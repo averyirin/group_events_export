@@ -173,7 +173,7 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-          echo var_dump($data)."<br/>";
+          echo var_dump(htmlentities($data))."<br/>";
 
 
           $res = $xpath->query('/table/tbody/tr');
