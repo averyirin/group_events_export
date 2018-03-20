@@ -68,6 +68,25 @@ function generate_export_spreadsheet($event){
 
 function group_events_export_sheet($event){
 
+  $dom = new DOMDocument();
+  $html = (string)($event->description);
+  $domHtml = @$dom->loadHTML($html);
+  $tables = $dom->getElementsByTagName('tbody');
+  //get all rows from the table
+  $rows = $tables->item(0)->getElementsByTagName('tr');
+  // loop over the table rows
+  foreach ($rows as $row)
+  {
+   // get each column by tag name
+      $cols = $row->getElementsByTagName('td');
+   // echo the values
+      echo $cols->item(0)->nodeValue.'<br />';
+      echo $cols->item(1)->nodeValue.'<br />';
+      echo $cols->item(2)->nodeValue;
+    }
+  exit();
+
+
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
