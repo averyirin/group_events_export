@@ -176,10 +176,11 @@ exit();
 
          //echo htmlentities($dom->saveHTML())."<br/>";
 
-          $results = $xpath->query('/html/body/table/tbody/tr not //td/table');
+          $results = $xpath->query('/html/body/table/tbody/tr');
+          echo htmlentities($results);
           foreach ($results as $result)
           {
-            
+
               $cells = $result -> getElementsByTagName('td');
               echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
