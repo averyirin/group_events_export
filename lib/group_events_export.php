@@ -182,9 +182,11 @@ exit();
         //  echo htmlentities($results);
           foreach ($results as $result)
           {
-              $internalTables = $result -> getElementsByTagName('table');
+              $internalTables = $result -> getElementsByTagName('table/tbody/tr');
               foreach ($internalTables as $it) {
                   echo $it->nodeValue, PHP_EOL;
+                  $icells = $it -> getElementsByTagName('td');
+                  echo var_dump($icells->item(0)->nodeValue)." , ".var_dump($icells->item(1)->nodeValue)."<br/>";
               }
 
               $cells = $result -> getElementsByTagName('td');
