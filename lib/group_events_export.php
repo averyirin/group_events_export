@@ -69,18 +69,6 @@ function generate_export_spreadsheet($event){
 function group_events_export_sheet($event){
 
 
-  $data = (string)($event->description);
-
-
-  $dom = new DOMDocument();
-@$dom->loadHTML($data);
-$dom->preserveWhiteSpace = false;
-$tables = $dom->getElementsByTagName('table');
-
-echo var_dump($event->title);
-echo var_dump($event->description);
-echo var_dump($tables);
-exit();
 
   /*
 
@@ -177,6 +165,19 @@ exit();
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           <Cell><Data ss:Type="String">'.(string)htmlentities($event->description).'</Data></Cell>
           </Row>';
+
+
+          $data = (string)($event->description);
+          $dom = new DOMDocument();
+          @$dom->loadHTML($data);
+          $dom->preserveWhiteSpace = false;
+          $tables = $dom->getElementsByTagName('table');
+
+          echo var_dump($event->title);
+          echo var_dump($event->description);
+          echo var_dump($tables);
+          exit();
+
 
 
 
