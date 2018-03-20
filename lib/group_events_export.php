@@ -173,83 +173,23 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-
-         //echo htmlentities($dom->saveHTML())."<br/>";
-
-
-        //  $results = $xpath->query('/html/body/table/tbody/tr');
           $results = $xpath->query('/html/body/table/tbody/tr');
         //  echo htmlentities($results);
-          foreach ($results as $result)
-          {
+          foreach ($results as $result){
               $internalTables = $result -> getElementsByTagName('table');
               foreach ($internalTables as $it) {
-                  echo $it->nodeValue, PHP_EOL;
                   $icells = $it -> getElementsByTagName('tr');
                   foreach($icells as $val){
                     $cells = $val -> getElementsByTagName('td');
                     echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
-
-
-                //    echo var_dump($val->nodeValue)." , ".var_dump($val->nodeValue)."<br/>";
                   }
               }
 
               $cells = $result -> getElementsByTagName('td');
               echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
 
-
-            //  $internalTables = $xpath->query('/td//table)', $result);
-            //  echo var_dump($internalTables)."<br/>";
-              /*
-              if($internalTables->length > 0){
-                echo "Internal Tables";
-                foreach ($internalTables as $it)
-                {
-                  echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
-                }
-              }*/
-
-
           }
 
-
-
-          echo "End Parent Table <br/>";
-
-
-
-
-
-/*
-          $tables = $dom->getElementsByTagName('table');
-          foreach($tables as $table){
-            $rows = $table->getElementsByTagName("tr");
-            //var_dump($tables->item(1));
-            foreach ($rows as $row) {
-                        $cells = $row -> getElementsByTagName('td');
-                        echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
-              }
-
-              echo "-----<br/>";
-          }
-*/
-
-
-          /*
-
-          foreach($firstCol as $rows[0]){
-            $cells = $firstCol -> getElementsByTagName('td');
-            echo $cells."<br/>";
-          }
-          foreach ($rows as $row) {
-                      $cells = $row -> getElementsByTagName('td');
-                      foreach ($cells as $cell) {
-                        echo $cell->nodeValue; // print cells' content as 124578
-            }
-                      echo "<br/>";
-          }
-          */
           exit();
 
 
