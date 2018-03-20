@@ -173,18 +173,16 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-        //  echo var_dump(htmlentities($data))."<br/>";
-         echo $dom->documentElement;
 
-         echo htmlentities($dom->saveHTML());
-/*
-          $results = $xpath->query('table');
+         echo htmlentities($dom->saveHTML())."<br/>";
+
+          $results = $xpath->query('/html/body/table');
           foreach ($results as $result)
           {
               print_r($result);
           }
 
-*/
+
 
           echo "End Parent Table <br/>";
 
