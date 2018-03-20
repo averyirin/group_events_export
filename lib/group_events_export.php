@@ -178,7 +178,7 @@ exit();
 
 
         //  $results = $xpath->query('/html/body/table/tbody/tr');
-          $results = $xpath->query('/html/body/table/tbody/tr/td//table');
+          $results = $xpath->query('/html/body/table/tbody/tr/td//table/tbody/tr');
           echo htmlentities($results);
           foreach ($results as $result)
           {
