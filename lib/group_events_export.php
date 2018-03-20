@@ -175,7 +175,7 @@ exit();
 
           $rows = $tables[0]->getElementsByTagName("tr");
 
-          for($firstCol as $rows[0]){
+          foreach($firstCol as $rows[0]){
             $cells = $firstCol -> getElementsByTagName('td');
             echo $cells."<br/>";
           }
