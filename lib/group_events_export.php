@@ -178,12 +178,25 @@ exit();
 
 
         //  $results = $xpath->query('/html/body/table/tbody/tr');
-          $results = $xpath->query('/html/body/table/tbody/tr[not(/td//table)]');
+          $results = $xpath->query('/html/body/table/tbody/tr');
         //  echo htmlentities($results);
           foreach ($results as $result)
           {
 
               $cells = $result -> getElementsByTagName('td');
+
+              $internalTables = $xpath->query('/td//table)', $result);
+              echo var_dump($internalTables)."<br/>";
+              /*
+              if($internalTables->length > 0){
+                echo "Internal Tables";
+                foreach ($internalTables as $it)
+                {
+                  echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
+                }
+              }*/
+
+
               echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
 
