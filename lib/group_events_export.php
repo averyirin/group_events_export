@@ -173,10 +173,11 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-          echo var_dump(htmlentities($data))."<br/>";
+        //  echo var_dump(htmlentities($data))."<br/>";
 
 
           $res = $xpath->query('/table/tbody/tr');
+          echo $res;
           foreach ($res as $row) {
             $cells = $row -> getElementsByTagName('td');
             echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
