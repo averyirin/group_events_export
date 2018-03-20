@@ -172,6 +172,7 @@ exit();
           @$dom->loadHTML($data);
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
+          $rows = $tables[1]->getElementsByTagName("tr");
 
           //var_dump($tables->item(1));
           foreach ($rows as $row) {
@@ -180,7 +181,6 @@ exit();
             }
 
           /*
-          $rows = $tables[0]->getElementsByTagName("tr");
 
           foreach($firstCol as $rows[0]){
             $cells = $firstCol -> getElementsByTagName('td');
