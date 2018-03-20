@@ -105,6 +105,8 @@ function group_events_export_overview($event){
         <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->start_day).'</Data></Cell>
         <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->end_ts).'</Data></Cell>';
 
+
+
         $data = (string)($event->description);
         $dom = new DOMDocument();
         @$dom->loadHTML($data);
@@ -127,6 +129,7 @@ function group_events_export_overview($event){
               }
         }
         $dataXml .= '</Row>';
+
       }
   }
   $headerXml .= '</Row>';
