@@ -144,10 +144,13 @@ function group_events_export_overview($event){
            foreach($icells as $val){
              $cells = $val -> getElementsByTagName('td');
              $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+             $eventXml .='<Cell><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
            }
        }
       }else{
        $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+       $eventXml .='<Cell><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+
      }
    }
 
