@@ -181,7 +181,7 @@ exit();
                       echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
             }
 
-          echo "Second Table<br/>"
+          echo "Second Table<br/>";
           $rows2 = $tables[1]->getElementsByTagName("tr");
 
           //var_dump($tables->item(1));
