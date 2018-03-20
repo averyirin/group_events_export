@@ -213,7 +213,7 @@ exit();
 
 
 
-
+/*
           $tables = $dom->getElementsByTagName('table');
           foreach($tables as $table){
             $rows = $table->getElementsByTagName("tr");
@@ -225,7 +225,7 @@ exit();
 
               echo "-----<br/>";
           }
-
+*/
 
 
           /*
