@@ -176,6 +176,11 @@ exit();
           $results = $xpath->query('/html/body/table/tbody/tr');
         //  echo htmlentities($results);
           foreach ($results as $result){
+
+            $cells = $result -> getElementsByTagName('td');
+            echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+
+
               $internalTables = $result -> getElementsByTagName('table');
               foreach ($internalTables as $it) {
                   $icells = $it -> getElementsByTagName('tr');
@@ -184,9 +189,6 @@ exit();
                     echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
                   }
               }
-
-              $cells = $result -> getElementsByTagName('td');
-              echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
 
           }
 
