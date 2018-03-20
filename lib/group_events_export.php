@@ -119,7 +119,7 @@ function group_events_export_overview($event){
        $eventXml .='<Cell><Data ss:Type="String">'.(string)count($peopleResponded).'</Data></Cell>';
 
        foreach ($peopleResponded as $attendee) {
-         $attendeDataeXml .=  '<Row>
+         $attendeeDataXml .=  '<Row>
          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
