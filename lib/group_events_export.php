@@ -67,10 +67,10 @@ function generate_export_spreadsheet($event){
 
 
 function group_events_export_sheet($event){
+
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
-
 
 
   $headerXml = '
@@ -83,6 +83,7 @@ function group_events_export_sheet($event){
    <Cell><Data ss:Type="String">Name</Data></Cell>
    <Cell><Data ss:Type="String">Email</Data></Cell>
    <Cell><Data ss:Type="String">Status</Data></Cell>
+   <Cell><Data ss:Type="String">Description</Data></Cell>
    </Row>';
 
 
@@ -149,6 +150,7 @@ function group_events_export_sheet($event){
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$event->description.'</Data></Cell>
           </Row>';
 
 
