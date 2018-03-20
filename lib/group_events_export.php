@@ -176,15 +176,13 @@ exit();
         //  echo var_dump(htmlentities($data))."<br/>";
 
 
-          $res = $xpath->query('/table')->item(0);
-          echo print_r($res)."<br/>";
-
-        //  echo $dom->documentElement;
-
-          foreach ($res as $row) {
-            $cells = $row -> getElementsByTagName('td');
-            echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
+          $res = $xpath->query('/table');
+          foreach ($results as $result)
+          {
+              print_r($result);
           }
+
+
 
           echo "End Parent Table <br/>";
 
