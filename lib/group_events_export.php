@@ -7,7 +7,7 @@
  */
 function generate_export_spreadsheet($event){
   $event_options = array();
-  $event_options['container_guid'] =$groupGuid;
+  $event_options["container_guid"] =$page_owner->getGUID();
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
   $spreadsheetExportString = '<?xml version="1.0"?>
@@ -82,9 +82,6 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
-
-   echo $event->title;
-   exit();
 
   $includeEvent = false;
   $event_relationship_options = event_manager_event_get_relationship_options();
