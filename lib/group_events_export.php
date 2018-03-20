@@ -119,14 +119,23 @@ function group_events_export_overview($event){
           foreach ($results as $result){
 
             $cells = $result -> getElementsByTagName('td');
-              $internalTables = $result -> getElementsByTagName('table');
-              foreach ($internalTables as $it) {
-                  $icells = $it -> getElementsByTagName('tr');
-                  foreach($icells as $val){
-                    $cells = $val -> getElementsByTagName('td');
-                    }
-              }
+            $internalTables = $result -> getElementsByTagName('table');
 
+            if(sizeof($internalTables) > 0){
+              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
+              echo ($cells->item(0)->nodeValue)." , ".$cells->item(1)->nodeValue)."<br/>";
+
+                foreach ($internalTables as $it) {
+                      $icells = $it -> getElementsByTagName('tr');
+                      foreach($icells as $val){
+                        $cells = $val -> getElementsByTagName('td');
+                      }
+                }
+
+            }else{
+              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue'</Data></Cell>';
+            }
+        //
           }
           $dataXml .= '</Row>';
 
