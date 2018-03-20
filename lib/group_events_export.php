@@ -179,7 +179,7 @@ exit();
           $results = $xpath->query('/html/body/table/tr');
           foreach ($results as $result)
           {
-            $cells = $row -> getElementsByTagName('td');
+            $cells = $result -> getElementsByTagName('td');
             echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
 
