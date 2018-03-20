@@ -81,7 +81,7 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Venue</Data></Cell>
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
-   </Row>';
+   ';
 
   $includeEvent = false;
   $event_relationship_options = event_manager_event_get_relationship_options();
@@ -98,49 +98,38 @@ function group_events_export_overview($event){
       elgg_set_ignore_access($old_ia);
 
       if($peopleResponded) {
-        $includeEvent = true;
-        reset($peopleResponded);
-        foreach($peopleResponded as $attendee) {
-          $dataXml .=  '<Row>
-          <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->start_day).'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->end_ts).'</Data></Cell>';
+        $dataXml .=  '<Row>
+        <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+        <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+        <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+        <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->start_day).'</Data></Cell>
+        <Cell><Data ss:Type="String">'.(string)date("F d, Y h:i",$event->end_ts).'</Data></Cell>';
 
+        $data = (string)($event->description);
+        $dom = new DOMDocument();
+        @$dom->loadHTML($data);
+        $dom->preserveWhiteSpace = false;
+        $xpath = new DOMXPath($dom);
 
+        $results = $xpath->query('/html/body/table/tbody/tr');
+        foreach ($results as $result){
+          $cells = $result -> getElementsByTagName('td');
+          $internalTables = $result -> getElementsByTagName('table');
+          $headerXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
 
-          $data = (string)($event->description);
-          $dom = new DOMDocument();
-          @$dom->loadHTML($data);
-          $dom->preserveWhiteSpace = false;
-          $xpath = new DOMXPath($dom);
-
-          $results = $xpath->query('/html/body/table/tbody/tr');
-          foreach ($results as $result){
-            
-            $cells = $result -> getElementsByTagName('td');
-            $internalTables = $result -> getElementsByTagName('table');
-            $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
-
-          //    $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
-            //  echo ($cells->item(0)->nodeValue)." , ".($cells->item(1)->nodeValue)."<br/>";
-                foreach ($internalTables as $it) {
-                      $icells = $it -> getElementsByTagName('tr');
-                      foreach($icells as $val){
-                        $cells = $val -> getElementsByTagName('td');
-                      }
-                }
-
-
-
-        //
-          }
-          $dataXml .= '</Row>';
-
+        //    $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
+          //  echo ($cells->item(0)->nodeValue)." , ".($cells->item(1)->nodeValue)."<br/>";
+              foreach ($internalTables as $it) {
+                    $icells = $it -> getElementsByTagName('tr');
+                    foreach($icells as $val){
+                      $cells = $val -> getElementsByTagName('td');
+                    }
+              }
         }
+        $dataXml .= '</Row>';
       }
   }
+  $headerXml .= '</Row>';
 
 //  $titleString .= $EOL;
   elgg_set_ignore_access($old_ia);
