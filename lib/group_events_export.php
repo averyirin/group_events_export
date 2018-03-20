@@ -64,8 +64,6 @@ function generate_export_spreadsheet($event){
 
 
 
-
-
 function group_events_export_sheet($event){
 
 
@@ -178,7 +176,7 @@ exit();
           foreach ($results as $result){
 
             $cells = $result -> getElementsByTagName('td');
-            echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+        //    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
 
 
               $internalTables = $result -> getElementsByTagName('table');
@@ -186,13 +184,13 @@ exit();
                   $icells = $it -> getElementsByTagName('tr');
                   foreach($icells as $val){
                     $cells = $val -> getElementsByTagName('td');
-                    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+                //    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
                   }
               }
 
           }
 
-          exit();
+      //    exit();
 
 
 
