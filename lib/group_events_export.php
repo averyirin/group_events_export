@@ -77,7 +77,7 @@ $xml->loadHTML($html);
 
 $xpath = new DOMXPath($xml);
 $table =$xpath->query("table")->item(0);
-echo $table;
+echo var_dump($table);
 
 exit();
 
