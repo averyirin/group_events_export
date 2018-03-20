@@ -104,8 +104,8 @@ function group_events_export_overview($event){
           <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
           <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
           <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$event->start_day.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$event->end_day.'</Data></Cell>';
+          <Cell><Data ss:Type="String">'.(string)date($event->start_time).'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)date($event->end_ts).'</Data></Cell>';
 
 
 
