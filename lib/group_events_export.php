@@ -176,7 +176,7 @@ exit();
         //  echo var_dump(htmlentities($data))."<br/>";
 
 
-          $results = $xpath->query('/table');
+          $results = $xpath->query('//table');
           foreach ($results as $result)
           {
               print_r($result);
