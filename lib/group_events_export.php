@@ -183,7 +183,7 @@ exit();
           foreach ($results as $result)
           {
               $internalTables = $result -> getElementsByTagName('table');
-              if($internalTables == NULL){
+              if($internalTables != NULL){
                 echo "Found table: ".var_dump($internalTables->item(0)->nodeValue)." , ".var_dump(htmlentities($internalTables->item(1)->nodeValue))."<br/>";
               }
 
