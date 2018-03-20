@@ -63,14 +63,8 @@ function generate_export_spreadsheet($groupGuid){
 
 
 function group_events_export_overview($event){
-
-echo $event->title;
-exit();
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
-  $EOL = "\r\n";
-
-
   $headerXml = '
    <Worksheet ss:Name="'.$event->title.'">
    <Table
@@ -85,7 +79,9 @@ exit();
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
 
-  $includeEvent = false;
+   $dataXml = '';
+
+
   $event_relationship_options = event_manager_event_get_relationship_options();
   reset($event_relationship_options);
   foreach($event_relationship_options as $relationship) {
@@ -100,19 +96,11 @@ exit();
       elgg_set_ignore_access($old_ia);
 
       if($peopleResponded) {
-        $includeEvent = true;
         reset($peopleResponded);
-        foreach($peopleResponded as $attendee) {
-          /*
 
 
-        }
       }
   }
-  $headerXml .= '</Row>';
-
-//  $titleString .= $EOL;
-  elgg_set_ignore_access($old_ia);
 
   $endXml = '</Table>
   <WorksheetOptions
@@ -133,19 +121,9 @@ exit();
   <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
   </Worksheet>';
-       /*
 
-      */
-  //return $headerXml.$dataXml.$endXml;
-        }
-      }
-    }
-        if($includeEvent){
-          return $headerXml.$dataXml.$endXml;
-        }
-        else{
-          return '';
-        }
+
+  return $headerXml.$dataXml.$endXml;
 }
 
 
