@@ -173,10 +173,8 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-          $res = $xpath->query('./table');
-          $sub = $xpath->query('./table', $res->item(1));//paragraphs of second table
-          echo trim($sub->item(0)->nodeValue);//first paragraph
-
+          echo $dom;
+          
 
           $tables = $dom->getElementsByTagName('table');
           foreach($tables as $table){
