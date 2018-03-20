@@ -173,7 +173,7 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
-          var_dump($tables);
+          var_dump($tables->item(0));
           /*
           $rows = $tables[0]->getElementsByTagName("tr");
 
