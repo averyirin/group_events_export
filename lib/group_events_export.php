@@ -70,7 +70,7 @@ function group_events_export_overview($event){
    <Table
    x:FullColumns="1"
    x:FullRows="1">
-   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+   <Column />
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Event</Data></Cell>
    <Cell><Data ss:Type="String">Location</Data></Cell>
@@ -109,13 +109,11 @@ function group_events_export_overview($event){
          foreach($icells as $val){
            $cells = $val -> getElementsByTagName('td');
            $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-
          }
      }
-     
+
    }else{
      $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-
    }
 
 
