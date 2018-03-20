@@ -173,9 +173,15 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
-          echo var_dump($event->title);
-          echo var_dump($event->description);
-          echo var_dump($tables);
+          $rows = $tables->item(0)->getElementsByTagName("tr");
+
+          foreach ($rows as $row) {
+            $cells = $row -> getElementsByTagName('td');
+            foreach ($cells as $cell) {
+              print $cell->nodeValue; // print cells' content as 124578
+            }
+          }
+          
           exit();
 
 
