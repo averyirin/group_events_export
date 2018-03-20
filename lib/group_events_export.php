@@ -132,7 +132,7 @@ function group_events_export_overview($event){
                 }
 
             }else{
-              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue'</Data></Cell>';
+              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
             }
         //
           }
