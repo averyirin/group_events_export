@@ -173,7 +173,9 @@ exit();
           $dom->preserveWhiteSpace = false;
           $xpath = new DOMXPath($dom);
 
-          echo $data."<br/>";
+          echo var_dump($data)."<br/>";
+
+
           $res = $xpath->query('/table/tbody/tr');
           foreach ($res as $row) {
             $cells = $row -> getElementsByTagName('td');
