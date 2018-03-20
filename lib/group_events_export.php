@@ -172,7 +172,17 @@ exit();
           @$dom->loadHTML($data);
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
+
+
           $rows = $tables[0]->getElementsByTagName("tr");
+          //var_dump($tables->item(1));
+          foreach ($rows as $row) {
+                      $cells = $row -> getElementsByTagName('td');
+                      echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
+            }
+
+            echo "Second Table<br/>"
+          $rows = $tables[1]->getElementsByTagName("tr");
 
           //var_dump($tables->item(1));
           foreach ($rows as $row) {
