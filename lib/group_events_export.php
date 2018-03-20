@@ -173,7 +173,7 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
-          var_dump($tables->item(1));
+          //var_dump($tables->item(1));
           foreach ($rows as $row) {
                       $cells = $row -> getElementsByTagName('td');
                       echo $cells->item(0)->nodeValue." ".$cells->item(1)->nodeValue."<br/>";
