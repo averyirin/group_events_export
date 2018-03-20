@@ -176,7 +176,7 @@ exit();
         //  echo var_dump(htmlentities($data))."<br/>";
 
 
-          $res = $xpath->query('/table/tbody/tr/');
+          $res = $xpath->query('/table');
           echo $res;
           foreach ($res as $row) {
             $cells = $row -> getElementsByTagName('td');
