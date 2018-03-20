@@ -141,6 +141,7 @@ exit();
 
       */
   //return $headerXml.$dataXml.$endXml;
+        }
   if($includeEvent){
   return $headerXml.$dataXml.$endXml;
   }
