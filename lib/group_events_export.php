@@ -179,6 +179,7 @@ exit();
           $res = $xpath->query('table');
           echo print_r($res)."<br/>";
 
+          echo $dom->documentElement;
 
           foreach ($res as $row) {
             $cells = $row -> getElementsByTagName('td');
