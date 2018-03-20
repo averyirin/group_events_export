@@ -77,10 +77,46 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Venue</Data></Cell>
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
-   </Row>';
+   ';
 
    $dataXml = '';
+   $dataXml .=  '<Row>
+   <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
+   <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+   <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
+   </Row>';
 
+
+   $data = (string)($event->description);
+
+   $dom = new DOMDocument();
+   @$dom->loadHTML($data);
+   $dom->preserveWhiteSpace = false;
+   $xpath = new DOMXPath($dom);
+
+   $results = $xpath->query('/html/body/table/tbody/tr');
+   //  echo htmlentities($results);
+   foreach ($results as $result){
+
+     $cells = $result -> getElementsByTagName('td');
+   //echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+
+
+   $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+
+
+       $internalTables = $result -> getElementsByTagName('table');
+       foreach ($internalTables as $it) {
+           $icells = $it -> getElementsByTagName('tr');
+           foreach($icells as $val){
+             $cells = $val -> getElementsByTagName('td');
+         //    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+           }
+       }
+
+   }
+   $headerXml .= '</Row>';
 /*
   $event_relationship_options = event_manager_event_get_relationship_options();
   reset($event_relationship_options);
