@@ -100,6 +100,9 @@ function group_events_export_overview($event){
       if($peopleResponded) {
         $includeEvent = true;
         reset($peopleResponded);
+        echo $event->title;
+        exit();
+        
         foreach($peopleResponded as $attendee) {
           $dataXml .=  '<Row>
           <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
