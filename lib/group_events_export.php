@@ -85,6 +85,21 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
+   $event_relationship_options = event_manager_event_get_relationship_options();
+   reset($event_relationship_options);
+   foreach($event_relationship_options as $relationship) {
+      $headerXml .=  '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
+       $old_ia = elgg_set_ignore_access(true);
+       $peopleResponded = elgg_get_entities_from_relationship(array(
+         'relationship' => $relationship,
+         'relationship_guid' => $event->getGUID(),
+         'inverse_relationship' => FALSE,
+         'site_guids' => false,
+         'limit' => false
+       ));
+   }
+
+
 
    $dataXml = '';
    $dataXml .=  '<Row>
@@ -118,19 +133,6 @@ function group_events_export_overview($event){
       }else{
        $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
      }
-   }
-   $event_relationship_options = event_manager_event_get_relationship_options();
-   reset($event_relationship_options);
-   foreach($event_relationship_options as $relationship) {
-      $headerXml .=  '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
-       $old_ia = elgg_set_ignore_access(true);
-       $peopleResponded = elgg_get_entities_from_relationship(array(
-         'relationship' => $relationship,
-         'relationship_guid' => $event->getGUID(),
-         'inverse_relationship' => FALSE,
-         'site_guids' => false,
-         'limit' => false
-       ));
    }
 
    $headerXml .= '</Row>';
