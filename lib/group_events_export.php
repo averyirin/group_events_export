@@ -51,7 +51,7 @@ function generate_export_spreadsheet($event){
   </Styles>
   ';
   foreach ($eventEntities as $event) {
-    $xml = group_events_export_sheet($event);
+    $xml = group_events_export_overview($event);
     $spreadsheetExportString .= $xml;
   }
   $spreadsheetExportString .='
@@ -62,6 +62,111 @@ function generate_export_spreadsheet($event){
 }
 
 
+function group_events_export_overview($event){
+
+  $old_ia = elgg_get_ignore_access();
+  elgg_set_ignore_access(true);
+  $EOL = "\r\n";
+
+
+  $headerXml = '
+   <Worksheet ss:Name="'.$event->title.'">
+   <Table
+   x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
+   <Row ss:StyleID="s23">
+   <Cell><Data ss:Type="String">Event</Data></Cell>
+   <Cell><Data ss:Type="String">Location</Data></Cell>
+   <Cell><Data ss:Type="String">Start</Data></Cell>
+   <Cell><Data ss:Type="String">End</Data></Cell>
+   </Row>';
+
+  $includeEvent = false;
+  $event_relationship_options = event_manager_event_get_relationship_options();
+  reset($event_relationship_options);
+  foreach($event_relationship_options as $relationship) {
+      $old_ia = elgg_set_ignore_access(true);
+      $peopleResponded = elgg_get_entities_from_relationship(array(
+        'relationship' => $relationship,
+        'relationship_guid' => $event->getGUID(),
+        'inverse_relationship' => FALSE,
+        'site_guids' => false,
+        'limit' => false
+      ));
+      elgg_set_ignore_access($old_ia);
+
+      if($peopleResponded) {
+        $includeEvent = true;
+        reset($peopleResponded);
+        foreach($peopleResponded as $attendee) {
+          $dataXml .=  '<Row>
+          <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$event->start_day.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)$event->end_day.'</Data></Cell>';
+
+
+
+          $data = (string)($event->description);
+          $dom = new DOMDocument();
+          @$dom->loadHTML($data);
+          $dom->preserveWhiteSpace = false;
+          $xpath = new DOMXPath($dom);
+
+          $results = $xpath->query('/html/body/table/tbody/tr');
+          foreach ($results as $result){
+
+            $cells = $result -> getElementsByTagName('td');
+              $internalTables = $result -> getElementsByTagName('table');
+              foreach ($internalTables as $it) {
+                  $icells = $it -> getElementsByTagName('tr');
+                  foreach($icells as $val){
+                    $cells = $val -> getElementsByTagName('td');
+                    }
+              }
+
+          }
+          $dataXml .= '</Row>';
+
+        }
+      }
+  }
+
+//  $titleString .= $EOL;
+  elgg_set_ignore_access($old_ia);
+
+  $endXml = '</Table>
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <Print>
+  <ValidPrinterInfo/>
+  <HorizontalResolution>300</HorizontalResolution>
+  <VerticalResolution>300</VerticalResolution>
+  </Print>
+  <Selected/>
+  <Panes>
+  <Pane>
+  <Number>3</Number>
+  <ActiveRow>5</ActiveRow>
+  </Pane>
+  </Panes>
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>';
+       /*
+
+      */
+  //return $headerXml.$dataXml.$endXml;
+  if($includeEvent){
+  return $headerXml.$dataXml.$endXml;
+  }
+  else{
+    return '';
+  }
+}
 
 
 function group_events_export_sheet($event){
