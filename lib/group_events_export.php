@@ -176,7 +176,7 @@ exit();
 
          //echo htmlentities($dom->saveHTML())."<br/>";
 
-          $results = $xpath->query('/html/body/table/tbody/tr');
+          $results = $xpath->query('/html/body/table/tbody/tr not //td/table');
           foreach ($results as $result)
           {
             
