@@ -50,10 +50,17 @@ function generate_export_spreadsheet($groupGuid){
   </Style>
   </Styles>
   ';
+
+
+
+
   foreach ($eventEntities as $event) {
     $xml = group_events_export_overview($event);
     $spreadsheetExportString .= $xml;
   }
+
+
+
   $spreadsheetExportString .='
     </Workbook>
        ';
@@ -98,28 +105,34 @@ function group_events_export_overview($event){
    $results = $xpath->query('/html/body/table/tbody/tr');
    //  echo htmlentities($results);
    foreach ($results as $result){
-
      $cells = $result -> getElementsByTagName('td');
-   //echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
-
-   $internalTables = $result -> getElementsByTagName('table');
-   if($internalTables->length > 0){
-     foreach ($internalTables as $it) {
-         $icells = $it -> getElementsByTagName('tr');
-         foreach($icells as $val){
-           $cells = $val -> getElementsByTagName('td');
-           $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-         }
+     $internalTables = $result -> getElementsByTagName('table');
+     if($internalTables->length > 0){
+        foreach ($internalTables as $it) {
+           $icells = $it -> getElementsByTagName('tr');
+           foreach($icells as $val){
+             $cells = $val -> getElementsByTagName('td');
+             $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+           }
+       }
+      }else{
+       $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
      }
-
-   }else{
-     $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
    }
+   $event_relationship_options = event_manager_event_get_relationship_options();
+   reset($event_relationship_options);
+   foreach($event_relationship_options as $relationship) {
+      $headerXml .=  '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
+       $old_ia = elgg_set_ignore_access(true);
+       $peopleResponded = elgg_get_entities_from_relationship(array(
+         'relationship' => $relationship,
+         'relationship_guid' => $event->getGUID(),
+         'inverse_relationship' => FALSE,
+         'site_guids' => false,
+         'limit' => false
+       ));
 
 
-
-
-   }
    $headerXml .= '</Row>';
 /*
   $event_relationship_options = event_manager_event_get_relationship_options();
