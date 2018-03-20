@@ -131,7 +131,7 @@ function group_events_export_overview($event){
          'site_guids' => false,
          'limit' => false
        ));
-
+   }
 
    $headerXml .= '</Row>';
 /*
