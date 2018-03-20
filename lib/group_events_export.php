@@ -64,6 +64,8 @@ function generate_export_spreadsheet($groupGuid){
 
 function group_events_export_overview($event){
 
+echo $event->title;
+exit();
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $EOL = "\r\n";
