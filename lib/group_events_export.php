@@ -85,7 +85,13 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
-   $attendeeXml = '';
+   $attendeeHeaderXml = '<Row></Row>
+   <Row ss:StyleID="s23">
+   <Cell><Data ss:Type="String">Name</Data></Cell>
+   <Cell><Data ss:Type="String">Email</Data></Cell>
+   <Cell><Data ss:Type="String">Status</Data></Cell>
+   </Row>';
+   $attendeeDataXml = '';
 
    $eventXml = '<Row>
    <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
@@ -113,7 +119,7 @@ function group_events_export_overview($event){
        $eventXml .='<Cell><Data ss:Type="String">'.(string)count($peopleResponded).'</Data></Cell>';
 
        foreach ($peopleResponded as $attendee) {
-         $attendeeXml .=  '<Row>
+         $attendeDataeXml .=  '<Row>
          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
@@ -198,7 +204,7 @@ function group_events_export_overview($event){
   </Worksheet>';
 
 
-  return $headerXml.$eventXml.$endXml;
+  return $headerXml.$eventXml.$attendeeHeaderXml.$attendeeDataXml.$endXml;
 }
 
 
