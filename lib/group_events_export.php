@@ -99,10 +99,7 @@ function group_events_export_overview($event){
 
       if($peopleResponded) {
         $includeEvent = true;
-        reset($peopleResponded);
-        echo $event->title;
-        exit();
-        
+        reset($peopleResponded);        
         foreach($peopleResponded as $attendee) {
           $dataXml .=  '<Row>
           <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
@@ -124,6 +121,7 @@ function group_events_export_overview($event){
 
             $cells = $result -> getElementsByTagName('td');
             $internalTables = $result -> getElementsByTagName('table');
+            $headerXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
             $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
 
           //    $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
