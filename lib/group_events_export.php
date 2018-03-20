@@ -178,8 +178,9 @@ exit();
           foreach ($rows as $row) {
             $cells = $row -> getElementsByTagName('td');
             foreach ($cells as $cell) {
-              echo $cell->nodeValue."<br/>"; // print cells' content as 124578
+              echo $cell->nodeValue; // print cells' content as 124578
             }
+            echo "<br/>";
           }
 
           exit();
