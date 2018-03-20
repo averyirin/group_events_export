@@ -171,7 +171,7 @@ exit();
           $dom = new DOMDocument();
           @$dom->loadHTML($data);
           $dom->preserveWhiteSpace = false;
-          $xpath = new DOMXPath($doc);
+          $xpath = new DOMXPath($dom);
           $nodeList = $xpath->query("(/table) and not (//table)");
 
                 foreach ($nodeList as $node) {
