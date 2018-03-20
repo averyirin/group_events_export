@@ -83,8 +83,8 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
 
-echo $event->title;
-exit();
+   echo $event->title;
+   exit();
 
   $includeEvent = false;
   $event_relationship_options = event_manager_event_get_relationship_options();
@@ -103,9 +103,6 @@ exit();
       if($peopleResponded) {
         $includeEvent = true;
         reset($peopleResponded);
-
-
-
         foreach($peopleResponded as $attendee) {
           /*
 
@@ -142,12 +139,14 @@ exit();
       */
   //return $headerXml.$dataXml.$endXml;
         }
-  if($includeEvent){
-  return $headerXml.$dataXml.$endXml;
-  }
-  else{
-    return '';
-  }
+      }
+    }
+        if($includeEvent){
+          return $headerXml.$dataXml.$endXml;
+        }
+        else{
+          return '';
+        }
 }
 
 
