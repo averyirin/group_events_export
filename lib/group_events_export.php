@@ -187,7 +187,7 @@ exit();
                   echo $it->nodeValue, PHP_EOL;
                   $icells = $it -> getElementsByTagName('tr');
                   foreach($icells as $val){
-                    $cells = $result -> getElementsByTagName('td');
+                    $cells = $val -> getElementsByTagName('td');
                     echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
 
 
