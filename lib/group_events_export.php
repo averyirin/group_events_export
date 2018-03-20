@@ -102,11 +102,15 @@ function group_events_export_overview($event){
      $cells = $result -> getElementsByTagName('td');
    //echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
 
+   $internalTables = $result -> getElementsByTagName('table');
+   if($internalTables->length > 0){
+     $headerXml .=  '<Cell><Data ss:Type="String">'.'Table'.'</Data></Cell>';
+   }else{
+     $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
 
-   $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+   }
 
 
-       $internalTables = $result -> getElementsByTagName('table');
        foreach ($internalTables as $it) {
            $icells = $it -> getElementsByTagName('tr');
            foreach($icells as $val){
