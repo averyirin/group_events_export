@@ -186,7 +186,9 @@ exit();
               foreach ($internalTables as $it) {
                   echo $it->nodeValue, PHP_EOL;
                   $icells = $it -> getElementsByTagName('td');
-                  echo var_dump($icells->item(0)->nodeValue)." , ".var_dump($icells->item(1)->nodeValue)."<br/>";
+                  foreach($icells as $val){
+                    echo var_dump($icells->nodeValue)." , ".var_dump($icells->nodeValue)."<br/>";
+                  }
               }
 
               $cells = $result -> getElementsByTagName('td');
