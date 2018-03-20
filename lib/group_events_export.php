@@ -174,12 +174,13 @@ exit();
           $xpath = new DOMXPath($dom);
 
 
-         echo htmlentities($dom->saveHTML())."<br/>";
+         //echo htmlentities($dom->saveHTML())."<br/>";
 
-          $results = $xpath->query('/html/body/table');
+          $results = $xpath->query('/html/body/table/tr');
           foreach ($results as $result)
           {
-              print_r($result);
+            $cells = $row -> getElementsByTagName('td');
+            echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
 
 
