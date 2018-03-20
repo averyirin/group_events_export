@@ -173,22 +173,18 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
+          foreach($tables as $key => $table){
+            echo "Table ".$key."<br/>";
+            $rows = $table[$key]->getElementsByTagName("tr");
+            //var_dump($tables->item(1));
+            foreach ($rows as $row) {
+                        $cells = $row -> getElementsByTagName('td');
+                        echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
+              }
 
-          $rows = $tables[0]->getElementsByTagName("tr");
-          //var_dump($tables->item(1));
-          foreach ($rows as $row) {
-                      $cells = $row -> getElementsByTagName('td');
-                      echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
-            }
+          }
 
-          echo "Second Table<br/>";
-          $rows2 = $tables[1]->getElementsByTagName("tr");
 
-          //var_dump($tables->item(1));
-          foreach ($rows2 as $row2) {
-                      $cells2 = $row2 -> getElementsByTagName('td');
-                      echo var_dump($cells2->item(0)->nodeValue)." , ".var_dump($cells2->item(1)->nodeValue)."<br/>";
-            }
 
           /*
 
