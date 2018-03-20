@@ -116,7 +116,7 @@ function group_events_export_overview($event){
          'site_guids' => false,
          'limit' => false
        ));
-       $eventXml .='<Cell><Data ss:Type="Int">'.(int)count($peopleResponded).'</Data></Cell>';
+       $eventXml .='<Cell><Data ss:Type="Integer">'.(int)count($peopleResponded).'</Data></Cell>';
 
        foreach ($peopleResponded as $attendee) {
          $attendeeDataXml .=  '<Row>
