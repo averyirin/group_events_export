@@ -81,7 +81,7 @@ function group_events_export_overview($event){
 
    $dataXml = '';
 
-
+/*
   $event_relationship_options = event_manager_event_get_relationship_options();
   reset($event_relationship_options);
   foreach($event_relationship_options as $relationship) {
@@ -101,7 +101,7 @@ function group_events_export_overview($event){
 
       }
   }
-
+*/
   $endXml = '</Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
