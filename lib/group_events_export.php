@@ -184,6 +184,8 @@ exit();
           {
 
               $cells = $result -> getElementsByTagName('td');
+              echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+
 
               $internalTables = $xpath->query('/td//table)', $result);
               echo var_dump($internalTables)."<br/>";
@@ -197,7 +199,6 @@ exit();
               }*/
 
 
-              echo var_dump($cells->item(0)->nodeValue)." , ".var_dump($cells->item(1)->nodeValue)."<br/>";
           }
 
 
