@@ -85,6 +85,19 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
+   $attendeeXml = '';
+
+   $eventXml = '<Row>
+   <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)date("F d Y, m:i",$event->start_time).'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)date("F d Y, m:i",$event->end_ts).'</Data></Cell>
+   ';
+
+
+
+
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
@@ -97,18 +110,21 @@ function group_events_export_overview($event){
          'site_guids' => false,
          'limit' => false
        ));
+       $eventXml .='<Cell><Data ss:Type="String">'.(string)count($peopleResponded).'</Data></Cell>';
+
+       foreach ($peopleResponded as $attendee) {
+         $attendeeXml .=  '<Row>
+         <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
+         <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+         <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
+         <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
+         </Row>';
+       }
    }
 
 
 
    $dataXml = '';
-   $dataXml .=  '<Row>
-   <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-   <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-   <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
-   </Row>';
-
 
    $data = (string)($event->description);
 
@@ -135,7 +151,8 @@ function group_events_export_overview($event){
      }
    }
 
-   $headerXml .= '</Row>';
+  $eventXml .= '</Row>';
+  $headerXml .= '</Row>';
 /*
   $event_relationship_options = event_manager_event_get_relationship_options();
   reset($event_relationship_options);
