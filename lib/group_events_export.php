@@ -195,7 +195,7 @@ function group_events_export_overview($event){
   </Worksheet>';
 
 
-  return $headerXml.$dataXml.$endXml;
+  return $headerXml.$eventXml.$endXml;
 }
 
 
