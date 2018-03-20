@@ -171,7 +171,15 @@ exit();
           $dom = new DOMDocument();
           @$dom->loadHTML($data);
           $dom->preserveWhiteSpace = false;
+          $xpath = new DOMXPath($doc);
+          $nodeList = $xpath->query("(/table) and not (//table)");
+
+                foreach ($nodeList as $node) {
+                    echo $node->nodeName ." ". $node->nodeValue. "\n";
+                }
+
           $tables = $dom->getElementsByTagName('table');
+
 
           foreach($tables as $table){
             $rows = $table->getElementsByTagName("tr");
