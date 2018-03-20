@@ -176,10 +176,10 @@ exit();
         //  echo var_dump(htmlentities($data))."<br/>";
 
 
-          $res = $xpath->query('/table')->getItem(0);
+          $res = $xpath->query('/table')->item(0);
           echo print_r($res)."<br/>";
 
-          echo $dom->documentElement;
+        //  echo $dom->documentElement;
 
           foreach ($res as $row) {
             $cells = $row -> getElementsByTagName('td');
