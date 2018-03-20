@@ -77,6 +77,7 @@ function group_events_export_sheet($event){
 $dom->preserveWhiteSpace = false;
 $tables = $dom->getElementsByTagName('table');
 
+echo var_dump($data);
 echo var_dump($tables);
 exit();
 
