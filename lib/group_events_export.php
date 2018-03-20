@@ -173,7 +173,7 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
-          $rows = $tables->item(0)->getElementsByTagName("tr");
+          $rows = $tables[0]->getElementsByTagName("tr");
 
           foreach ($rows as $row) {
             $cells = $row -> getElementsByTagName('td');
