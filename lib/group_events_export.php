@@ -173,14 +173,22 @@ exit();
           $dom->preserveWhiteSpace = false;
           $tables = $dom->getElementsByTagName('table');
 
+          var_dump($tables);
+          /*
           $rows = $tables[0]->getElementsByTagName("tr");
 
           foreach($firstCol as $rows[0]){
             $cells = $firstCol -> getElementsByTagName('td');
             echo $cells."<br/>";
           }
-
-
+          foreach ($rows as $row) {
+                      $cells = $row -> getElementsByTagName('td');
+                      foreach ($cells as $cell) {
+                        echo $cell->nodeValue; // print cells' content as 124578
+            }
+                      echo "<br/>";
+          }
+          */
           exit();
 
 
