@@ -183,8 +183,8 @@ exit();
           foreach ($results as $result)
           {
               $internalTables = $result -> getElementsByTagName('table');
-              if($internalTables == false){
-                echo "Found table: ".var_dump($internalTables->item(0)->nodeValue)." , ".var_dump(htmlentities($internalTables->item(1)->nodeValue))."<br/>";
+              foreach ($internalTables as $it) {
+                  echo $it->nodeValue, PHP_EOL;
               }
 
               $cells = $result -> getElementsByTagName('td');
