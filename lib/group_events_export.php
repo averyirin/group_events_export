@@ -182,13 +182,14 @@ exit();
         //  echo htmlentities($results);
           foreach ($results as $result)
           {
-
-              
               $internalTables = $result -> getElementsByTagName('table');
-              echo var_dump($internalTables->item(0)->nodeValue)." , ".var_dump(htmlentities($internalTables->item(1)->nodeValue))."<br/>";
+              if($internalTables !== NULL){
+                echo "Found table: ".var_dump($internalTables->item(0)->nodeValue)." , ".var_dump(htmlentities($internalTables->item(1)->nodeValue))."<br/>";
+              }
 
-                            $cells = $result -> getElementsByTagName('td');
-                            echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+              $cells = $result -> getElementsByTagName('td');
+              echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
+
 
             //  $internalTables = $xpath->query('/td//table)', $result);
             //  echo var_dump($internalTables)."<br/>";
