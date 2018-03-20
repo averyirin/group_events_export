@@ -150,7 +150,7 @@ function group_events_export_sheet($event){
           <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
           <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
           <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$event->description.'</Data></Cell>
+          <Cell><Data ss:Type="String">'.(string)html_entity_decode($event->description).'</Data></Cell>
           </Row>';
 
 
