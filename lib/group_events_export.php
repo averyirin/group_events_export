@@ -78,6 +78,7 @@ function group_events_export_overview($event){
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Event</Data></Cell>
    <Cell><Data ss:Type="String">Location</Data></Cell>
+   <Cell><Data ss:Type="String">Venue</Data></Cell>
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    </Row>';
@@ -117,12 +118,12 @@ function group_events_export_overview($event){
 
           $results = $xpath->query('/html/body/table/tbody/tr');
           foreach ($results as $result){
-
+            
             $cells = $result -> getElementsByTagName('td');
             $internalTables = $result -> getElementsByTagName('table');
+            $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
 
-            if(sizeof($internalTables) > 0){
-              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
+          //    $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>';
             //  echo ($cells->item(0)->nodeValue)." , ".($cells->item(1)->nodeValue)."<br/>";
                 foreach ($internalTables as $it) {
                       $icells = $it -> getElementsByTagName('tr');
@@ -131,9 +132,8 @@ function group_events_export_overview($event){
                       }
                 }
 
-            }else{
-              $dataXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
-            }
+
+
         //
           }
           $dataXml .= '</Row>';
