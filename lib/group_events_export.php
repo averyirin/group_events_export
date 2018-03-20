@@ -174,15 +174,16 @@ exit();
           $xpath = new DOMXPath($dom);
 
         //  echo var_dump(htmlentities($data))."<br/>";
+         echo $dom->documentElement;
 
-
-          $results = $xpath->query('//table');
+/*
+          $results = $xpath->query('table');
           foreach ($results as $result)
           {
               print_r($result);
           }
 
-
+*/
 
           echo "End Parent Table <br/>";
 
