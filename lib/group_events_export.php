@@ -5,9 +5,9 @@
  * Date: 11/21/2017
  * Time: 10:17 AM
  */
-function generate_export_spreadsheet($event){
+function generate_export_spreadsheet($groupGuid){
   $event_options = array();
-  $event_options["container_guid"] =$page_owner->getGUID();
+  $event_options["container_guid"] =$groupGuid;
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
   $spreadsheetExportString = '<?xml version="1.0"?>
