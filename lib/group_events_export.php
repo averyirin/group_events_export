@@ -7,7 +7,7 @@
  */
 function generate_export_spreadsheet($event){
   $event_options = array();
-  $event_options["container_guid"] =$groupGuid;
+  $event_options['container_guid'] =$groupGuid;
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
   $spreadsheetExportString = '<?xml version="1.0"?>
