@@ -114,10 +114,8 @@ function group_events_export_overview($event){
         @$dom->loadHTML($data);
         $dom->preserveWhiteSpace = false;
         $xpath = new DOMXPath($dom);
-
         $results = $xpath->query('/html/body/table/tbody/tr');
         foreach ($results as $result){
-
           $cells = $result -> getElementsByTagName('td');
           $internalTables = $result -> getElementsByTagName('table');
           $headerXml .=  '<Cell><Data ss:Type="String">'.(string)$cells->item(0)->nodeValue.'</Data></Cell>';
