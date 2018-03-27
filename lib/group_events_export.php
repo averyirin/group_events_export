@@ -149,6 +149,7 @@ function group_events_export_overview($event){
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
+     //Add types of attendance header (attended/interested/organizing/exhibiting)
       $headerXml .=  '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
        $old_ia = elgg_set_ignore_access(true);
        $peopleResponded = elgg_get_entities_from_relationship(array(
@@ -158,23 +159,54 @@ function group_events_export_overview($event){
          'site_guids' => false,
          'limit' => false
        ));
+       //Add number of people who are each attendance type
        $eventXml .='<Cell><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
 
+       //add individual attendee status, their registration question responses, and chosen activities
        foreach ($peopleResponded as $attendee) {
          $attendeeDataXml .=  '<Row>
          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
-         </Row>';
+         ';
+         //Registration question answers
+         $answerString = '';
+         if($event->registration_needed) {
+           if($registration_form = $event->getRegistrationFormQuestions()) {
+             foreach($registration_form as $question) {
+               $answer = $question->getAnswerFromUser($attendee->getGUID());
+               $attendeeDataXml .= '<Cell><Data ss:Type="String">'.($answer->value).'</Data></Cell>';
+             }
+           }
+         }
+
+         //[V] Checked - Joined a program within event
+         if($event->with_program) {
+           if($eventDays = $event->getEventDays()) {
+             foreach($eventDays as $eventDay) {
+               if($eventSlots = $eventDay->getEventSlots()) {
+                 foreach($eventSlots as $eventSlot) {
+                   if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
+                     $attendeeDataXml .= '<Cell><Data ss:Type="String">'.'joined'.'</Data></Cell>';
+                   } else {
+                     $attendeeDataXml .= '<Cell><Data ss:Type="String"></Data></Cell>';
+                   }
+                 }
+               }
+             }
+           }
+         }
+         $attendeeDataXml .= '</Row>';
+
        }
    }
 
 
 
 
+   //Filter out the event description table into headers
    $dataXml = '';
-
    $data = (string)($event->description);
 
    $dom = new DOMDocument();
@@ -199,33 +231,10 @@ function group_events_export_overview($event){
       }else{
        $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
        $eventXml .='<Cell><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
-
      }
    }
-
   $eventXml .= '</Row>';
   $headerXml .= '</Row>';
-/*
-  $event_relationship_options = event_manager_event_get_relationship_options();
-  reset($event_relationship_options);
-  foreach($event_relationship_options as $relationship) {
-      $old_ia = elgg_set_ignore_access(true);
-      $peopleResponded = elgg_get_entities_from_relationship(array(
-        'relationship' => $relationship,
-        'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => FALSE,
-        'site_guids' => false,
-        'limit' => false
-      ));
-      elgg_set_ignore_access($old_ia);
-
-      if($peopleResponded) {
-        reset($peopleResponded);
-
-
-      }
-  }
-*/
   $endXml = '</Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
@@ -246,7 +255,7 @@ function group_events_export_overview($event){
   </WorksheetOptions>
   </Worksheet>';
 
-
+//return sheet of event info
   return $headerXml.$eventXml.$attendeeHeaderXml.$attendeeDataXml.$endXml;
 }
 
