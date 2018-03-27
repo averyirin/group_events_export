@@ -13,7 +13,7 @@ echo "Action----"."<br/>";
 var_dump($_SESSION['eventHook']);
 var_dump($_SESSION['eventEntityType']);
 var_dump($_SESSION['eventValue']);
-var_dump($_SESSION['eventValue']);
+var_dump($_SESSION['eventParams']);
 exit();
 /*
 $spreadsheetExportString = generate_export_spreadsheet($groupGuid);
