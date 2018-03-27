@@ -11,6 +11,7 @@ exit;
 */
 echo "Action----"."<br/>";
 var_dump($_SESSION['eventSearch']);
+var_dump($_SESSION['eventParams']);
 exit();
 /*
 $spreadsheetExportString = generate_export_spreadsheet($groupGuid);
