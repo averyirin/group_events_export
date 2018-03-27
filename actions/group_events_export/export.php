@@ -8,10 +8,10 @@ header("Content-Disposition: Attachment; filename=export.csv");
 header('Pragma: public');
 echo $csvExportString;
 exit;
-*/
-
 echo var_dump($_SESSION['eventEntities']);
 exit;
+*/
+
 $resultEntities = $_SESSION['eventEntities'];
 $spreadsheetExportString = generate_export_spreadsheet($resultEntities);
 header("Content-type: text/xml");
