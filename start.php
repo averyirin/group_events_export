@@ -11,8 +11,8 @@ elgg_register_action("group_events_export/export", $action_path . "/export.php")
 elgg_register_event_handler('init', 'system', 'group_events_export_init');
 
 //register plugin hook to action event_manager/event/search
-elgg_register_plugin_hook_handler("action", "event_manager/event/search", "group_events_export_search");
-//elgg_register_plugin_hook_handler("action", "group_events_export/export", "group_events_export_search");
+//elgg_register_plugin_hook_handler("action", "event_manager/event/search", "group_events_export_search");
+elgg_register_plugin_hook_handler("action", "group_events_export/export", "group_events_export_search");
 
 
 //when the plugin is active
