@@ -32,7 +32,11 @@ function group_events_export_init()
 //search plugin hook
 function group_events_export_search($hook, $entity_type, $value,$params) {
     $_SESSION['eventSearch'] = [$hook,$entity_type,$value,$params];
-    return false;
+    echo var_dump($hook)."<br/>";
+    echo var_dump($entity_type)."<br/>";
+    echo var_dump($value)."<br/>";
+    echo var_dump($params)."<br/>";
+    exit;
 }
 
 
