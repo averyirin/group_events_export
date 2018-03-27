@@ -9,10 +9,13 @@ header('Pragma: public');
 echo $csvExportString;
 exit;
 */
+var_dump($_SESSION['eventSearch']);
 
+/*
 $spreadsheetExportString = generate_export_spreadsheet($groupGuid);
 header("Content-type: text/xml");
 header("Content-Disposition: Attachment; filename=export.xml");
 header('Pragma: public');
 echo $spreadsheetExportString;
 exit;
+*/
