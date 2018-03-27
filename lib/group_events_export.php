@@ -5,11 +5,13 @@
  * Date: 11/21/2017
  * Time: 10:17 AM
  */
-function generate_export_spreadsheet($groupGuid){
+function generate_export_spreadsheet($resultEventGuids){
+  /*
   $event_options = array();
   $event_options["container_guid"] =$groupGuid;
   $events = event_manager_search_events($event_options);
   $eventEntities = $events["entities"];
+  */
   $spreadsheetExportString = '<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -54,8 +56,8 @@ function generate_export_spreadsheet($groupGuid){
 
 
 
-  foreach ($eventEntities as $event) {
-    $xml = group_events_export_overview($event);
+  foreach ($resultEventGuids as $eventGuid) {
+    $xml = group_events_export_overview(get_entity($eventGuid));
     $spreadsheetExportString .= $xml;
   }
 

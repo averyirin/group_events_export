@@ -9,14 +9,10 @@ header('Pragma: public');
 echo $csvExportString;
 exit;
 */
-echo "Action----"."<br/>";
-var_dump($_SESSION['eventEntities']);
-exit();
-/*
-$spreadsheetExportString = generate_export_spreadsheet($groupGuid);
+$resultEntities = $_SESSION['eventEntities'];
+$spreadsheetExportString = generate_export_spreadsheet($resultEntities);
 header("Content-type: text/xml");
 header("Content-Disposition: Attachment; filename=export.xml");
 header('Pragma: public');
 echo $spreadsheetExportString;
 exit;
-*/
