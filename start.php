@@ -23,14 +23,16 @@ function group_events_export_init()
     //load library
     elgg_load_library('group_events_export:lib');
 
-    //register plugin hook to action /event_manager_search_events
-    elgg_register_plugin_hook_handler('action', 'event_manager/event/search', 'group_events_export_search', 400);
+    //register plugin hook to action event_manager/event/search
+    elgg_register_plugin_hook_handler("action", "event_manager/event/search", "group_events_export_search", 400);
 
 
 }
+
 //search plugin hook
-function group_events_export_search('event_manager/event/search', 'action', $value, $params) {
+function group_events_export_search($hook, $entity_type, $value,$params) {
     echo var_dump($value);
+    echo var_dump($params);
     exit();
 }
 
