@@ -103,9 +103,6 @@ function group_events_export_overview($event){
        }
      }
    }
-   //End Fields
-   $attendeeHeaderXml .= '</Row>';
-   /*
 
    //Build program headers with the events that the attendee can join
    if($event->with_program) {
@@ -124,13 +121,17 @@ function group_events_export_overview($event){
              $end_time_hour = date('H', $end_time);
              $end_time_minutes = date('i', $end_time);
 
-             $attendeeHeaderXml .= ',"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
+             $attendeeHeaderXml .= '<Cell><Data ss:Type="String">Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')</Data></Cell>';
            }
          }
        }
      }
    }
-   */
+
+
+   //End Fields
+   $attendeeHeaderXml .= '</Row>';
+
 
    $attendeeDataXml = '';
 
