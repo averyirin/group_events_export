@@ -10,7 +10,7 @@ echo $csvExportString;
 exit;
 */
 var_dump($_SESSION['eventSearch']);
-
+exit;
 /*
 $spreadsheetExportString = generate_export_spreadsheet($groupGuid);
 header("Content-type: text/xml");
