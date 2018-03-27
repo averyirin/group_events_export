@@ -24,7 +24,7 @@ function group_events_export_init()
     elgg_load_library('group_events_export:lib');
 
     //register plugin hook to action event_manager/event/search
-    elgg_register_plugin_hook_handler("action", "group_events_export/export", "group_events_export_search", 400);
+    elgg_register_plugin_hook_handler("action", "event_manager/event/search", "group_events_export_search", 400);
 
 
 }
@@ -32,7 +32,7 @@ function group_events_export_init()
 //search plugin hook
 function group_events_export_search($hook, $entity_type, $value,$params) {
 
-  echo "Hook----";
+  echo "Hook----"."<br/>";
     $_SESSION['eventSearch'] = $value;
     echo var_dump($hook)."<br/>";
     echo var_dump($entity_type)."<br/>";

@@ -11,7 +11,7 @@ exit;
 */
 echo "Action----"."<br/>";
 var_dump($_SESSION['eventSearch']);
-exit("Exit Action");
+exit();
 /*
 $spreadsheetExportString = generate_export_spreadsheet($groupGuid);
 header("Content-type: text/xml");
