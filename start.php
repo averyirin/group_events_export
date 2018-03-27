@@ -10,6 +10,9 @@ elgg_register_action("group_events_export/export", $action_path . "/export.php")
 //register plugin init
 elgg_register_event_handler('init', 'system', 'group_events_export_init');
 
+//register plugin hook to action event_manager/event/search
+elgg_register_plugin_hook_handler("action", "event_manager/event/search", "group_events_export_search", 400);
+
 
 //when the plugin is active
 function group_events_export_init()
@@ -22,9 +25,6 @@ function group_events_export_init()
     elgg_register_library('group_events_export:lib', elgg_get_plugins_path() . 'group_events_export/lib/group_events_export.php');
     //load library
     elgg_load_library('group_events_export:lib');
-
-    //register plugin hook to action event_manager/event/search
-    elgg_register_plugin_hook_handler("action", "group_events_export/export", "group_events_export_search", 400);
 
 
 }
