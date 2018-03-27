@@ -38,7 +38,7 @@ function group_events_export_search($hook, $entity_type, $value,$params) {
     echo var_dump($entity_type)."<br/>";
     echo var_dump($value)."<br/>";
     echo var_dump($params)."<br/>";
-    return false;
+    return $value;
 }
 
 
