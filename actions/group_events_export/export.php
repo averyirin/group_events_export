@@ -9,6 +9,7 @@ header('Pragma: public');
 echo $csvExportString;
 exit;
 */
+echo "Action----";
 var_dump($_SESSION['eventSearch']);
 exit;
 /*
