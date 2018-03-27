@@ -6,12 +6,6 @@
  * Time: 10:17 AM
  */
 function generate_export_spreadsheet($resultEventGuids){
-  /*
-  $event_options = array();
-  $event_options["container_guid"] =$groupGuid;
-  $events = event_manager_search_events($event_options);
-  $eventEntities = $events["entities"];
-  */
   $spreadsheetExportString = '<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -52,26 +46,22 @@ function generate_export_spreadsheet($resultEventGuids){
   </Style>
   </Styles>
   ';
+  //Create Overview Sheet
 
 
-
-
+  //Create Individual Event Sheet
   foreach ($resultEventGuids as $eventGuid) {
-    $xml = group_events_export_overview(get_entity($eventGuid));
+    $xml = group_events_export_sheet(get_entity($eventGuid));
     $spreadsheetExportString .= $xml;
   }
-
-
-
   $spreadsheetExportString .='
     </Workbook>
        ';
-
   return $spreadsheetExportString;
 }
 
 
-function group_events_export_overview($event){
+function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
   $headerXml = '
@@ -257,209 +247,6 @@ function group_events_export_overview($event){
 
 //return sheet of event info
   return $headerXml.$eventXml.$attendeeHeaderXml.$attendeeDataXml.$endXml;
-}
-
-
-function group_events_export_sheet($event){
-
-
-
-  /*
-
-$xml = new DOMDocument();
-//$xml->validateOnParse = true;
-$xml->loadHTML($html);
-
-$xpath = new DOMXPath($xml);
-$table =$xpath->query("table")->item(0);
-echo var_dump($table);
-
-exit();
-*/
-
-  $old_ia = elgg_get_ignore_access();
-  elgg_set_ignore_access(true);
-  $EOL = "\r\n";
-
-
-  $headerXml = '
-   <Worksheet ss:Name="'.$event->title.'">
-   <Table
-   x:FullColumns="1"
-   x:FullRows="1">
-   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="154.5"/>
-   <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">Name</Data></Cell>
-   <Cell><Data ss:Type="String">Email</Data></Cell>
-   <Cell><Data ss:Type="String">Status</Data></Cell>
-   </Row>';
-
-
-/*
-  //Title
-  $titleString .= '"'.$event->title.'"';
-  //Fields
-  $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
-  if($event->registration_needed) {
-    if($registration_form = $event->getRegistrationFormQuestions()) {
-      foreach($registration_form as $question) {
-        $headerString .= ',"'.$question->title.'"';
-      }
-    }
-  }
-  if($event->with_program) {
-    if($eventDays = $event->getEventDays()) {
-      foreach($eventDays as $eventDay) {
-        $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
-        if($eventSlots = $eventDay->getEventSlots()) {
-          foreach($eventSlots as $eventSlot) {
-
-            $start_time = $eventSlot->start_time;
-            $end_time = $eventSlot->end_time;
-
-            $start_time_hour = date('H', $start_time);
-            $start_time_minutes = date('i', $start_time);
-
-            $end_time_hour = date('H', $end_time);
-            $end_time_minutes = date('i', $end_time);
-
-            $headerString .= ',"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
-          }
-        }
-      }
-    }
-  }
-  //End Fields
-  $headerString .= $EOL;
-*/
-  $includeEvent = false;
-  //generate event data
-  //Loop Through relationship options
-  $event_relationship_options = event_manager_event_get_relationship_options();
-  reset($event_relationship_options);
-  foreach($event_relationship_options as $relationship) {
-      $old_ia = elgg_set_ignore_access(true);
-      $peopleResponded = elgg_get_entities_from_relationship(array(
-        'relationship' => $relationship,
-        'relationship_guid' => $event->getGUID(),
-        'inverse_relationship' => FALSE,
-        'site_guids' => false,
-        'limit' => false
-      ));
-      elgg_set_ignore_access($old_ia);
-
-      if($peopleResponded) {
-        $includeEvent = true;
-        reset($peopleResponded);
-        foreach($peopleResponded as $attendee) {
-
-          $dataXml .=  '<Row>
-          <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
-          <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
-          </Row>';
-
-
-          $data = (string)($event->description);
-          $dom = new DOMDocument();
-          @$dom->loadHTML($data);
-          $dom->preserveWhiteSpace = false;
-          $xpath = new DOMXPath($dom);
-
-          $results = $xpath->query('/html/body/table/tbody/tr');
-        //  echo htmlentities($results);
-          foreach ($results as $result){
-
-            $cells = $result -> getElementsByTagName('td');
-        //    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
-
-
-              $internalTables = $result -> getElementsByTagName('table');
-              foreach ($internalTables as $it) {
-                  $icells = $it -> getElementsByTagName('tr');
-                  foreach($icells as $val){
-                    $cells = $val -> getElementsByTagName('td');
-                //    echo var_dump($cells->item(0)->nodeValue)." , ".var_dump(htmlentities($cells->item(1)->nodeValue))."<br/>";
-                  }
-              }
-
-          }
-
-      //    exit();
-
-
-
-
-          /*
-          //Registration question answers
-          $answerString = '';
-          if($event->registration_needed) {
-            if($registration_form = $event->getRegistrationFormQuestions()) {
-              foreach($registration_form as $question) {
-                $answer = $question->getAnswerFromUser($attendee->getGUID());
-
-                $answerString .= '"'.addslashes($answer->value).'",';
-              }
-            }
-            $dataString .= ','.substr($answerString, 0, (strlen($answerString) -1));
-          }
-
-          //[V] Checked - Joined a program within event
-          if($event->with_program) {
-            if($eventDays = $event->getEventDays()) {
-              foreach($eventDays as $eventDay) {
-                if($eventSlots = $eventDay->getEventSlots()) {
-                  foreach($eventSlots as $eventSlot) {
-                    if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
-                      $dataString .= ',"joined"';
-                    } else {
-                      $dataString .= ',""';
-                    }
-                  }
-                }
-              }
-            }
-          }
-          $dataString .= $EOL;
-          */
-          //end of data, move on to next person
-        }
-      }
-  }
-
-//  $titleString .= $EOL;
-  elgg_set_ignore_access($old_ia);
-
-  $endXml = '</Table>
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <Print>
-  <ValidPrinterInfo/>
-  <HorizontalResolution>300</HorizontalResolution>
-  <VerticalResolution>300</VerticalResolution>
-  </Print>
-  <Selected/>
-  <Panes>
-  <Pane>
-  <Number>3</Number>
-  <ActiveRow>5</ActiveRow>
-  </Pane>
-  </Panes>
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  </Worksheet>';
-       /*
-
-      */
-  //return $headerXml.$dataXml.$endXml;
-  if($includeEvent){
-  return $headerXml.$dataXml.$endXml;
-  }
-  else{
-    return '';
-  }
 }
 
 
