@@ -87,12 +87,51 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">Start</Data></Cell>
    <Cell><Data ss:Type="String">End</Data></Cell>
    ';
+   //Default attendee data
    $attendeeHeaderXml = '<Row></Row>
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Name</Data></Cell>
    <Cell><Data ss:Type="String">Email</Data></Cell>
    <Cell><Data ss:Type="String">Status</Data></Cell>
-   </Row>';
+   ';
+   //Build registration question headers
+   $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
+   if($event->registration_needed) {
+     if($registration_form = $event->getRegistrationFormQuestions()) {
+       foreach($registration_form as $question) {
+         $attendeeHeaderXml .= '<Cell><Data ss:Type="String">'.$question->title.'</Data></Cell>';
+       }
+     }
+   }
+   //End Fields
+   $attendeeHeaderXml .= '</Row>';
+   /*
+
+   //Build program headers with the events that the attendee can join
+   if($event->with_program) {
+     if($eventDays = $event->getEventDays()) {
+       foreach($eventDays as $eventDay) {
+         $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
+         if($eventSlots = $eventDay->getEventSlots()) {
+           foreach($eventSlots as $eventSlot) {
+
+             $start_time = $eventSlot->start_time;
+             $end_time = $eventSlot->end_time;
+
+             $start_time_hour = date('H', $start_time);
+             $start_time_minutes = date('i', $start_time);
+
+             $end_time_hour = date('H', $end_time);
+             $end_time_minutes = date('i', $end_time);
+
+             $attendeeHeaderXml .= ',"Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')"';
+           }
+         }
+       }
+     }
+   }
+   */
+
    $attendeeDataXml = '';
 
    $eventXml = '<Row>
@@ -129,6 +168,7 @@ function group_events_export_overview($event){
          </Row>';
        }
    }
+
 
 
 
