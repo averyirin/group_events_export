@@ -360,13 +360,13 @@ function group_events_export_sheet($event){
            $icells = $it -> getElementsByTagName('tr');
            foreach($icells as $val){
              $cells = $val -> getElementsByTagName('td');
-             $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-             $eventXml .='<Cell><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+             $headerXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+             $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
            }
        }
       }else{
-       $headerXml .=  '<Cell><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-       $eventXml .='<Cell><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+       $headerXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
      }
    }
   $eventXml .= '</Row>';
