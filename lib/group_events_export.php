@@ -116,6 +116,9 @@ function generate_export_spreadsheet($resultEventGuids){
   <ProtectObjects>False</ProtectObjects>
   <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
+  <AutoFilter x:Range="R1C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+   xmlns="urn:schemas-microsoft-com:office:excel">
+  </AutoFilter>
   </Worksheet>';
   //Create Individual Event Sheet
   foreach ($resultEventGuids as $eventGuid) {
