@@ -462,12 +462,12 @@ if($descTable != ""){
 }
 
 //optional activity data table spacing
-$activityTable = $activityHeaderXml.$activityDataXml;
+$activityTable = $activityHeaderTitle.$activityHeaderXml.$activityDataXml;
 
 if($activityTable != ""){
      $activityTable .= $rowSpace;
 }
-$attendeeTable = $activityHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.$rowSpace;
+$attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
