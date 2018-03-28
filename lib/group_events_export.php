@@ -231,6 +231,8 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
+   $eventColTotal = 5;
+
    $eventGeneralHeaderXml = '
     <Row ss:StyleID="s23">
     <Cell ss:StyleID="s29"></Cell>
@@ -304,9 +306,9 @@ function group_events_export_sheet($event){
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
-     //Add types of attendance header (attended/interested/organizing/exhibiting)
-      $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
-       $old_ia = elgg_set_ignore_access(true);
+
+
+        $old_ia = elgg_set_ignore_access(true);
        $peopleResponded = elgg_get_entities_from_relationship(array(
          'relationship' => $relationship,
          'relationship_guid' => $event->getGUID(),
@@ -314,7 +316,10 @@ function group_events_export_sheet($event){
          'site_guids' => false,
          'limit' => false
        ));
+       //Add types of attendance header (attended/interested/organizing/exhibiting)
        //Add number of people who are each attendance type
+       $eventColTotal ++;
+       $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
        $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
 
        //add individual attendee status, their registration question responses, and chosen activities
@@ -355,6 +360,11 @@ function group_events_export_sheet($event){
          $attendeeDataXml .= '</Row>';
        }
    }
+
+   $eventHeaderTitle = '
+    <Row>
+    <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
+    </Row>';
   $descHeaderXml = '';
   $descDataXml = '';
   $data = (string)($event->description);
@@ -419,7 +429,7 @@ function group_events_export_sheet($event){
   </WorksheetOptions>
   </Worksheet>';
 //event table
-$eventTable = $eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
+$eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
 $descTable = $descHeaderXml.$descDataXml;
 if($descTable != ""){
