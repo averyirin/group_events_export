@@ -369,6 +369,7 @@ function group_events_export_sheet($event){
   $descDataXml = '';
   $descColTotal = 0;
   $descGeneralHeaderXml = '';
+  $descHeaderTitle = '';
 
   $data = (string)($event->description);
    //Filter out the event description table into headers
@@ -411,9 +412,9 @@ function group_events_export_sheet($event){
      //end description data
      $descHeaderXml .= '</Row>';
     $descDataXml .= '</Row>';
-    $descGeneralHeaderXml = '
+    $descHeaderTitle = '
      <Row ss:StyleID="s23">
-    <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s31"><Data ss:Type="String">Description</Data></Cell>
+    <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>
     </Row>';
   }
 
@@ -441,7 +442,7 @@ function group_events_export_sheet($event){
 //event table
 $eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
-$descTable = $descGeneralHeaderXml.$descHeaderXml.$descDataXml;
+$descTable = $descHeaderTitle.$descHeaderXml.$descDataXml;
 if($descTable != ""){
      $descTable .= $rowSpace;
 }
