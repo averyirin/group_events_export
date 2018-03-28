@@ -343,7 +343,11 @@ function group_events_export_sheet($event){
    @$dom->loadHTML($data);
    $dom->preserveWhiteSpace = false;
    $xpath = new DOMXPath($dom);
+   echo var_dump ($event->title." ".$event->description);
+   exit();
+if($event->description != ""){
 
+}
    $results = $xpath->query('/html/body/table/tbody/tr');
    //  echo htmlentities($results);
    foreach ($results as $result){
