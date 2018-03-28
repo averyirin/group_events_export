@@ -261,6 +261,8 @@ function group_events_export_sheet($event){
 
    $activityHeaderXml = '';
    $activityDataXml = '';
+   $activityColTotal = 5;
+   $activityHeaderTitle = '';
 
    //Build program headers with the events that the attendee can join
    if($event->with_program) {
@@ -290,6 +292,11 @@ function group_events_export_sheet($event){
          }
        }
      }
+
+     $activityHeaderTitle = '
+      <Row ss:StyleID="s23">
+     <Cell ss:MergeAcross="'.($activityColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Activities</Data></Cell>
+     </Row>';
 
    }
    //End Fields
@@ -377,17 +384,6 @@ function group_events_export_sheet($event){
       $descHeaderXml .= '<Row>';
       $descDataXml .= '<Row>';
       $descGeneralHeaderXml = '<Row>';
-      /*
-
-       <Row ss:StyleID="s23">
-       <Cell ss:StyleID="s29"></Cell>
-       <Cell ss:StyleID="s29"></Cell>
-       <Cell ss:StyleID="s29"></Cell>
-       <Cell ss:StyleID="s29"></Cell>
-       <Cell ss:StyleID="s29"></Cell>
-       <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
-       </Row>';
-      */
      $dom = new DOMDocument();
      @$dom->loadHTML($data);
      $dom->preserveWhiteSpace = false;
@@ -471,7 +467,7 @@ $activityTable = $activityHeaderXml.$activityDataXml;
 if($activityTable != ""){
      $activityTable .= $rowSpace;
 }
-$attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
+$attendeeTable = $activityHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
