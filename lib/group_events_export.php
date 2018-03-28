@@ -242,29 +242,38 @@ function group_events_export_sheet($event){
      }
    }
 
+   $activityHeaderXml = '';
+   $activityDataXml = '';
+
    //Build program headers with the events that the attendee can join
    if($event->with_program) {
+     $activityHeaderXml .= '<Row ss:StyleID="s23">
+     <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
+     <Cell ss:StyleID="s29"><Data ss:Type="String">Description</Data></Cell>
+     <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+     <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
+     <Cell ss:StyleID="s29"><Data ss:Type="String">Participants</Data></Cell>
+     </Row>';
+
+
      if($eventDays = $event->getEventDays()) {
        foreach($eventDays as $eventDay) {
          $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
          if($eventSlots = $eventDay->getEventSlots()) {
            foreach($eventSlots as $eventSlot) {
-             /*
-             $start_time = $eventSlot->start_time;
-             $end_time = $eventSlot->end_time;
-
-             $start_time_hour = date('H', $start_time);
-             $start_time_minutes = date('i', $start_time);
-
-             $end_time_hour = date('H', $end_time);
-             $end_time_minutes = date('i', $end_time);
-            '\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')
-             */
+            $activityDataXml .= '<Row>
+            <Cell ss:StyleID="30"><Data ss:Type="String">'.(string)$eventSlot->title.'</Data></Cell>
+            <Cell ss:StyleID="30"><Data ss:Type="String">'.(string)$eventSlot->description.'</Data></Cell>
+            <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventSlot->start_time) . "T". date('H', $eventSlot->start_time) . ':' . date('i', $eventSlot->start_time).'</Data></Cell>
+            <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventSlot->end_time) . "T". date('H', $eventSlot->end_time) . ':' . date('i', $eventSlot->end_time) .'</Data></Cell>
+            <Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)$eventSlot->countRegistrations().'</Data></Cell>
+            </Row>';
              $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
            }
          }
        }
      }
+
    }
    //End Fields
    $attendeeHeaderXml .= '</Row>';
@@ -398,14 +407,19 @@ function group_events_export_sheet($event){
 $eventTable = $eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
 $descTable = $descHeaderXml.$descDataXml;
-
 if($descTable != ""){
      $descTable .= $rowSpace;
+}
+
+//optional activity data table spacing
+$activityTable = $activityHeaderXml.$activityDataXml;
+if($activityTable != ""){
+     $activityTable .= $rowSpace;
 }
 $attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
-  return $beginXml.$eventTable.$descTable.$attendeeTable.$endXml;
+  return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
 }
 
 
