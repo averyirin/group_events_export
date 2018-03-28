@@ -286,7 +286,7 @@ function group_events_export_sheet($event){
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
      //Add types of attendance header (attended/interested/organizing/exhibiting)
-      $headerXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$relationship.'</Data></Cell>';
+      $headerXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
        $old_ia = elgg_set_ignore_access(true);
        $peopleResponded = elgg_get_entities_from_relationship(array(
          'relationship' => $relationship,
