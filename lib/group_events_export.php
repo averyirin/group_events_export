@@ -46,9 +46,21 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   <Font x:Family="Swiss" ss:Bold="1"/>
   </Style>
   <Style ss:ID="s26">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
   <NumberFormat ss:Format="General Date"/>
  </Style>
  <Style ss:ID="s27">
+  <Borders>
+   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+  </Borders>
   <NumberFormat ss:Format="[$-1009]d\-mmm\-yy;@"/>
 </Style>
   <Style ss:ID="s28">
@@ -59,12 +71,18 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   </Style>
   <Style ss:ID="s29">
    <Alignment ss:Vertical="Bottom"/>
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-   </Borders>
    <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
    <Interior ss:Color="#808080" ss:Pattern="Solid"/>
   </Style>
+  <Style ss:ID="s30">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+  </Style>
+
   </Styles>
   ';
   //rows is number of events plus header filter row plus top heading
@@ -155,9 +173,9 @@ function group_events_export_overview($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
    $eventXml = '<Row>
-   <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
    ';
@@ -174,7 +192,7 @@ function group_events_export_overview($event){
          'limit' => false
        ));
        //Add number of people who are each attendance type
-       $eventXml .='<Cell><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
    }
   $eventXml .= '</Row>';
 //return of event info
