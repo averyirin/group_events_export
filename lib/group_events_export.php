@@ -5,7 +5,7 @@
  * Date: 11/21/2017
  * Time: 10:17 AM
  */
-function generate_export_spreadsheet($resultEventGuids, groupGuid){
+function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   //Create excel formatted xml spreadsheet
   $spreadsheetExportString = '<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
