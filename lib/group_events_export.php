@@ -334,6 +334,8 @@ function group_events_export_sheet($event){
   $data = (string)($event->description);
    //Filter out the event description table into headers
    if($data != ""){
+      $descHeaderXml .= '<Row>';
+      $descDataXml .= '<Row>';
      $dom = new DOMDocument();
      @$dom->loadHTML($data);
      $dom->preserveWhiteSpace = false;
@@ -350,20 +352,23 @@ function group_events_export_sheet($event){
                $icells = $it -> getElementsByTagName('tr');
                foreach($icells as $val){
                  $cells = $val -> getElementsByTagName('td');
-                 $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-                 $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+                 $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+                 $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
                }
            }
           }else{
-           $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-           $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+           $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+           $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
          }
        }
      }else{
        //No tables in description
-       $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
-       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
+       $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
+       $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
      }
+     //end description data
+     $descHeaderXml .= '</Row>';
+    $descDataXml .= '</Row>';
   }
 
   $eventDataXml .= '</Row>';
@@ -394,7 +399,7 @@ $descTable = $descHeaderXml.$descDataXml;
 $attendeeTable = $attendeeHeaderXml.$attendeeDataXml;
 
 //return sheet of event info
-  return $beginXml.$eventTable.$rowSpace.$attendeeTable.$endXml;
+  return $beginXml.$eventTable.$rowSpace.$descTable.$rowSpace.$attendeeTable.$endXml;
 }
 
 
