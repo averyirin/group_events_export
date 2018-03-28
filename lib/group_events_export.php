@@ -216,7 +216,6 @@ function group_events_export_sheet($event){
    x:FullColumns="1"
    x:FullRows="1">
    <Column />';
-
   $eventHeaderXml = '
    <Row ss:StyleID="s23">
    <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
@@ -233,7 +232,6 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
    ';
    //Build registration question headers
-   $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
    if($event->registration_needed) {
      if($registration_form = $event->getRegistrationFormQuestions()) {
        foreach($registration_form as $question) {
@@ -249,7 +247,7 @@ function group_events_export_sheet($event){
          $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
          if($eventSlots = $eventDay->getEventSlots()) {
            foreach($eventSlots as $eventSlot) {
-
+             /*
              $start_time = $eventSlot->start_time;
              $end_time = $eventSlot->end_time;
 
@@ -258,21 +256,17 @@ function group_events_export_sheet($event){
 
              $end_time_hour = date('H', $end_time);
              $end_time_minutes = date('i', $end_time);
-            //'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')
+            '\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')
+             */
              $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
            }
          }
        }
      }
    }
-
-
    //End Fields
    $attendeeHeaderXml .= '</Row>';
-
-
    $attendeeDataXml = '';
-
    $eventDataXml = '<Row>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
@@ -280,9 +274,6 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
    ';
-
-
-
 
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
@@ -344,7 +335,8 @@ function group_events_export_sheet($event){
 
 
    //Filter out the event description table into headers
-   $dataXml = '';
+   $descHeaderXml = '';
+   $descDataXml = '';
    $data = (string)($event->description);
 
    $dom = new DOMDocument();
@@ -395,6 +387,7 @@ function group_events_export_sheet($event){
 
 $rowSpace = '<Row></Row>';
 $eventTable = $eventHeaderXml.$eventDataXml;
+$descTable = $descHeaderXml.$descDataXml;
 $attendeeTable = $attendeeHeaderXml.$attendeeDataXml;
 
 //return sheet of event info
