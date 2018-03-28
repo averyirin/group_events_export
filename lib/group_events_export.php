@@ -75,7 +75,7 @@ function generate_export_spreadsheet($resultEventGuids){
 
 
   //End overview Spreadsheet
-  $spreadsheetExportString .=  = '</Table>
+  $spreadsheetExportString .= '</Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
   <Print>
