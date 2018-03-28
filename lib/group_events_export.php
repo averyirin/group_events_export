@@ -256,8 +256,8 @@ function group_events_export_sheet($event){
 
              $end_time_hour = date('H', $end_time);
              $end_time_minutes = date('i', $end_time);
-
-             $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">\''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')</Data></Cell>';
+            //'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')
+             $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
            }
          }
        }
@@ -324,7 +324,7 @@ function group_events_export_sheet($event){
                if($eventSlots = $eventDay->getEventSlots()) {
                  foreach($eventSlots as $eventSlot) {
                    if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
-                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.'joined'.'</Data></Cell>';
+                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.'x'.'</Data></Cell>';
                    } else {
                      $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String"></Data></Cell>';
                    }
