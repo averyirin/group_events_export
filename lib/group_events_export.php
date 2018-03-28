@@ -6,6 +6,7 @@
  * Time: 10:17 AM
  */
 function generate_export_spreadsheet($resultEventGuids){
+  //Create excel formatted xml spreadsheet
   $spreadsheetExportString = '<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -52,7 +53,8 @@ function generate_export_spreadsheet($resultEventGuids){
   <Table
   x:FullColumns="1"
   x:FullRows="1">
-  <Column />'
+  <Column />';
+
   //Set Overview Headers
   $spreadsheetExportString .= '
    <Row ss:StyleID="s23">
