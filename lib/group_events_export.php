@@ -94,9 +94,6 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   $nameOfGroup = get_entity($groupGuid)->name;
   //Set Overview Headers
   $overviewHeaderRow .= '
-   <Row>
-   <Cell ss:MergeAcross="11" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
-   </Row>
    <Row ss:StyleID="s23">
    <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
@@ -112,6 +109,11 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
      $overviewHeaderRow .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
   }
   $overviewHeaderRow .= '</Row>';
+  $overviewHeaderTitle = '
+   <Row>
+   <Cell ss:MergeAcross="'.($overviewColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
+   </Row>';
+
 
 
   //Create Overview Sheet
@@ -127,7 +129,7 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   <Column />';
 
   //add overview header information with filter
-  $spreadsheetExportString .= $overviewSheet .$overviewHeaderRow;
+  $spreadsheetExportString .= $overviewSheet .$overviewHeaderTitle. $overviewHeaderRow;
 
   //Populate Overview Data
   foreach ($resultEventGuids as $eventGuid) {
