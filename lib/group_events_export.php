@@ -57,6 +57,14 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
     ss:Bold="1"/>
    <Interior ss:Color="#000000" ss:Pattern="Solid"/>
   </Style>
+  <Style ss:ID="s29">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+  </Style>
   </Styles>
   ';
   //rows is number of events plus header filter row plus top heading
@@ -72,11 +80,11 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
    <Cell ss:MergeAcross="11" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
    </Row>
    <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">Event</Data></Cell>
-   <Cell><Data ss:Type="String">Location</Data></Cell>
-   <Cell><Data ss:Type="String">Venue</Data></Cell>
-   <Cell><Data ss:Type="String">Start</Data></Cell>
-   <Cell><Data ss:Type="String">End</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
