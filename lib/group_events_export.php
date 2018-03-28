@@ -422,7 +422,7 @@ if($activityTable != ""){
 $attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
-  return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
+  return $beginXml.$eventTable.$descTable.$attendeeTable.$endXml;
 }
 
 
