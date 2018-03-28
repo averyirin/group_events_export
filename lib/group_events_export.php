@@ -401,7 +401,7 @@ $descTable = $descHeaderXml.$descDataXml;
 if($descTable != ""){
      $descHeaderXml .= $rowSpace;
 }
-$attendeeTable = $attendeeHeaderXml.$attendeeDataXml;
+$attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$attendeeTable.$endXml;
