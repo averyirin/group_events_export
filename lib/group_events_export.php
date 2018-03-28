@@ -210,6 +210,8 @@ function group_events_export_overview($event){
 function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
+
+  $rowSpace = '<Row></Row>';
   $beginXml = '
   <Worksheet ss:Name="'.$event->title.'">
    <Table
@@ -392,14 +394,17 @@ function group_events_export_sheet($event){
   <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
   </Worksheet>';
-
-$rowSpace = '<Row></Row>';
-$eventTable = $eventHeaderXml.$eventDataXml;
+//event table
+$eventTable = $eventHeaderXml.$eventDataXml.$rowSpace;
+//optional desc table spacing
 $descTable = $descHeaderXml.$descDataXml;
-$attendeeTable = $attendeeHeaderXml.$attendeeDataXml;
+if($descTable != ""){
+     $descHeaderXml .= $rowSpace;
+}
+$attendeeTable = $attendeeHeaderXml.$descTable.$attendeeDataXml;
 
 //return sheet of event info
-  return $beginXml.$eventTable.$rowSpace.$descTable.$rowSpace.$attendeeTable.$endXml;
+  return $beginXml.$eventTable.$descTable.$attendeeTable.$endXml;
 }
 
 
