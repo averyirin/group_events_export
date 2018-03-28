@@ -429,7 +429,7 @@ function group_events_export_sheet($event){
      //end description data
      $descHeaderXml .= '</Row>';
     $descDataXml .= '</Row>';
-    $descGeneralHeaderXml = '</Row>';
+    $descGeneralHeaderXml .= '</Row>';
     $descHeaderTitle = '
      <Row ss:StyleID="s23">
     <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>
