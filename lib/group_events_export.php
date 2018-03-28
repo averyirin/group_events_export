@@ -48,6 +48,9 @@ function generate_export_spreadsheet($resultEventGuids){
   <Style ss:ID="s26">
   <NumberFormat ss:Format="General Date"/>
  </Style>
+ <Style ss:ID="s27">
+  <NumberFormat ss:Format="[$-1009]d\-mmm\-yy;@"/>
+</Style>
   </Styles>
   ';
   //Create Overview Sheet
@@ -118,7 +121,7 @@ function group_events_export_overview($event){
    <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
    <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
    <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
-   <Cell ss:StyleID="s26"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
+   <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
    <Cell><Data ss:Type="String">'.date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . " ". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
    ';
    $event_relationship_options = event_manager_event_get_relationship_options();
