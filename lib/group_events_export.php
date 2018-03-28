@@ -51,6 +51,12 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
  <Style ss:ID="s27">
   <NumberFormat ss:Format="[$-1009]d\-mmm\-yy;@"/>
 </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="16" ss:Color="#FFFFFF"
+    ss:Bold="1"/>
+   <Interior ss:Color="#000000" ss:Pattern="Solid"/>
+  </Style>
   </Styles>
   ';
   //rows is number of events plus header filter row plus top heading
@@ -62,8 +68,8 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   $nameOfGroup = get_entity($groupGuid)->name;
   //Set Overview Headers
   $overviewHeaderRow .= '
-   <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
+   <Row>
+   <Cell ss:MergeAcross="11" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
    </Row>
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Event</Data></Cell>
