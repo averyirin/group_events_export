@@ -40,6 +40,12 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   <Protection/>
   </Style>
   <Style ss:ID="s21" ss:Name="Hyperlink">
+  <Borders>
+   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+  </Borders>
   <Font ss:Color="#0000FF" ss:Underline="Single"/>
   </Style>
   <Style ss:ID="s23">
@@ -211,25 +217,25 @@ function group_events_export_sheet($event){
    x:FullRows="1">
    <Column />
    <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">Event</Data></Cell>
-   <Cell><Data ss:Type="String">Location</Data></Cell>
-   <Cell><Data ss:Type="String">Venue</Data></Cell>
-   <Cell><Data ss:Type="String">Start</Data></Cell>
-   <Cell><Data ss:Type="String">End</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
    //Default attendee data
    $attendeeHeaderXml = '<Row></Row>
    <Row ss:StyleID="s23">
-   <Cell><Data ss:Type="String">Name</Data></Cell>
-   <Cell><Data ss:Type="String">Email</Data></Cell>
-   <Cell><Data ss:Type="String">Status</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Email</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
    ';
    //Build registration question headers
    $headerString .= '"'.elgg_echo('name').'","'.elgg_echo('email').'","'.elgg_echo('Status').'"';
    if($event->registration_needed) {
      if($registration_form = $event->getRegistrationFormQuestions()) {
        foreach($registration_form as $question) {
-         $attendeeHeaderXml .= '<Cell><Data ss:Type="String">'.$question->title.'</Data></Cell>';
+         $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$question->title.'</Data></Cell>';
        }
      }
    }
@@ -251,7 +257,7 @@ function group_events_export_sheet($event){
              $end_time_hour = date('H', $end_time);
              $end_time_minutes = date('i', $end_time);
 
-             $attendeeHeaderXml .= '<Cell><Data ss:Type="String">Event activity: \''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')</Data></Cell>';
+             $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">\''.$eventSlot->title.'\' '.$date. ' ('.$start_time_hour.':'.$start_time_minutes.' - '.$end_time_hour.':'.$end_time_minutes.')</Data></Cell>';
            }
          }
        }
@@ -266,11 +272,11 @@ function group_events_export_sheet($event){
    $attendeeDataXml = '';
 
    $eventXml = '<Row>
-   <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
-   <Cell><Data ss:Type="String">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . " ". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
-   <Cell><Data ss:Type="String">'.date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . " ". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+   <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
+   <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
    ';
 
 
@@ -280,7 +286,7 @@ function group_events_export_sheet($event){
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
      //Add types of attendance header (attended/interested/organizing/exhibiting)
-      $headerXml .=  '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
+      $headerXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$relationship.'</Data></Cell>';
        $old_ia = elgg_set_ignore_access(true);
        $peopleResponded = elgg_get_entities_from_relationship(array(
          'relationship' => $relationship,
@@ -290,15 +296,15 @@ function group_events_export_sheet($event){
          'limit' => false
        ));
        //Add number of people who are each attendance type
-       $eventXml .='<Cell><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
 
        //add individual attendee status, their registration question responses, and chosen activities
        foreach ($peopleResponded as $attendee) {
          $attendeeDataXml .=  '<Row>
-         <Cell><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
+         <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
          <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
          <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
-         <Cell><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
+         <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
          ';
          //Registration question answers
          $answerString = '';
@@ -306,7 +312,7 @@ function group_events_export_sheet($event){
            if($registration_form = $event->getRegistrationFormQuestions()) {
              foreach($registration_form as $question) {
                $answer = $question->getAnswerFromUser($attendee->getGUID());
-               $attendeeDataXml .= '<Cell><Data ss:Type="String">'.($answer->value).'</Data></Cell>';
+               $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.($answer->value).'</Data></Cell>';
              }
            }
          }
@@ -318,9 +324,9 @@ function group_events_export_sheet($event){
                if($eventSlots = $eventDay->getEventSlots()) {
                  foreach($eventSlots as $eventSlot) {
                    if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
-                     $attendeeDataXml .= '<Cell><Data ss:Type="String">'.'joined'.'</Data></Cell>';
+                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.'joined'.'</Data></Cell>';
                    } else {
-                     $attendeeDataXml .= '<Cell><Data ss:Type="String"></Data></Cell>';
+                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String"></Data></Cell>';
                    }
                  }
                }
