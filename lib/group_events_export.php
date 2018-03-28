@@ -226,6 +226,16 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
+   $eventGeneralHeaderXml = '
+    <Row ss:StyleID="s23">
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
+    </Row';
+
    //Default attendee data
    $attendeeHeaderXml = '
    <Row ss:StyleID="s23">
@@ -404,7 +414,7 @@ function group_events_export_sheet($event){
   </WorksheetOptions>
   </Worksheet>';
 //event table
-$eventTable = $eventHeaderXml.$eventDataXml.$rowSpace;
+$eventTable = $eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
 $descTable = $descHeaderXml.$descDataXml;
 if($descTable != ""){
