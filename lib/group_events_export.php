@@ -56,7 +56,7 @@ function generate_export_spreadsheet($resultEventGuids){
   //rows is number of events plus header row
   $overviewRowTotal = count($resultEventGuids)+1;
   //col is number of data cols
-  $overviewColTotal = 4;
+  $overviewColTotal = 5;
 
   //Set Overview Headers
   $overviewHeaderRow .= '
@@ -80,6 +80,10 @@ function generate_export_spreadsheet($resultEventGuids){
   //Create Overview Sheet
   $overviewSheet = '
   <Worksheet ss:Name="'."Overview".'">
+  <Names>
+   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Overview!R1C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+    ss:Hidden="1"/>
+  </Names>
   <Table
   x:FullColumns="1"
   x:FullRows="1">
