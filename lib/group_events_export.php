@@ -376,6 +376,18 @@ function group_events_export_sheet($event){
    if($data != ""){
       $descHeaderXml .= '<Row>';
       $descDataXml .= '<Row>';
+      $descGeneralHeaderXml = '<Row>';
+      /*
+
+       <Row ss:StyleID="s23">
+       <Cell ss:StyleID="s29"></Cell>
+       <Cell ss:StyleID="s29"></Cell>
+       <Cell ss:StyleID="s29"></Cell>
+       <Cell ss:StyleID="s29"></Cell>
+       <Cell ss:StyleID="s29"></Cell>
+       <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
+       </Row>';
+      */
      $dom = new DOMDocument();
      @$dom->loadHTML($data);
      $dom->preserveWhiteSpace = false;
@@ -390,15 +402,19 @@ function group_events_export_sheet($event){
          if($internalTables->length > 0){
             foreach ($internalTables as $it) {
                $icells = $it -> getElementsByTagName('tr');
+               $iColTotal = 0;
                foreach($icells as $val){
                  $cells = $val -> getElementsByTagName('td');
                  $descColTotal++;
+                 $iColTotal++;
+                 $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
                  $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
                  $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
                }
            }
           }else{
             $descColTotal++;
+          $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
            $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
            $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
          }
@@ -406,12 +422,14 @@ function group_events_export_sheet($event){
      }else{
        //No tables in description
        $descColTotal++;
+       $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
        $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
        $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
      }
      //end description data
      $descHeaderXml .= '</Row>';
     $descDataXml .= '</Row>';
+    $descGeneralHeaderXml = '</Row>';
     $descHeaderTitle = '
      <Row ss:StyleID="s23">
     <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>
@@ -442,7 +460,7 @@ function group_events_export_sheet($event){
 //event table
 $eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
-$descTable = $descHeaderTitle.$descHeaderXml.$descDataXml;
+$descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
 if($descTable != ""){
      $descTable .= $rowSpace;
 }
