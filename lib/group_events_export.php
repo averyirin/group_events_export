@@ -250,10 +250,15 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">Email</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
    ';
+
+   $attendeeColTotal = 3;
+   $attendeeHeaderTitle = '';
+
    //Build registration question headers
    if($event->registration_needed) {
      if($registration_form = $event->getRegistrationFormQuestions()) {
        foreach($registration_form as $question) {
+         $attendeeColTotal++;
          $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$question->title.'</Data></Cell>';
        }
      }
@@ -280,6 +285,8 @@ function group_events_export_sheet($event){
          $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
          if($eventSlots = $eventDay->getEventSlots()) {
            foreach($eventSlots as $eventSlot) {
+
+              $attendeeColTotal++;
               $activityDataXml .= '<Row>
               <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>
               <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->description.'</Data></Cell>
@@ -292,6 +299,10 @@ function group_events_export_sheet($event){
          }
        }
      }
+    $attendeeHeaderTitle = '
+           <Row ss:StyleID="s23">
+          <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
+          </Row>';
 
      $activityHeaderTitle = '
       <Row ss:StyleID="s23">
@@ -467,7 +478,7 @@ $activityTable = $activityHeaderTitle.$activityHeaderXml.$activityDataXml;
 if($activityTable != ""){
      $activityTable .= $rowSpace;
 }
-$attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
+$attendeeTable = $attendeeHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
