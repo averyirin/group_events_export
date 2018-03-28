@@ -180,7 +180,7 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
 function group_events_export_overview($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
-   $eventXml = '<Row>
+   $eventDataXml = '<Row>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
@@ -200,22 +200,24 @@ function group_events_export_overview($event){
          'limit' => false
        ));
        //Add number of people who are each attendance type
-       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
    }
-  $eventXml .= '</Row>';
+  $eventDataXml .= '</Row>';
 //return of event info
-  return $eventXml;
+  return $eventDataXml;
 }
 
 function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
-  $headerXml = '
-   <Worksheet ss:Name="'.$event->title.'">
+  $beginXml = '
+  <Worksheet ss:Name="'.$event->title.'">
    <Table
    x:FullColumns="1"
    x:FullRows="1">
-   <Column />
+   <Column />';
+
+  $eventHeaderXml = '
    <Row ss:StyleID="s23">
    <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
@@ -224,7 +226,7 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
    //Default attendee data
-   $attendeeHeaderXml = '<Row></Row>
+   $attendeeHeaderXml = '
    <Row ss:StyleID="s23">
    <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Email</Data></Cell>
@@ -271,7 +273,7 @@ function group_events_export_sheet($event){
 
    $attendeeDataXml = '';
 
-   $eventXml = '<Row>
+   $eventDataXml = '<Row>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
@@ -286,7 +288,7 @@ function group_events_export_sheet($event){
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
      //Add types of attendance header (attended/interested/organizing/exhibiting)
-      $headerXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
+      $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
        $old_ia = elgg_set_ignore_access(true);
        $peopleResponded = elgg_get_entities_from_relationship(array(
          'relationship' => $relationship,
@@ -296,7 +298,7 @@ function group_events_export_sheet($event){
          'limit' => false
        ));
        //Add number of people who are each attendance type
-       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
 
        //add individual attendee status, their registration question responses, and chosen activities
        foreach ($peopleResponded as $attendee) {
@@ -360,17 +362,17 @@ function group_events_export_sheet($event){
            $icells = $it -> getElementsByTagName('tr');
            foreach($icells as $val){
              $cells = $val -> getElementsByTagName('td');
-             $headerXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-             $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+             $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+             $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
            }
        }
       }else{
-       $headerXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-       $eventXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+       $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
      }
    }
-  $eventXml .= '</Row>';
-  $headerXml .= '</Row>';
+  $eventDataXml .= '</Row>';
+  $eventHeaderXml .= '</Row>';
   $endXml = '</Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
@@ -391,8 +393,12 @@ function group_events_export_sheet($event){
   </WorksheetOptions>
   </Worksheet>';
 
+$rowSpace = '<Row></Row>';
+$eventTable = $eventHeaderXml.$eventDataXml;
+$attendeeTable = $attendeeHeaderXml.$attendeeDataXml;
+
 //return sheet of event info
-  return $headerXml.$eventXml.$attendeeHeaderXml.$attendeeDataXml.$endXml;
+  return $beginXml.$eventTable.$rowSpace.$attendeeTable.$endXml;
 }
 
 
