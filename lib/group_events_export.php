@@ -367,6 +367,9 @@ function group_events_export_sheet($event){
     </Row>';
   $descHeaderXml = '';
   $descDataXml = '';
+  $descColTotal = 0;
+  $descGeneralHeaderXml = '';
+
   $data = (string)($event->description);
    //Filter out the event description table into headers
    if($data != ""){
@@ -388,23 +391,30 @@ function group_events_export_sheet($event){
                $icells = $it -> getElementsByTagName('tr');
                foreach($icells as $val){
                  $cells = $val -> getElementsByTagName('td');
+                 $descColTotal++;
                  $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
                  $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
                }
            }
           }else{
+            $descColTotal++;
            $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
            $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
          }
        }
      }else{
        //No tables in description
+       $descColTotal++;
        $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
        $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
      }
      //end description data
      $descHeaderXml .= '</Row>';
     $descDataXml .= '</Row>';
+    $descGeneralHeaderXml = '
+     <Row ss:StyleID="s23">
+    <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s31"><Data ss:Type="String">Description</Data></Cell>
+    </Row>';
   }
 
   $eventDataXml .= '</Row>';
@@ -431,7 +441,7 @@ function group_events_export_sheet($event){
 //event table
 $eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
-$descTable = $descHeaderXml.$descDataXml;
+$descTable = $descGeneralHeaderXml.$descHeaderXml.$descDataXml;
 if($descTable != ""){
      $descTable .= $rowSpace;
 }
