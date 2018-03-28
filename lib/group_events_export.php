@@ -398,10 +398,9 @@ function group_events_export_sheet($event){
 $eventTable = $eventHeaderXml.$eventDataXml.$rowSpace;
 //optional desc table spacing
 $descTable = $descHeaderXml.$descDataXml;
-echo var_dump($descTable);
-exit();
+
 if($descTable != ""){
-     $descHeaderXml .= $rowSpace;
+     $descTable .= $rowSpace;
 }
 $attendeeTable = $attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
