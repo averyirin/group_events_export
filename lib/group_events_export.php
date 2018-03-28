@@ -71,9 +71,11 @@ function generate_export_spreadsheet($resultEventGuids){
      $spreadsheetExportString .= '<Cell><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
   }
   $spreadsheetExportString .= '</Row>';
-
-
-
+  //Populate Overview Data
+  foreach ($resultEventGuids as $eventGuid) {
+    $xml = group_events_export_overview(get_entity($eventGuid));
+    $spreadsheetExportString .= $xml;
+  }
   //End overview Spreadsheet
   $spreadsheetExportString .= '</Table>
   <WorksheetOptions
