@@ -5,7 +5,7 @@
  * Date: 11/21/2017
  * Time: 10:17 AM
  */
-function generate_export_spreadsheet($resultEventGuids){
+function generate_export_spreadsheet($resultEventGuids, groupGuid){
   //Create excel formatted xml spreadsheet
   $spreadsheetExportString = '<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
@@ -53,13 +53,18 @@ function generate_export_spreadsheet($resultEventGuids){
 </Style>
   </Styles>
   ';
-  //rows is number of events plus header row
-  $overviewRowTotal = count($resultEventGuids)+1;
+  //rows is number of events plus header filter row plus top heading
+  $overviewRowTotal = count($resultEventGuids)+2;
   //col is number of data cols
   $overviewColTotal = 5;
 
+  //get name of group
+  $nameOfGroup = get_entity($groupGuid)->name;
   //Set Overview Headers
   $overviewHeaderRow .= '
+   <Row ss:StyleID="s23">
+   <Cell><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
+   </Row>
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Event</Data></Cell>
    <Cell><Data ss:Type="String">Location</Data></Cell>
@@ -81,7 +86,7 @@ function generate_export_spreadsheet($resultEventGuids){
   $overviewSheet = '
   <Worksheet ss:Name="'."Overview".'">
   <Names>
-   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Overview!R1C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Overview!R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
     ss:Hidden="1"/>
   </Names>
   <Table
@@ -116,7 +121,7 @@ function generate_export_spreadsheet($resultEventGuids){
   <ProtectObjects>False</ProtectObjects>
   <ProtectScenarios>False</ProtectScenarios>
   </WorksheetOptions>
-  <AutoFilter x:Range="R1C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+  <AutoFilter x:Range="R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
    xmlns="urn:schemas-microsoft-com:office:excel">
   </AutoFilter>
   </Worksheet>';

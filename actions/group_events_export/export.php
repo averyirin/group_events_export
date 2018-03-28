@@ -13,7 +13,7 @@ exit;
 */
 
 $resultEntities = $_SESSION['eventEntities'];
-$spreadsheetExportString = generate_export_spreadsheet($resultEntities);
+$spreadsheetExportString = generate_export_spreadsheet($resultEntities,$groupGuid);
 header("Content-type: text/xml");
 header("Content-Disposition: Attachment; filename=export.xml");
 header('Pragma: public');
