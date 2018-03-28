@@ -327,7 +327,6 @@ function group_events_export_sheet($event){
            }
          }
          $attendeeDataXml .= '</Row>';
-
        }
    }
   $descHeaderXml = '';
@@ -341,7 +340,9 @@ function group_events_export_sheet($event){
      $xpath = new DOMXPath($dom);
 
      $results = $xpath->query('/html/body/table/tbody/tr');
-     if(count($results)> 0){
+     echo (var_dump($results->length));
+     exit();
+     if($results->length > 0){
        //Found tables
        foreach ($results as $result){
          $cells = $result -> getElementsByTagName('td');
