@@ -228,13 +228,13 @@ function group_events_export_sheet($event){
    ';
    $eventGeneralHeaderXml = '
     <Row ss:StyleID="s23">
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-    </Row';
+    </Row>';
 
    //Default attendee data
    $attendeeHeaderXml = '
