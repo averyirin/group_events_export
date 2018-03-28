@@ -404,13 +404,13 @@ function group_events_export_sheet($event){
                $icells = $it -> getElementsByTagName('tr');
                $iColTotal = 0;
                foreach($icells as $val){
-                 $cells = $val -> getElementsByTagName('td');
+                 $iDataCells = $val -> getElementsByTagName('td');
                  $descColTotal++;
                  $iColTotal++;
-                 $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-                 $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+                 $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($iDataCells->item(0)->nodeValue).'</Data></Cell>';
+                 $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($iDataCells->item(1)->nodeValue).'</Data></Cell>';
                }
-               $descGeneralHeaderXml .= '<Cell ss:MergeAcross="'.($iColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>';
+               $descGeneralHeaderXml .= '<Cell ss:MergeAcross="'.($iColTotal-1).'" ss:StyleID="s29"><Data ss:Type="String">Description</Data></Cell>';
            }
           }else{
             $descColTotal++;
