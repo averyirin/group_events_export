@@ -274,6 +274,7 @@ function group_events_export_sheet($event){
 
               $activityDataXml .= '<Row>
               <Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>
+              <Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->description.'</Data></Cell>
               </Row>';
              $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
            }
