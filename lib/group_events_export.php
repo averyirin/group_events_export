@@ -233,7 +233,7 @@ function group_events_export_sheet($event){
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
+    <Cell ss:MergeAcross="6" ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
     </Row>';
 
    //Default attendee data
