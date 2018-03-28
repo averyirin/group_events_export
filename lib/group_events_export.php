@@ -53,16 +53,13 @@ function generate_export_spreadsheet($resultEventGuids){
 </Style>
   </Styles>
   ';
-  //Create Overview Sheet
-  $spreadsheetExportString .= '
-  <Worksheet ss:Name="'."Overview".'">
-  <Table
-  x:FullColumns="1"
-  x:FullRows="1">
-  <Column />';
+  //rows is number of events plus header row
+  $overviewRowTotal = count($resultEventGuids)+1;
+  //col is number of data cols
+  $overviewColTotal = 4;
 
   //Set Overview Headers
-  $spreadsheetExportString .= '
+  $overviewHeaderRow .= '
    <Row ss:StyleID="s23">
    <Cell><Data ss:Type="String">Event</Data></Cell>
    <Cell><Data ss:Type="String">Location</Data></Cell>
@@ -74,9 +71,23 @@ function generate_export_spreadsheet($resultEventGuids){
    reset($event_relationship_options);
    foreach($event_relationship_options as $relationship) {
      //Add types of attendance header (attended/interested/organizing/exhibiting)
-     $spreadsheetExportString .= '<Cell><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
+     $overviewColTotal++;
+     $overviewHeaderRow .= '<Cell><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
   }
-  $spreadsheetExportString .= '</Row>';
+  $overviewHeaderRow .= '</Row>';
+
+
+  //Create Overview Sheet
+  $overviewSheet = '
+  <Worksheet ss:Name="'."Overview".'">
+  <Table
+  x:FullColumns="1"
+  x:FullRows="1">
+  <Column />';
+
+  //add overview header information with filter
+  $spreadsheetExportString .= $overviewSheet .$overviewHeaderRow;
+
   //Populate Overview Data
   foreach ($resultEventGuids as $eventGuid) {
     $xml = group_events_export_overview(get_entity($eventGuid));
