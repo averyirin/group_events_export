@@ -47,8 +47,51 @@ function generate_export_spreadsheet($resultEventGuids){
   </Styles>
   ';
   //Create Overview Sheet
+  $spreadsheetExportString .= '
+  <Worksheet ss:Name="'."Overview".'">
+  <Table
+  x:FullColumns="1"
+  x:FullRows="1">
+  <Column />'
+  //Set Overview Headers
+  $spreadsheetExportString .= '
+   <Row ss:StyleID="s23">
+   <Cell><Data ss:Type="String">Event</Data></Cell>
+   <Cell><Data ss:Type="String">Location</Data></Cell>
+   <Cell><Data ss:Type="String">Venue</Data></Cell>
+   <Cell><Data ss:Type="String">Start</Data></Cell>
+   <Cell><Data ss:Type="String">End</Data></Cell>
+   ';
+   $event_relationship_options = event_manager_event_get_relationship_options();
+   reset($event_relationship_options);
+   foreach($event_relationship_options as $relationship) {
+     //Add types of attendance header (attended/interested/organizing/exhibiting)
+     $spreadsheetExportString .= '<Cell><Data ss:Type="String">'.$relationship.'</Data></Cell>';
+  }
+  $spreadsheetExportString .= '</Row>';
 
 
+
+  //End overview Spreadsheet
+  $spreadsheetExportString .=  = '</Table>
+  <WorksheetOptions
+  xmlns="urn:schemas-microsoft-com:office:excel">
+  <Print>
+  <ValidPrinterInfo/>
+  <HorizontalResolution>300</HorizontalResolution>
+  <VerticalResolution>300</VerticalResolution>
+  </Print>
+  <Selected/>
+  <Panes>
+  <Pane>
+  <Number>3</Number>
+  <ActiveRow>5</ActiveRow>
+  </Pane>
+  </Panes>
+  <ProtectObjects>False</ProtectObjects>
+  <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  </Worksheet>';
   //Create Individual Event Sheet
   foreach ($resultEventGuids as $eventGuid) {
     $xml = group_events_export_sheet(get_entity($eventGuid));
@@ -60,6 +103,36 @@ function generate_export_spreadsheet($resultEventGuids){
   return $spreadsheetExportString;
 }
 
+
+function group_events_export_overview($event){
+  $old_ia = elgg_get_ignore_access();
+  elgg_set_ignore_access(true);
+   $eventXml = '<Row>
+   <Cell><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+   <Cell><Data ss:Type="String">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . " ". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
+   <Cell><Data ss:Type="String">'.date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . " ". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
+   ';
+   $event_relationship_options = event_manager_event_get_relationship_options();
+   reset($event_relationship_options);
+   foreach($event_relationship_options as $relationship) {
+     //Add types of attendance header (attended/interested/organizing/exhibiting)
+       $old_ia = elgg_set_ignore_access(true);
+       $peopleResponded = elgg_get_entities_from_relationship(array(
+         'relationship' => $relationship,
+         'relationship_guid' => $event->getGUID(),
+         'inverse_relationship' => FALSE,
+         'site_guids' => false,
+         'limit' => false
+       ));
+       //Add number of people who are each attendance type
+       $eventXml .='<Cell><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+   }
+  $eventXml .= '</Row>';
+//return of event info
+  return $eventXml;
+}
 
 function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
