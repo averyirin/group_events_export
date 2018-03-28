@@ -340,8 +340,6 @@ function group_events_export_sheet($event){
      $xpath = new DOMXPath($dom);
 
      $results = $xpath->query('/html/body/table/tbody/tr');
-     echo (var_dump($results->length));
-     exit();
      if($results->length > 0){
        //Found tables
        foreach ($results as $result){
