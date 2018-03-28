@@ -88,6 +88,11 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
     <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
    </Borders>
   </Style>
+  <Style ss:ID="s31">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+  </Style>
 
   </Styles>
   ';
@@ -233,7 +238,7 @@ function group_events_export_sheet($event){
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:MergeAcross="6" ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
+    <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
     </Row>';
 
    //Default attendee data
