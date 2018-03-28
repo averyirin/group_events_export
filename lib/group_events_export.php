@@ -413,8 +413,6 @@ if($descTable != ""){
 
 //optional activity data table spacing
 $activityTable = $activityHeaderXml.$activityDataXml;
-echo var_dump($activityTable);
-exit();
 
 if($activityTable != ""){
      $activityTable .= $rowSpace;
