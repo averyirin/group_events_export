@@ -91,7 +91,7 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
    foreach($event_relationship_options as $relationship) {
      //Add types of attendance header (attended/interested/organizing/exhibiting)
      $overviewColTotal++;
-     $overviewHeaderRow .= '<Cell><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
+     $overviewHeaderRow .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
   }
   $overviewHeaderRow .= '</Row>';
 
