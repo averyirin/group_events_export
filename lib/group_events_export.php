@@ -330,43 +330,43 @@ function group_events_export_sheet($event){
 
        }
    }
-
-
-
-
+  $descHeaderXml = '';
+  $descDataXml = '';
+  $data = (string)($event->description);
    //Filter out the event description table into headers
-   $descHeaderXml = '';
-   $descDataXml = '';
-   $data = (string)($event->description);
+   if($data != ""){
+     $dom = new DOMDocument();
+     @$dom->loadHTML($data);
+     $dom->preserveWhiteSpace = false;
+     $xpath = new DOMXPath($dom);
 
-   $dom = new DOMDocument();
-   @$dom->loadHTML($data);
-   $dom->preserveWhiteSpace = false;
-   $xpath = new DOMXPath($dom);
-   echo var_dump ($event->title." ".$event->description);
-   exit();
-if($event->description != ""){
-
-}
-   $results = $xpath->query('/html/body/table/tbody/tr');
-   //  echo htmlentities($results);
-   foreach ($results as $result){
-     $cells = $result -> getElementsByTagName('td');
-     $internalTables = $result -> getElementsByTagName('table');
-     if($internalTables->length > 0){
-        foreach ($internalTables as $it) {
-           $icells = $it -> getElementsByTagName('tr');
-           foreach($icells as $val){
-             $cells = $val -> getElementsByTagName('td');
-             $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-             $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+     $results = $xpath->query('/html/body/table/tbody/tr');
+     if(count($results)> 0){
+       //Found tables
+       foreach ($results as $result){
+         $cells = $result -> getElementsByTagName('td');
+         $internalTables = $result -> getElementsByTagName('table');
+         if($internalTables->length > 0){
+            foreach ($internalTables as $it) {
+               $icells = $it -> getElementsByTagName('tr');
+               foreach($icells as $val){
+                 $cells = $val -> getElementsByTagName('td');
+                 $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+                 $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+               }
            }
+          }else{
+           $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+           $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+         }
        }
-      }else{
-       $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+     }else{
+       //No tables in description
+       $eventHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
+       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
      }
-   }
+  }
+
   $eventDataXml .= '</Row>';
   $eventHeaderXml .= '</Row>';
   $endXml = '</Table>
