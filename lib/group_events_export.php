@@ -420,7 +420,7 @@ if($descTable != ""){
 }
 
 //optional activity data table spacing
-$activityTable = $activityHeaderXml;
+$activityTable = $activityDataXml;
 
 if($activityTable != ""){
      $activityTable .= $rowSpace;
