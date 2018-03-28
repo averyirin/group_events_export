@@ -126,7 +126,7 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
   <Table
   x:FullColumns="1"
   x:FullRows="1">
-  <Column />';
+  <Column ss:AutoFitWidth="1"  />';
 
   //add overview header information with filter
   $spreadsheetExportString .= $overviewSheet .$overviewHeaderTitle. $overviewHeaderRow;
