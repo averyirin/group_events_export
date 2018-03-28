@@ -299,11 +299,6 @@ function group_events_export_sheet($event){
          }
        }
      }
-    $attendeeHeaderTitle = '
-           <Row ss:StyleID="s23">
-          <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
-          </Row>';
-
      $activityHeaderTitle = '
       <Row ss:StyleID="s23">
      <Cell ss:MergeAcross="'.($activityColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Activities</Data></Cell>
@@ -320,6 +315,7 @@ function group_events_export_sheet($event){
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
    ';
+
 
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
@@ -383,6 +379,11 @@ function group_events_export_sheet($event){
     <Row>
     <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
     </Row>';
+
+    $attendeeHeaderTitle = '
+          <Row ss:StyleID="s23">
+         <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
+         </Row>';
   $descHeaderXml = '';
   $descDataXml = '';
   $descColTotal = 0;
