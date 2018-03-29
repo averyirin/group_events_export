@@ -378,7 +378,7 @@ function getDescriptionTable($event){
 
 
 function getInfoTable($event){
-        //Contact Table
+        //Info and Contact Table
         $infoHeaderXml = '
         <Row>
         <Cell ss:StyleID="s29"><Data ss:Type="String">shortdescription</Data></Cell>
@@ -390,7 +390,7 @@ function getInfoTable($event){
         <Cell ss:StyleID="s29"><Data ss:Type="String">region</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">website</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">event_type</Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">organizer</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">contact</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">fee</Data></Cell>
         </Row>';
 
@@ -424,7 +424,7 @@ function getInfoTable($event){
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->region.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->website.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->event_type.'</Data></Cell>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->organizer.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->contact_details.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->fee.'</Data></Cell>
         </Row>';
         $infoColTotal = 11;
