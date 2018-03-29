@@ -281,7 +281,7 @@ function getEventTable($event){
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
     </Row>';
-    $max_attendees = $event->max_attendees
+    $max_attendees = $event->max_attendees;
     if($max_attendees){
 		    $spots_left = ($max_attendees - $event->countAttendees());
 	  }
