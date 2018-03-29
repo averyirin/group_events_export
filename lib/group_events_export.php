@@ -93,7 +93,12 @@ function generate_export_spreadsheet($resultEventGuids, $groupGuid){
        <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
        <Interior ss:Color="#808080" ss:Pattern="Solid"/>
       </Style>
-
+      <Style ss:ID="s32">
+       <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+       <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="11" ss:Color="#FFFFFF"
+        ss:Bold="0"/>
+       <Interior ss:Color="#000000" ss:Pattern="Solid"/>
+      </Style>
       </Styles>
       ';
       //rows is number of events plus header filter row plus top heading
@@ -248,7 +253,7 @@ function group_events_export_sheet($event){
     $attendeeTable = getAttendeeTable($event);
 
     //return sheet of event info
-    return $beginXml.$eventTable.$contactTable.$infoTable.$descTable.$activityTable.$attendeeTable.$endXml;
+    return $beginXml.$eventTable.$infoTable.$descTable.$activityTable.$attendeeTable.$endXml;
 }
 
 
@@ -263,6 +268,8 @@ function getEventTable($event){
    <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
    ';
+
+
    $eventGeneralHeaderXml = '
     <Row ss:StyleID="s23">
     <Cell ss:StyleID="s29"></Cell>
@@ -301,6 +308,11 @@ function getEventTable($event){
      <Row>
      <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
      </Row>';
+
+     $eventShortDescTitle = '
+      <Row ">
+      <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s32"><Data ss:Type="String">'.$event->shortdescription.'</Data></Cell>
+      </Row>';
 
      return $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
 }
@@ -381,7 +393,6 @@ function getInfoTable($event){
         //Info and Contact Table
         $infoHeaderXml = '
         <Row>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">shortdescription</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">registration_ended</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">notify_onsignup</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">max_attendees</Data></Cell>
@@ -415,7 +426,6 @@ function getInfoTable($event){
 
           */
         $infoDataXml = '<Row>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->shortdescription.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->registration_ended.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->notify_onsignup.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->max_attendees.'</Data></Cell>
