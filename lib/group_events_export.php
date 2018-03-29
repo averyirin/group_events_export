@@ -396,7 +396,7 @@ function getDescriptionTable($event){
   return $descTable;
 }
 
-function placeTable($tableData, $tableOrientation, $startCol, $startRow){
+function placeTable($tableData, $tableOrientation, $startRow, $startCol){
   $tableXml = '';
 
 for($r=$startRow;$r < ($startRow+3); $r++){
