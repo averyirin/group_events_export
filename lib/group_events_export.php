@@ -354,7 +354,7 @@ function getDescriptionTable($event){
   if($descTable != ""){
        $descTable .= '<Row></Row>';
   }
-  
+
   return $descTable;
 }
 
@@ -391,23 +391,8 @@ function group_events_export_sheet($event){
        }
      }
    }
-
-   $activityHeaderXml = '';
-   $activityDataXml = '';
-   $activityColTotal = 5;
-   $activityHeaderTitle = '';
-
    //Build program headers with the events that the attendee can join
    if($event->with_program) {
-     $activityHeaderXml .= '<Row ss:StyleID="s23">
-     <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
-     <Cell ss:StyleID="s29"><Data ss:Type="String">Description</Data></Cell>
-     <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
-     <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
-     <Cell ss:StyleID="s29"><Data ss:Type="String">Participants</Data></Cell>
-     </Row>';
-
-
      if($eventDays = $event->getEventDays()) {
        foreach($eventDays as $eventDay) {
          $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
@@ -415,28 +400,16 @@ function group_events_export_sheet($event){
            foreach($eventSlots as $eventSlot) {
 
               $attendeeColTotal++;
-              $activityDataXml .= '<Row>
-              <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>
-              <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->description.'</Data></Cell>
-              <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY,$eventDay->date) . "T". date('H', $eventSlot->start_time) . ':' . date('i', $eventSlot->start_time).'</Data></Cell>
-              <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY,$eventDay->date) . "T". date('H', $eventSlot->end_time) . ':' . date('i', $eventSlot->end_time) .'</Data></Cell>
-              <Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)$eventSlot->countRegistrations().'</Data></Cell>
-              </Row>';
              $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
            }
          }
        }
      }
-     $activityHeaderTitle = '
-      <Row ss:StyleID="s23">
-     <Cell ss:MergeAcross="'.($activityColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Activities</Data></Cell>
-     </Row>';
 
    }
    //End Fields
    $attendeeHeaderXml .= '</Row>';
    $attendeeDataXml = '';
-
 
    $event_relationship_options = event_manager_event_get_relationship_options();
    reset($event_relationship_options);
@@ -550,18 +523,57 @@ $eventTable = getEventTable($event);
 
 $descTable = getDescriptionTable($event);
 
-//optional activity data table spacing
-$activityTable = $activityHeaderTitle.$activityHeaderXml.$activityDataXml;
+$activityTable = getActivityTable($event);
 
-if($activityTable != ""){
-     $activityTable .= $rowSpace;
-}
 $attendeeTable = $attendeeHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.$rowSpace;
 
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
 }
 
+function getActivityTable($event){
+  $activityHeaderXml = '';
+  $activityDataXml = '';
+  $activityColTotal = 5;
+  $activityHeaderTitle = '';
+
+  //Build program headers with the events that the attendee can join
+  if($event->with_program) {
+    $activityHeaderXml .= '<Row ss:StyleID="s23">
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Description</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="String">Participants</Data></Cell>
+    </Row>';
+    if($eventDays = $event->getEventDays()) {
+      foreach($eventDays as $eventDay) {
+        $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
+        if($eventSlots = $eventDay->getEventSlots()) {
+          foreach($eventSlots as $eventSlot) {
+             $activityDataXml .= '<Row>
+             <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>
+             <Cell ss:StyleID="s30"><Data ss:Type="String">'.$eventSlot->description.'</Data></Cell>
+             <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY,$eventDay->date) . "T". date('H', $eventSlot->start_time) . ':' . date('i', $eventSlot->start_time).'</Data></Cell>
+             <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY,$eventDay->date) . "T". date('H', $eventSlot->end_time) . ':' . date('i', $eventSlot->end_time) .'</Data></Cell>
+             <Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)$eventSlot->countRegistrations().'</Data></Cell>
+             </Row>';
+          }
+        }
+      }
+    }
+    $activityHeaderTitle = '
+     <Row ss:StyleID="s23">
+    <Cell ss:MergeAcross="'.($activityColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Activities</Data></Cell>
+    </Row>';
+  }
+  //optional activity data table spacing
+  $activityTable = $activityHeaderTitle.$activityHeaderXml.$activityDataXml;
+  if($activityTable != ""){
+       $activityTable .= '<Row></Row>';
+  }
+  return $activityTable;
+}
 
 
 function getGroupEventXMLOriginal(){
