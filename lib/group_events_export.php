@@ -211,6 +211,47 @@ function group_events_export_overview($event){
   return $eventDataXml;
 }
 
+//generates a sheet for each event with details
+function group_events_export_sheet($event){
+  $beginXml = '
+  <Worksheet ss:Name="'.$event->title.'">
+   <Table
+   x:FullColumns="1"
+   x:FullRows="1">
+   <Column />';
+   $endXml = '</Table>
+   <WorksheetOptions
+   xmlns="urn:schemas-microsoft-com:office:excel">
+   <Print>
+   <ValidPrinterInfo/>
+   <HorizontalResolution>300</HorizontalResolution>
+   <VerticalResolution>300</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+   <Pane>
+   <Number>3</Number>
+   <ActiveRow>5</ActiveRow>
+   </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+   </WorksheetOptions>
+   </Worksheet>';
+
+    //tables
+    $eventTable = getEventTable($event);
+    $infoTable = getInfoTable($event);
+    $contactTable = getContactTable($event);
+    $descTable = getDescriptionTable($event);
+    $activityTable = getActivityTable($event);
+    $attendeeTable = getAttendeeTable($event);
+
+    //return sheet of event info
+    return $beginXml.$eventTable.$contactTable.$infoTable.$descTable.$activityTable.$attendeeTable.$endXml;
+}
+
+
 //generates the general event information table
 function getEventTable($event){
   $eventColTotal = 5;
@@ -335,45 +376,6 @@ function getDescriptionTable($event){
   return $descTable;
 }
 
-//generates a sheet for each event with details
-function group_events_export_sheet($event){
-  $beginXml = '
-  <Worksheet ss:Name="'.$event->title.'">
-   <Table
-   x:FullColumns="1"
-   x:FullRows="1">
-   <Column />';
-   $endXml = '</Table>
-   <WorksheetOptions
-   xmlns="urn:schemas-microsoft-com:office:excel">
-   <Print>
-   <ValidPrinterInfo/>
-   <HorizontalResolution>300</HorizontalResolution>
-   <VerticalResolution>300</VerticalResolution>
-   </Print>
-   <Selected/>
-   <Panes>
-   <Pane>
-   <Number>3</Number>
-   <ActiveRow>5</ActiveRow>
-   </Pane>
-   </Panes>
-   <ProtectObjects>False</ProtectObjects>
-   <ProtectScenarios>False</ProtectScenarios>
-   </WorksheetOptions>
-   </Worksheet>';
-
-    //tables
-    $eventTable = getEventTable($event);
-    $infoTable = getInfoTable($event);
-    $contactTable = getContactTable($event);
-    $descTable = getDescriptionTable($event);
-    $activityTable = getActivityTable($event);
-    $attendeeTable = getAttendeeTable($event);
-
-    //return sheet of event info
-    return $beginXml.$eventTable.$contactTable.$descTable.$activityTable.$attendeeTable.$endXml;
-}
 
 function getInfoTable($event){
         //Contact Table
