@@ -234,6 +234,7 @@ $event->fee = $fee;
   return $eventDataXml;
 }
 
+//generates the general event information table
 function getEventTable($event){
   $eventColTotal = 5;
   $eventHeaderXml = '
@@ -267,7 +268,9 @@ function getEventTable($event){
         //Add number of people who are each attendance type
         $peopleResponded = elgg_get_entities_from_relationship(array(
           'relationship' => $relationship,
-          'relationship_guid' => $event->getGUID(),
+          'relationship_guid' => $event->ge
+
+          tGUID(),
           'inverse_relationship' => FALSE,
           'site_guids' => false,
           'limit' => false
@@ -296,27 +299,6 @@ function group_events_export_sheet($event){
    x:FullColumns="1"
    x:FullRows="1">
    <Column />';
-
-
-  $eventHeaderXml = '
-   <Row ss:StyleID="s23">
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
-   ';
-   $eventColTotal = 5;
-
-   $eventGeneralHeaderXml = '
-    <Row ss:StyleID="s23">
-    <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:StyleID="s29"></Cell>
-    <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
-    </Row>';
 
    //Default attendee data
    $attendeeHeaderXml = '
@@ -405,12 +387,6 @@ function group_events_export_sheet($event){
          'site_guids' => false,
          'limit' => false
        ));
-       //Add types of attendance header (attended/interested/organizing/exhibiting)
-       //Add number of people who are each attendance type
-       $eventColTotal ++;
-       $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
-       $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
-
        //add individual attendee status, their registration question responses, and chosen activities
        foreach ($peopleResponded as $attendee) {
          $attendeeDataXml .=  '<Row>
@@ -449,12 +425,6 @@ function group_events_export_sheet($event){
          $attendeeDataXml .= '</Row>';
        }
    }
-
-   $eventHeaderTitle = '
-    <Row>
-    <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
-    </Row>';
-
     $attendeeHeaderTitle = '
           <Row ss:StyleID="s23">
          <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
@@ -550,8 +520,7 @@ function group_events_export_sheet($event){
     </Row>';
   }
 
-  $eventDataXml .= '</Row>';
-  $eventHeaderXml .= '</Row>';
+
   $endXml = '</Table>
   <WorksheetOptions
   xmlns="urn:schemas-microsoft-com:office:excel">
@@ -572,8 +541,9 @@ function group_events_export_sheet($event){
   </WorksheetOptions>
   </Worksheet>';
 //event table
-$eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
 $eventTable = getEventTable($event);
+
+
 //optional desc table spacing
 $descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
 if($descTable != ""){
