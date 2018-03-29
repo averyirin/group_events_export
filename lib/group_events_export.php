@@ -400,7 +400,7 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableXml = '';
   $tableData = array('status'=> array('location'=>'Borden','Venue'=>'LSC'));
 
-  var_dump($tableData);
+  echo var_dump($tableData)."<br/>";
   if($orientation == 'vertical'){
     for($r=$startRow;$r < ($startRow+3); $r++){
           echo "[".$r.",".$startCol."]"."<br/>";
