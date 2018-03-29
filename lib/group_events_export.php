@@ -429,15 +429,15 @@ function getInfoTable($event){
 
           */
         $infoDataXml = '<Row>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->region.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->registration_ended.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->notify_onsignup.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->twitter_hash.'</Data></Cell>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->region.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->website.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->contact_details.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->fee.'</Data></Cell>
         </Row>';
-        $infoColTotal = 11;
+        $infoColTotal = 7;
         $infoGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
