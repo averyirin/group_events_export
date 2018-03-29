@@ -360,84 +360,77 @@ function getDescriptionTable($event){
 
 
 function group_events_export_sheet($event){
-  $old_ia = elgg_get_ignore_access();
-  elgg_set_ignore_access(true);
 
-  $rowSpace = '<Row></Row>';
+           /*
+           $event->shortdescription = $shortdescription;
+           $event->comments_on = $comments_on;
+           $event->registration_ended = $registration_ended;
+           $event->registration_needed = $registration_needed;
+           $event->show_attendees = $show_attendees;
+           $event->hide_owner_block = $hide_owner_block;
+           $event->notify_onsignup = $notify_onsignup;
+           $event->max_attendees = $max_attendees;
+           $event->waiting_list = $waiting_list;
+           $event->twitter_hash = $twitter_hash;
+           $event->region = $region;
+           $event->website = $website;
+           $event->event_type = $event_type;
+           $event->organizer = $organizer;
+           $event->fee = $fee;
+  */
   $beginXml = '
   <Worksheet ss:Name="'.$event->title.'">
    <Table
    x:FullColumns="1"
    x:FullRows="1">
    <Column />';
+   $endXml = '</Table>
+   <WorksheetOptions
+   xmlns="urn:schemas-microsoft-com:office:excel">
+   <Print>
+   <ValidPrinterInfo/>
+   <HorizontalResolution>300</HorizontalResolution>
+   <VerticalResolution>300</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+   <Pane>
+   <Number>3</Number>
+   <ActiveRow>5</ActiveRow>
+   </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+   </WorksheetOptions>
+   </Worksheet>';
 
-    //Contact Table
-    $contactHeaderXml = '
-    <Row><Cell ss:StyleID="s29"><Data ss:Type="String">Contact Details</Data></Cell></Row>';
-    $contactDataXml = '<Row>
-    <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->contact_details.'</Data></Cell>
-    </Row>';
-    $contactColTotal = 0;
-    $contactGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
-    $contactHeaderTitle = '<Row ss:StyleID="s23">
-   <Cell ss:MergeAcross="'.($contactColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Contact</Data></Cell>
-   </Row>';
+    //tables
+    $eventTable = getEventTable($event);
+    $descTable = getDescriptionTable($event);
+    $activityTable = getActivityTable($event);
+    $attendeeTable = getAttendeeTable($event);
+    $contactTable = getContactTable($event);
 
-         /*
-         $event->shortdescription = $shortdescription;
-         $event->comments_on = $comments_on;
-         $event->registration_ended = $registration_ended;
-         $event->registration_needed = $registration_needed;
-         $event->show_attendees = $show_attendees;
-         $event->hide_owner_block = $hide_owner_block;
-         $event->notify_onsignup = $notify_onsignup;
-         $event->max_attendees = $max_attendees;
-         $event->waiting_list = $waiting_list;
-         $event->twitter_hash = $twitter_hash;
-         $event->region = $region;
-         $event->website = $website;
-         $event->event_type = $event_type;
-         $event->organizer = $organizer;
-         $event->fee = $fee;
-*/
-
-
-
-  $endXml = '</Table>
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <Print>
-  <ValidPrinterInfo/>
-  <HorizontalResolution>300</HorizontalResolution>
-  <VerticalResolution>300</VerticalResolution>
-  </Print>
-  <Selected/>
-  <Panes>
-  <Pane>
-  <Number>3</Number>
-  <ActiveRow>5</ActiveRow>
-  </Pane>
-  </Panes>
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  </Worksheet>';
-//event table
-$eventTable = getEventTable($event);
-
-$descTable = getDescriptionTable($event);
-
-$activityTable = getActivityTable($event);
-
-$attendeeTable = getAttendeeTable($event);
-//return sheet of event info
-  return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
+    //return sheet of event info
+    return $beginXml.$eventTable.$contactTable.$descTable.$activityTable.$attendeeTable.$endXml;
+}
+function getContactTable($event){
+      //Contact Table
+      $contactHeaderXml = '
+      <Row><Cell ss:StyleID="s29"><Data ss:Type="String">Contact Details</Data></Cell></Row>';
+      $contactDataXml = '<Row>
+      <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->contact_details.'</Data></Cell>
+      </Row>';
+      $contactColTotal = 1;
+      $contactGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
+      $contactHeaderTitle = '<Row ss:StyleID="s23">
+     <Cell ss:MergeAcross="'.($contactColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Contact</Data></Cell>
+     </Row>';
+     return $contactHeaderTitle. $contactGeneralHeaderXml.$contactHeaderXml.$contactDataXml.'<Row></Row>';
 }
 
 //get attendees responses and Status
 function getAttendeeTable($event){
-
-
   //Default attendee data
   $attendeeHeaderXml = '
   <Row ss:StyleID="s23">
