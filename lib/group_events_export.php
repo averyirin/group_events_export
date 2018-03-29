@@ -286,6 +286,78 @@ function getEventTable($event){
 
      return $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
 }
+
+//returns the complex description table generated from LP Table
+function getDescriptionTable($event){
+  //Description
+  $descHeaderXml = '';
+  $descDataXml = '';
+  $descColTotal = 0;
+  $descGeneralHeaderXml = '';
+  $descHeaderTitle = '';
+
+  $data = (string)($event->description);
+   //Filter out the event description table into headers
+   if($data != ""){
+      $descHeaderXml .= '<Row>';
+      $descDataXml .= '<Row>';
+      $descGeneralHeaderXml = '<Row>';
+     $dom = new DOMDocument();
+     @$dom->loadHTML($data);
+     $dom->preserveWhiteSpace = false;
+     $xpath = new DOMXPath($dom);
+
+     $results = $xpath->query('/html/body/table/tbody/tr');
+     if($results->length > 0){
+       //Found tables
+       foreach ($results as $result){
+         $cells = $result -> getElementsByTagName('td');
+         $internalTables = $result -> getElementsByTagName('table');
+         if($internalTables->length > 0){
+            foreach ($internalTables as $it) {
+               $icells = $it -> getElementsByTagName('tr');
+               $iColTotal = 0;
+               foreach($icells as $val){
+                 $iDataCells = $val -> getElementsByTagName('td');
+                 $descColTotal++;
+                 $iColTotal++;
+                 $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($iDataCells->item(0)->nodeValue).'</Data></Cell>';
+                 $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($iDataCells->item(1)->nodeValue).'</Data></Cell>';
+               }
+               $descGeneralHeaderXml .= '<Cell ss:MergeAcross="'.($iColTotal-1).'" ss:StyleID="s31"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+           }
+          }else{
+            $descColTotal++;
+          $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
+           $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
+           $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
+         }
+       }
+     }else{
+       //No tables in description
+       $descColTotal++;
+       $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
+       $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
+       $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
+     }
+     //end description data
+     $descHeaderXml .= '</Row>';
+    $descDataXml .= '</Row>';
+    $descGeneralHeaderXml .= '</Row>';
+    $descHeaderTitle = '
+     <Row ss:StyleID="s23">
+    <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>
+    </Row>';
+  }
+  //optional desc table spacing
+  $descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
+  if($descTable != ""){
+       $descTable .= $rowSpace;
+  }
+  return $descTable;
+}
+
+
 function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
@@ -450,66 +522,7 @@ function group_events_export_sheet($event){
          $event->organizer = $organizer;
          $event->fee = $fee;
 */
-  //Description
-  $descHeaderXml = '';
-  $descDataXml = '';
-  $descColTotal = 0;
-  $descGeneralHeaderXml = '';
-  $descHeaderTitle = '';
 
-  $data = (string)($event->description);
-   //Filter out the event description table into headers
-   if($data != ""){
-      $descHeaderXml .= '<Row>';
-      $descDataXml .= '<Row>';
-      $descGeneralHeaderXml = '<Row>';
-     $dom = new DOMDocument();
-     @$dom->loadHTML($data);
-     $dom->preserveWhiteSpace = false;
-     $xpath = new DOMXPath($dom);
-
-     $results = $xpath->query('/html/body/table/tbody/tr');
-     if($results->length > 0){
-       //Found tables
-       foreach ($results as $result){
-         $cells = $result -> getElementsByTagName('td');
-         $internalTables = $result -> getElementsByTagName('table');
-         if($internalTables->length > 0){
-            foreach ($internalTables as $it) {
-               $icells = $it -> getElementsByTagName('tr');
-               $iColTotal = 0;
-               foreach($icells as $val){
-                 $iDataCells = $val -> getElementsByTagName('td');
-                 $descColTotal++;
-                 $iColTotal++;
-                 $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($iDataCells->item(0)->nodeValue).'</Data></Cell>';
-                 $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($iDataCells->item(1)->nodeValue).'</Data></Cell>';
-               }
-               $descGeneralHeaderXml .= '<Cell ss:MergeAcross="'.($iColTotal-1).'" ss:StyleID="s31"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-           }
-          }else{
-            $descColTotal++;
-          $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
-           $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'.($cells->item(0)->nodeValue).'</Data></Cell>';
-           $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.($cells->item(1)->nodeValue).'</Data></Cell>';
-         }
-       }
-     }else{
-       //No tables in description
-       $descColTotal++;
-       $descGeneralHeaderXml .= '<Cell ss:StyleID="s29"></Cell>';
-       $descHeaderXml .=  '<Cell  ss:StyleID="s29"><Data ss:Type="String">'."Description".'</Data></Cell>';
-       $descDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="String">'.$data.'</Data></Cell>';
-     }
-     //end description data
-     $descHeaderXml .= '</Row>';
-    $descDataXml .= '</Row>';
-    $descGeneralHeaderXml .= '</Row>';
-    $descHeaderTitle = '
-     <Row ss:StyleID="s23">
-    <Cell ss:MergeAcross="'.($descColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Description</Data></Cell>
-    </Row>';
-  }
 
 
   $endXml = '</Table>
@@ -534,12 +547,7 @@ function group_events_export_sheet($event){
 //event table
 $eventTable = getEventTable($event);
 
-
-//optional desc table spacing
-$descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
-if($descTable != ""){
-     $descTable .= $rowSpace;
-}
+$descTable = getDescriptionTable($event);
 
 //optional activity data table spacing
 $activityTable = $activityHeaderTitle.$activityHeaderXml.$activityDataXml;
