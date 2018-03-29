@@ -402,8 +402,8 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
 
 
   echo var_dump($tableData)."<br/>";
-  for($tableData as $table){
-    for($table as $heading => $value){
+  foreach($tableData as $table){
+    foreach($table as $heading => $value){
       echo $heading." ".$value;
     }
   }
