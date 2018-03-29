@@ -404,7 +404,7 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
     }
   }else{
     for($c=$startCol;$c < ($startCol+3); $c++){
-          echo "[".$startRow.",".c."]"."<br/>";
+          echo "[".$startRow.",".$c."]"."<br/>";
     }
   }
 
