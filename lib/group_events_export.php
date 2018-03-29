@@ -371,102 +371,6 @@ function group_events_export_sheet($event){
    x:FullRows="1">
    <Column />';
 
-   //Default attendee data
-   $attendeeHeaderXml = '
-   <Row ss:StyleID="s23">
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Email</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
-   ';
-
-   $attendeeColTotal = 3;
-   $attendeeHeaderTitle = '';
-
-   //Build registration question headers
-   if($event->registration_needed) {
-     if($registration_form = $event->getRegistrationFormQuestions()) {
-       foreach($registration_form as $question) {
-         $attendeeColTotal++;
-         $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$question->title.'</Data></Cell>';
-       }
-     }
-   }
-   //Build program headers with the events that the attendee can join
-   if($event->with_program) {
-     if($eventDays = $event->getEventDays()) {
-       foreach($eventDays as $eventDay) {
-         $date = date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $eventDay->date);
-         if($eventSlots = $eventDay->getEventSlots()) {
-           foreach($eventSlots as $eventSlot) {
-
-              $attendeeColTotal++;
-             $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
-           }
-         }
-       }
-     }
-
-   }
-   //End Fields
-   $attendeeHeaderXml .= '</Row>';
-   $attendeeDataXml = '';
-
-   $event_relationship_options = event_manager_event_get_relationship_options();
-   reset($event_relationship_options);
-   foreach($event_relationship_options as $relationship) {
-
-
-        $old_ia = elgg_set_ignore_access(true);
-       $peopleResponded = elgg_get_entities_from_relationship(array(
-         'relationship' => $relationship,
-         'relationship_guid' => $event->getGUID(),
-         'inverse_relationship' => FALSE,
-         'site_guids' => false,
-         'limit' => false
-       ));
-       //add individual attendee status, their registration question responses, and chosen activities
-       foreach ($peopleResponded as $attendee) {
-         $attendeeDataXml .=  '<Row>
-         <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
-         <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
-         <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
-         <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
-         ';
-         //Registration question answers
-         $answerString = '';
-         if($event->registration_needed) {
-           if($registration_form = $event->getRegistrationFormQuestions()) {
-             foreach($registration_form as $question) {
-               $answer = $question->getAnswerFromUser($attendee->getGUID());
-               $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.($answer->value).'</Data></Cell>';
-             }
-           }
-         }
-
-         //[V] Checked - Joined a program within event
-         if($event->with_program) {
-           if($eventDays = $event->getEventDays()) {
-             foreach($eventDays as $eventDay) {
-               if($eventSlots = $eventDay->getEventSlots()) {
-                 foreach($eventSlots as $eventSlot) {
-                   if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
-                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.'x'.'</Data></Cell>';
-                   } else {
-                     $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String"></Data></Cell>';
-                   }
-                 }
-               }
-             }
-           }
-         }
-         $attendeeDataXml .= '</Row>';
-       }
-   }
-    $attendeeHeaderTitle = '
-          <Row ss:StyleID="s23">
-         <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
-         </Row>';
-
     //Contact Table
     $contactHeaderXml = '
     <Row><Cell ss:StyleID="s29"><Data ss:Type="String">Contact Details</Data></Cell></Row>';
@@ -525,12 +429,108 @@ $descTable = getDescriptionTable($event);
 
 $activityTable = getActivityTable($event);
 
-$attendeeTable = $attendeeHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.$rowSpace;
-
+$attendeeTable = getAttendeeTable($event);
 //return sheet of event info
   return $beginXml.$eventTable.$descTable.$activityTable.$attendeeTable.$endXml;
 }
 
+//get attendees responses and Status
+function getAttendeeTable($event){
+
+
+  //Default attendee data
+  $attendeeHeaderXml = '
+  <Row ss:StyleID="s23">
+  <Cell ss:StyleID="s29"><Data ss:Type="String">Name</Data></Cell>
+  <Cell ss:StyleID="s29"><Data ss:Type="String">Email</Data></Cell>
+  <Cell ss:StyleID="s29"><Data ss:Type="String">Status</Data></Cell>
+  ';
+
+  $attendeeColTotal = 3;
+  $attendeeHeaderTitle = '';
+
+  //Build registration question headers
+  if($event->registration_needed) {
+    if($registration_form = $event->getRegistrationFormQuestions()) {
+      foreach($registration_form as $question) {
+        $attendeeColTotal++;
+        $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$question->title.'</Data></Cell>';
+      }
+    }
+  }
+  //Build program headers with the events that the attendee can join
+  if($event->with_program) {
+    if($eventDays = $event->getEventDays()) {
+      foreach($eventDays as $eventDay) {
+        if($eventSlots = $eventDay->getEventSlots()) {
+          foreach($eventSlots as $eventSlot) {
+            $attendeeColTotal++;
+            $attendeeHeaderXml .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.$eventSlot->title.'</Data></Cell>';
+          }
+        }
+      }
+    }
+  }
+  //End Fields
+  $attendeeHeaderXml .= '</Row>';
+  $attendeeDataXml = '';
+  $event_relationship_options = event_manager_event_get_relationship_options();
+  foreach($event_relationship_options as $relationship) {
+      $peopleResponded = elgg_get_entities_from_relationship(array(
+        'relationship' => $relationship,
+        'relationship_guid' => $event->getGUID(),
+        'inverse_relationship' => FALSE,
+        'site_guids' => false,
+        'limit' => false
+      ));
+      //add individual attendee status, their registration question responses, and chosen activities
+      foreach ($peopleResponded as $attendee) {
+        $attendeeDataXml .=  '<Row>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$attendee->name.'</Data></Cell>
+        <Cell ss:StyleID="s21" ss:HRef="mailto:molly@katzen.com">
+        <Data ss:Type="String">'.(string)$attendee->email.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$relationship.'</Data></Cell>
+        ';
+        //Registration question answers
+        $answerString = '';
+        if($event->registration_needed) {
+          if($registration_form = $event->getRegistrationFormQuestions()) {
+            foreach($registration_form as $question) {
+              $answer = $question->getAnswerFromUser($attendee->getGUID());
+              $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.($answer->value).'</Data></Cell>';
+            }
+          }
+        }
+
+        //[V] Checked - Joined a program within event
+        if($event->with_program) {
+          if($eventDays = $event->getEventDays()) {
+            foreach($eventDays as $eventDay) {
+              if($eventSlots = $eventDay->getEventSlots()) {
+                foreach($eventSlots as $eventSlot) {
+                  if(check_entity_relationship($attendee->getGUID(), EVENT_MANAGER_RELATION_SLOT_REGISTRATION, $eventSlot->getGUID())) {
+                    $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String">'.'x'.'</Data></Cell>';
+                  } else {
+                    $attendeeDataXml .= '<Cell ss:StyleID="s30"><Data ss:Type="String"></Data></Cell>';
+                  }
+                }
+              }
+            }
+          }
+        }
+        $attendeeDataXml .= '</Row>';
+      }
+  }
+  $attendeeHeaderTitle = '
+         <Row ss:StyleID="s23">
+        <Cell ss:MergeAcross="'.($attendeeColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Attendees</Data></Cell>
+        </Row>';
+
+  $attendeeTable = $attendeeHeaderTitle.$attendeeHeaderXml.$attendeeDataXml.'<Row></Row>';
+  return $attendeeTable;
+}
+
+//get list of activities and total members attended them
 function getActivityTable($event){
   $activityHeaderXml = '';
   $activityDataXml = '';
