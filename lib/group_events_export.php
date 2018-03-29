@@ -376,24 +376,61 @@ function group_events_export_sheet($event){
 }
 
 function getInfoTable($event){
-  /*
+        //Contact Table
+        $infoHeaderXml = '
+        <Row>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">shortdescription</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">registration_ended</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">notify_onsignup</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">max_attendees</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">waiting_list</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">twitter_hash</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">region</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">website</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">event_type</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">organizer</Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">fee</Data></Cell>
+        </Row>';
 
-  $event->shortdescription = $shortdescription;
-  $event->comments_on = $comments_on;
-  $event->registration_ended = $registration_ended;
-  $event->registration_needed = $registration_needed;
-  $event->show_attendees = $show_attendees;
-  $event->hide_owner_block = $hide_owner_block;
-  $event->notify_onsignup = $notify_onsignup;
-  $event->max_attendees = $max_attendees;
-  $event->waiting_list = $waiting_list;
-  $event->twitter_hash = $twitter_hash;
-  $event->region = $region;
-  $event->website = $website;
-  $event->event_type = $event_type;
-  $event->organizer = $organizer;
-  $event->fee = $fee;
-  */
+        /*
+          $event->shortdescription = $shortdescription;
+          $event->comments_on = $comments_on;
+          $event->registration_ended = $registration_ended;
+          $event->registration_needed = $registration_needed;
+          $event->show_attendees = $show_attendees;
+          $event->hide_owner_block = $hide_owner_block;
+          $event->notify_onsignup = $notify_onsignup;
+          $event->max_attendees = $max_attendees;
+          $event->waiting_list = $waiting_list;
+          $event->twitter_hash = $twitter_hash;
+          $event->region = $region;
+          $event->website = $website;
+          $event->event_type = $event_type;
+          $event->organizer = $organizer;
+          $event->fee = $fee;
+
+          <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY,$eventDay->date) . "T". date('H', $eventSlot->start_time) . ':' . date('i', $eventSlot->start_time).'</Data></Cell>
+
+          */
+        $infoDataXml = '<Row>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->shortdescription.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->registration_ended.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->notify_onsignup.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->max_attendees.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->waiting_list.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->twitter_hash.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->region.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->website.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->event_type.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->organizer.'</Data></Cell>
+        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->fee.'</Data></Cell>
+        </Row>';
+        $infoColTotal = 11;
+        $infoGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
+        $infoHeaderTitle = '<Row ss:StyleID="s23">
+       <Cell ss:MergeAcross="'.($infoColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Info</Data></Cell>
+       </Row>';
+       return $infoHeaderTitle. $infoGeneralHeaderXml.$infoHeaderXml.$infoDataXml.'<Row></Row>';
 
 }
 
