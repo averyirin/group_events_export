@@ -399,14 +399,11 @@ function getInfoTable($event){
         //Info and Contact Table
         $infoHeaderXml = '
         <Row>
+        <Cell ss:StyleID="s29"><Data ss:Type="String">region</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">registration_ended</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">notify_onsignup</Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">max_attendees</Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">waiting_list</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">twitter_hash</Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">region</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">website</Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String">event_type</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">contact</Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String">fee</Data></Cell>
         </Row>';
@@ -434,21 +431,14 @@ function getInfoTable($event){
         $infoDataXml = '<Row>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->registration_ended.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->notify_onsignup.'</Data></Cell>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->max_attendees.'</Data></Cell>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->waiting_list.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->twitter_hash.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->region.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->website.'</Data></Cell>
-        <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->event_type.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->contact_details.'</Data></Cell>
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->fee.'</Data></Cell>
         </Row>';
         $infoColTotal = 11;
         $infoGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
