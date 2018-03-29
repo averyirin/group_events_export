@@ -281,14 +281,15 @@ function getEventTable($event){
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
     </Row>';
-
+    $max_attendees = $event->max_attendees;
+		$spots_left = ($max_attendees - $event->countAttendees());
     $eventDataXml = '<Row>
     <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
     <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
     <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
     <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
-    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->countEventSlotSpots()['left'].'</Data></Cell>
-    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->countEventSlotSpots()['total'].'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$spots_left.'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$max_attendees.'</Data></Cell>
     ';
     $event_relationship_options = event_manager_event_get_relationship_options();
     foreach($event_relationship_options as $relationship) {
