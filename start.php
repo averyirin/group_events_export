@@ -56,13 +56,14 @@ function group_events_export_pagesetup()
     $user = elgg_get_logged_in_user_entity();
     //add the group statistics button to the group events menu
     //! Does this need security?
+
     if(elgg_in_context("events")&& ($page_owner instanceof ElggGroup)) {
       if((($who_create_group_events == "group_admin") && $page_owner->canEdit()) || (($who_create_group_events == "members") && $page_owner->isMember($user))){
 
       elgg_register_menu_item('title', array(
                 'name' => "export",
                 'href' => "action/group_events_export/export?groupGuid=".$page_owner->getGuid(),
-                'text' => "Export Group Events",
+                'text' => get_context(),
                 'link_class' => 'elgg-button elgg-button-action',
                 'is_action' => true
                 ));
