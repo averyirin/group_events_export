@@ -310,7 +310,7 @@ function getEventTable($event){
      </Row>';
 
      $eventShortDescTitle = '
-      <Row ">
+      <Row>
       <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s32"><Data ss:Type="String">'.$event->shortdescription.'</Data></Cell>
       </Row>';
 
