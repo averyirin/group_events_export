@@ -437,7 +437,9 @@ function getInfoTable($event){
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
         <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
-        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+</Row>';
         $infoHeaderTitle = '<Row ss:StyleID="s23">
        <Cell ss:MergeAcross="'.($infoColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Info</Data></Cell>
        </Row>';
