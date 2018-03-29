@@ -399,12 +399,12 @@ function getDescriptionTable($event){
 function placeTable($tableData, $tableOrientation, $startCol, $startRow){
   $tableXml = '';
 
-  for($c=$startCol;$c < ($startCol+5); $c++){
-    for($r=$startRow;$r < ($startRow+3); $r++){
+for($r=$startRow;$r < ($startRow+3); $r++){
+    for($c=$startCol;$c < ($startCol+5); $c++){
       echo "[".$r.",".$c."]";
     }
     echo "<br/>";
-  }
+}
 
   exit();
 }
