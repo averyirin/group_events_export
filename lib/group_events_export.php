@@ -265,6 +265,13 @@ function getEventTable($event){
     foreach($event_relationship_options as $relationship) {
         //Add types of attendance header (attended/interested/organizing/exhibiting)
         //Add number of people who are each attendance type
+        $peopleResponded = elgg_get_entities_from_relationship(array(
+          'relationship' => $relationship,
+          'relationship_guid' => $event->getGUID(),
+          'inverse_relationship' => FALSE,
+          'site_guids' => false,
+          'limit' => false
+        ));
         $eventColTotal ++;
         $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
         $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
