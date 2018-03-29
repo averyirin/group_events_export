@@ -245,7 +245,7 @@ function group_events_export_sheet($event){
    </Worksheet>';
 
    placeTable(array(), 'horizontal', 2,3);
-   
+
     //tables
     $eventTable = getEventTable($event);
     $infoTable = getInfoTable($event);
@@ -399,9 +399,13 @@ function getDescriptionTable($event){
 function placeTable($tableData, $tableOrientation, $startCol, $startRow){
   $tableXml = '';
 
-  for($i=$startRow;$i < ($startRow+5); $i++){
-    echo $i;
+  for($c=$startRow;$c < ($startRow+5); $c++){
+    for($r=$startRow;$r < ($startRow+5); $r++){
+      echo "(".$r." ".$i.")";
+    }
+    echo "<br/>";
   }
+
   exit();
 }
 
