@@ -400,7 +400,7 @@ function placeTable($tableData, $tableOrientation, $startCol, $startRow){
   $tableXml = '';
 
   for($c=$startCol;$c < ($startCol+5); $c++){
-    for($r=$startRow;$r < ($startRow+5); $r++){
+    for($r=$startRow;$r < ($startRow+3); $r++){
       echo "[".$r.",".$c."]";
     }
     echo "<br/>";
