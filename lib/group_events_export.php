@@ -268,9 +268,7 @@ function getEventTable($event){
         //Add number of people who are each attendance type
         $peopleResponded = elgg_get_entities_from_relationship(array(
           'relationship' => $relationship,
-          'relationship_guid' => $event->ge
-
-          tGUID(),
+          'relationship_guid' => $event->getGUID(),
           'inverse_relationship' => FALSE,
           'site_guids' => false,
           'limit' => false
@@ -365,13 +363,6 @@ function group_events_export_sheet($event){
    //End Fields
    $attendeeHeaderXml .= '</Row>';
    $attendeeDataXml = '';
-   $eventDataXml = '<Row>
-   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
-   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
-   <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
-   <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
-   <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
-   ';
 
 
    $event_relationship_options = event_manager_event_get_relationship_options();
