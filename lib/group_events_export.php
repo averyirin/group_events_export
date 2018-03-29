@@ -410,7 +410,10 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   echo var_dump($tableData)."<br/>";
   foreach($tableData as $table){
     foreach($table as $heading => $value){
-      echo $heading." ".$value;
+      echo $heading." ".$value."<br/>";
+      if(is_array($value)){
+        echo "is array"."<br/>";
+      }
     }
   }
 
