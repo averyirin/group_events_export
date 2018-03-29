@@ -234,6 +234,48 @@ $event->fee = $fee;
   return $eventDataXml;
 }
 
+function getEventTable($event){
+  $eventColTotal = 5;
+  $eventHeaderXml = '
+   <Row ss:StyleID="s23">
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
+   ';
+   $eventGeneralHeaderXml = '
+    <Row ss:StyleID="s23">
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:StyleID="s29"></Cell>
+    <Cell ss:MergeAcross="6" ss:StyleID="s31"><Data ss:Type="String">Status</Data></Cell>
+    </Row>';
+
+    $eventDataXml = '<Row>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
+    ';
+    $event_relationship_options = event_manager_event_get_relationship_options();
+    foreach($event_relationship_options as $relationship) {
+        //Add types of attendance header (attended/interested/organizing/exhibiting)
+        //Add number of people who are each attendance type
+        $eventColTotal ++;
+        $eventHeaderXml .=  '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
+        $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
+    }
+    $eventHeaderXml .= '</Row>';
+    $eventHeaderTitle = '
+     <Row>
+     <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
+     </Row>';
+     return $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
+}
 function group_events_export_sheet($event){
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
@@ -245,6 +287,8 @@ function group_events_export_sheet($event){
    x:FullColumns="1"
    x:FullRows="1">
    <Column />';
+
+
   $eventHeaderXml = '
    <Row ss:StyleID="s23">
    <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
@@ -520,6 +564,7 @@ function group_events_export_sheet($event){
   </Worksheet>';
 //event table
 $eventTable = $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.$rowSpace;
+$eventTable = getEventTable($event);
 //optional desc table spacing
 $descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
 if($descTable != ""){
