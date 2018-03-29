@@ -259,19 +259,21 @@ function group_events_export_sheet($event){
 
 //generates the general event information table
 function getEventTable($event){
-  $eventColTotal = 5;
+  $eventColTotal = 6;
   $eventHeaderXml = '
    <Row ss:StyleID="s23">
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
    <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Spots Left</Data></Cell>
+   <Cell ss:StyleID="s29"><Data ss:Type="String">Max Attend</Data></Cell>
    ';
 
 
    $eventGeneralHeaderXml = '
     <Row ss:StyleID="s23">
+    <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
     <Cell ss:StyleID="s29"></Cell>
@@ -284,6 +286,8 @@ function getEventTable($event){
     <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->title.'</Data></Cell>
     <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->location.'</Data></Cell>
     <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->venue.'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->countEventSlotSpots()['left'].'</Data></Cell>
+    <Cell ss:StyleID="s30"><Data ss:Type="String">'.(string)$event->countEventSlotSpots()['total'].'</Data></Cell>
     <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->start_day) . "T". date('H', $event->start_time) . ':' . date('i', $event->start_time).'</Data></Cell>
     <Cell ss:StyleID="s27"><Data ss:Type="DateTime">'.(string)date(EVENT_MANAGER_FORMAT_DATE_EVENTDAY, $event->end_ts) . "T". date('H', $event->end_ts) . ':' . date('i', $event->end_ts) .'</Data></Cell>
     ';
