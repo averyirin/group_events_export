@@ -401,7 +401,7 @@ function placeTable($tableData, $tableOrientation, $startCol, $startRow){
 
   for($c=$startCol;$c < ($startCol+5); $c++){
     for($r=$startRow;$r < ($startRow+5); $r++){
-      echo "(".$r." ".$c.")";
+      echo "[".$r.",".$c."]";
     }
     echo "<br/>";
   }
