@@ -244,6 +244,8 @@ function group_events_export_sheet($event){
    </WorksheetOptions>
    </Worksheet>';
 
+   placeTable(array(), 'horizontal', 2,3);
+   
     //tables
     $eventTable = getEventTable($event);
     $infoTable = getInfoTable($event);
@@ -394,6 +396,14 @@ function getDescriptionTable($event){
   return $descTable;
 }
 
+function placeTable($tableData, $tableOrientation, $startCol, $startRow){
+  $tableXml = '';
+
+  for($i=$startRow;$i < ($startRow+5); $i++){
+    echo $i;
+  }
+  exit();
+}
 
 function getInfoTable($event){
         //Info and Contact Table
