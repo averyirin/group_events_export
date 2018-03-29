@@ -314,7 +314,7 @@ function getEventTable($event){
       <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s32"><Data ss:Type="String">'.$event->shortdescription.'</Data></Cell>
       </Row>';
 
-     return $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
+     return $eventHeaderTitle.$eventShortDescTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
 }
 
 //returns the complex description table generated from LP Table
