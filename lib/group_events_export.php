@@ -352,8 +352,9 @@ function getDescriptionTable($event){
   //optional desc table spacing
   $descTable = $descHeaderTitle.$descGeneralHeaderXml.$descHeaderXml.$descDataXml;
   if($descTable != ""){
-       $descTable .= $rowSpace;
+       $descTable .= '<Row></Row>';
   }
+  
   return $descTable;
 }
 
