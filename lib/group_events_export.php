@@ -398,6 +398,7 @@ function getDescriptionTable($event){
 
 function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableXml = '';
+  $tableData = array('status'=> array('location'=>'Borden','Venue'=>'LSC'));
   if($orientation == 'vertical'){
     for($r=$startRow;$r < ($startRow+3); $r++){
           echo "[".$r.",".$startCol."]"."<br/>";
