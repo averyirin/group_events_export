@@ -398,7 +398,13 @@ function getDescriptionTable($event){
 
 function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableXml = '';
-  $tableData = array('status'=> array('location'=>'Borden','Venue'=>'LSC'));
+  $tableData = array('status'=>
+  array(
+  'location'=>'Borden',
+  'Venue'=>'LSC'
+  'Services' => array('CAF'=>'','RCAF'=>'x')
+ )
+);
 
 
   echo var_dump($tableData)."<br/>";
