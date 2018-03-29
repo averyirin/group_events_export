@@ -6,205 +6,182 @@
  * Time: 10:17 AM
  */
 function generate_export_spreadsheet($resultEventGuids, $groupGuid){
-  //Create excel formatted xml spreadsheet
-  $spreadsheetExportString = '<?xml version="1.0"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:x="urn:schemas-microsoft-com:office:excel"
- xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
- xmlns:html="http://www.w3.org/TR/REC-html40">
- <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-  <Author>Jack Herrington</Author>
-  <LastAuthor>Jack Herrington</LastAuthor>
-  <Created>2005-08-02T04:06:26Z</Created>
-  <LastSaved>2005-08-02T04:30:11Z</LastSaved>
-  <Company>My Software Company, Inc.</Company>
-  <Version>11.6360</Version>
-  </DocumentProperties>
-  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>8535</WindowHeight>
-  <WindowWidth>12345</WindowWidth>
-  <WindowTopX>480</WindowTopX>
-  <WindowTopY>90</WindowTopY>
-  <ProtectStructure>False</ProtectStructure>
-  <ProtectWindows>False</ProtectWindows>
-  </ExcelWorkbook>
-  <Styles>
-  <Style ss:ID="Default" ss:Name="Normal">
-  <Alignment ss:Vertical="Bottom"/>
-  <Borders/>
-  <Font/>
-  <Interior/>
-  <NumberFormat/>
-  <Protection/>
-  </Style>
-  <Style ss:ID="s21" ss:Name="Hyperlink">
-  <Borders>
-   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-  </Borders>
-  <Font ss:Color="#0000FF" ss:Underline="Single"/>
-  </Style>
-  <Style ss:ID="s23">
-  <Font x:Family="Swiss" ss:Bold="1"/>
-  </Style>
-  <Style ss:ID="s26">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-   </Borders>
-  <NumberFormat ss:Format="General Date"/>
- </Style>
- <Style ss:ID="s27">
-  <Borders>
-   <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-   <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-  </Borders>
-  <NumberFormat ss:Format="[$-1009]d\-mmm\-yy;@"/>
-</Style>
-  <Style ss:ID="s28">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
-   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="16" ss:Color="#FFFFFF"
-    ss:Bold="1"/>
-   <Interior ss:Color="#000000" ss:Pattern="Solid"/>
-  </Style>
-  <Style ss:ID="s29">
-   <Alignment ss:Vertical="Bottom"/>
-   <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
-   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
-  </Style>
-  <Style ss:ID="s30">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s31">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
-   <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
-   <Interior ss:Color="#808080" ss:Pattern="Solid"/>
-  </Style>
+      //Create excel formatted xml spreadsheet
+      $spreadsheetExportString = '<?xml version="1.0"?>
+    <?mso-application progid="Excel.Sheet"?>
+    <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+     xmlns:o="urn:schemas-microsoft-com:office:office"
+     xmlns:x="urn:schemas-microsoft-com:office:excel"
+     xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+     xmlns:html="http://www.w3.org/TR/REC-html40">
+     <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+      <Author>Jack Herrington</Author>
+      <LastAuthor>Jack Herrington</LastAuthor>
+      <Created>2005-08-02T04:06:26Z</Created>
+      <LastSaved>2005-08-02T04:30:11Z</LastSaved>
+      <Company>My Software Company, Inc.</Company>
+      <Version>11.6360</Version>
+      </DocumentProperties>
+      <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+      <WindowHeight>8535</WindowHeight>
+      <WindowWidth>12345</WindowWidth>
+      <WindowTopX>480</WindowTopX>
+      <WindowTopY>90</WindowTopY>
+      <ProtectStructure>False</ProtectStructure>
+      <ProtectWindows>False</ProtectWindows>
+      </ExcelWorkbook>
+      <Styles>
+      <Style ss:ID="Default" ss:Name="Normal">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders/>
+      <Font/>
+      <Interior/>
+      <NumberFormat/>
+      <Protection/>
+      </Style>
+      <Style ss:ID="s21" ss:Name="Hyperlink">
+      <Borders>
+       <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:Color="#0000FF" ss:Underline="Single"/>
+      </Style>
+      <Style ss:ID="s23">
+      <Font x:Family="Swiss" ss:Bold="1"/>
+      </Style>
+      <Style ss:ID="s26">
+       <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+       </Borders>
+      <NumberFormat ss:Format="General Date"/>
+     </Style>
+     <Style ss:ID="s27">
+      <Borders>
+       <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+       <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <NumberFormat ss:Format="[$-1009]d\-mmm\-yy;@"/>
+    </Style>
+      <Style ss:ID="s28">
+       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+       <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="16" ss:Color="#FFFFFF"
+        ss:Bold="1"/>
+       <Interior ss:Color="#000000" ss:Pattern="Solid"/>
+      </Style>
+      <Style ss:ID="s29">
+       <Alignment ss:Vertical="Bottom"/>
+       <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
+       <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+      </Style>
+      <Style ss:ID="s30">
+       <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+       </Borders>
+      </Style>
+      <Style ss:ID="s31">
+       <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+       <Font ss:FontName="Arial" x:Family="Swiss" ss:Color="#FFFFFF" ss:Bold="1"/>
+       <Interior ss:Color="#808080" ss:Pattern="Solid"/>
+      </Style>
 
-  </Styles>
-  ';
-  //rows is number of events plus header filter row plus top heading
-  $overviewRowTotal = count($resultEventGuids)+2;
-  //col is number of data cols
-  $overviewColTotal = 5;
+      </Styles>
+      ';
+      //rows is number of events plus header filter row plus top heading
+      $overviewRowTotal = count($resultEventGuids)+2;
+      //col is number of data cols
+      $overviewColTotal = 5;
 
-  //get name of group
-  $nameOfGroup = get_entity($groupGuid)->name;
-  //Set Overview Headers
-  $overviewHeaderRow .= '
-   <Row ss:StyleID="s23">
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
-   <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
-   ';
-   $event_relationship_options = event_manager_event_get_relationship_options();
-   reset($event_relationship_options);
-   foreach($event_relationship_options as $relationship) {
-     //Add types of attendance header (attended/interested/organizing/exhibiting)
-     $overviewColTotal++;
-     $overviewHeaderRow .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
-  }
-  $overviewHeaderRow .= '</Row>';
-  $overviewHeaderTitle = '
-   <Row>
-   <Cell ss:MergeAcross="'.($overviewColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
-   </Row>';
-
-
-
-  //Create Overview Sheet
-  $overviewSheet = '
-  <Worksheet ss:Name="'."Overview".'">
-  <Names>
-   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Overview!R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
-    ss:Hidden="1"/>
-  </Names>
-  <Table
-  x:FullColumns="1"
-  x:FullRows="1">
-  <Column ss:AutoFitWidth="1"  />';
-
-  //add overview header information with filter
-  $spreadsheetExportString .= $overviewSheet .$overviewHeaderTitle. $overviewHeaderRow;
-
-  //Populate Overview Data
-  foreach ($resultEventGuids as $eventGuid) {
-    $xml = group_events_export_overview(get_entity($eventGuid));
-    $spreadsheetExportString .= $xml;
-  }
-  //End overview Spreadsheet
-  $spreadsheetExportString .= '</Table>
-  <WorksheetOptions
-  xmlns="urn:schemas-microsoft-com:office:excel">
-  <Print>
-  <ValidPrinterInfo/>
-  <HorizontalResolution>300</HorizontalResolution>
-  <VerticalResolution>300</VerticalResolution>
-  </Print>
-  <Selected/>
-  <Panes>
-  <Pane>
-  <Number>3</Number>
-  <ActiveRow>5</ActiveRow>
-  </Pane>
-  </Panes>
-  <ProtectObjects>False</ProtectObjects>
-  <ProtectScenarios>False</ProtectScenarios>
-  </WorksheetOptions>
-  <AutoFilter x:Range="R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
-   xmlns="urn:schemas-microsoft-com:office:excel">
-  </AutoFilter>
-  </Worksheet>';
-  //Create Individual Event Sheet
-  foreach ($resultEventGuids as $eventGuid) {
-    $xml = group_events_export_sheet(get_entity($eventGuid));
-    $spreadsheetExportString .= $xml;
-  }
-  $spreadsheetExportString .='
-    </Workbook>
+      //get name of group
+      $nameOfGroup = get_entity($groupGuid)->name;
+      //Set Overview Headers
+      $overviewHeaderRow .= '
+       <Row ss:StyleID="s23">
+       <Cell ss:StyleID="s29"><Data ss:Type="String">Event</Data></Cell>
+       <Cell ss:StyleID="s29"><Data ss:Type="String">Location</Data></Cell>
+       <Cell ss:StyleID="s29"><Data ss:Type="String">Venue</Data></Cell>
+       <Cell ss:StyleID="s29"><Data ss:Type="String">Start</Data></Cell>
+       <Cell ss:StyleID="s29"><Data ss:Type="String">End</Data></Cell>
        ';
-  return $spreadsheetExportString;
+       $event_relationship_options = event_manager_event_get_relationship_options();
+       reset($event_relationship_options);
+       foreach($event_relationship_options as $relationship) {
+         //Add types of attendance header (attended/interested/organizing/exhibiting)
+         $overviewColTotal++;
+         $overviewHeaderRow .= '<Cell ss:StyleID="s29"><Data ss:Type="String">'.ucfirst(substr($relationship,6)).'</Data></Cell>';
+      }
+      $overviewHeaderRow .= '</Row>';
+      $overviewHeaderTitle = '
+       <Row>
+       <Cell ss:MergeAcross="'.($overviewColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$nameOfGroup.' Overview</Data></Cell>
+       </Row>';
+
+
+
+      //Create Overview Sheet
+      $overviewSheet = '
+      <Worksheet ss:Name="'."Overview".'">
+      <Names>
+       <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Overview!R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+        ss:Hidden="1"/>
+      </Names>
+      <Table
+      x:FullColumns="1"
+      x:FullRows="1">
+      <Column ss:AutoFitWidth="1"  />';
+
+      //add overview header information with filter
+      $spreadsheetExportString .= $overviewSheet .$overviewHeaderTitle. $overviewHeaderRow;
+
+      //Populate Overview Data
+      foreach ($resultEventGuids as $eventGuid) {
+        $xml = group_events_export_overview(get_entity($eventGuid));
+        $spreadsheetExportString .= $xml;
+      }
+      //End overview Spreadsheet
+      $spreadsheetExportString .= '</Table>
+      <WorksheetOptions
+      xmlns="urn:schemas-microsoft-com:office:excel">
+      <Print>
+      <ValidPrinterInfo/>
+      <HorizontalResolution>300</HorizontalResolution>
+      <VerticalResolution>300</VerticalResolution>
+      </Print>
+      <Selected/>
+      <Panes>
+      <Pane>
+      <Number>3</Number>
+      <ActiveRow>5</ActiveRow>
+      </Pane>
+      </Panes>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+      </WorksheetOptions>
+      <AutoFilter x:Range="R2C1:R'.$overviewRowTotal.'C'.$overviewColTotal.'"
+       xmlns="urn:schemas-microsoft-com:office:excel">
+      </AutoFilter>
+      </Worksheet>';
+      //Create Individual Event Sheet
+      foreach ($resultEventGuids as $eventGuid) {
+        $xml = group_events_export_sheet(get_entity($eventGuid));
+        $spreadsheetExportString .= $xml;
+      }
+      $spreadsheetExportString .='
+        </Workbook>
+           ';
+      return $spreadsheetExportString;
 }
 
-
 function group_events_export_overview($event){
-  /*
-  $event->start_day = $start_day;
-  $event->start_time = $start_time;
-  $event->venue = $venue;
-
-$event->shortdescription = $shortdescription;
-$event->comments_on = $comments_on;
-$event->registration_ended = $registration_ended;
-$event->registration_needed = $registration_needed;
-$event->show_attendees = $show_attendees;
-$event->hide_owner_block = $hide_owner_block;
-$event->notify_onsignup = $notify_onsignup;
-$event->max_attendees = $max_attendees;
-$event->waiting_list = $waiting_list;
-$event->twitter_hash = $twitter_hash;
-$event->contact_details = $contact_details;
-$event->region = $region;
-$event->website = $website;
-$event->event_type = $event_type;
-$event->organizer = $organizer;
-$event->fee = $fee;
-  */
   $old_ia = elgg_get_ignore_access();
   elgg_set_ignore_access(true);
    $eventDataXml = '<Row>
@@ -230,7 +207,7 @@ $event->fee = $fee;
        $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
    }
   $eventDataXml .= '</Row>';
-//return of event info
+  //return of event info
   return $eventDataXml;
 }
 
@@ -358,26 +335,8 @@ function getDescriptionTable($event){
   return $descTable;
 }
 
-
+//generates a sheet for each event with details
 function group_events_export_sheet($event){
-
-           /*
-           $event->shortdescription = $shortdescription;
-           $event->comments_on = $comments_on;
-           $event->registration_ended = $registration_ended;
-           $event->registration_needed = $registration_needed;
-           $event->show_attendees = $show_attendees;
-           $event->hide_owner_block = $hide_owner_block;
-           $event->notify_onsignup = $notify_onsignup;
-           $event->max_attendees = $max_attendees;
-           $event->waiting_list = $waiting_list;
-           $event->twitter_hash = $twitter_hash;
-           $event->region = $region;
-           $event->website = $website;
-           $event->event_type = $event_type;
-           $event->organizer = $organizer;
-           $event->fee = $fee;
-  */
   $beginXml = '
   <Worksheet ss:Name="'.$event->title.'">
    <Table
@@ -406,14 +365,38 @@ function group_events_export_sheet($event){
 
     //tables
     $eventTable = getEventTable($event);
+    $infoTable = getInfoTable($event);
+    $contactTable = getContactTable($event);
     $descTable = getDescriptionTable($event);
     $activityTable = getActivityTable($event);
     $attendeeTable = getAttendeeTable($event);
-    $contactTable = getContactTable($event);
 
     //return sheet of event info
     return $beginXml.$eventTable.$contactTable.$descTable.$activityTable.$attendeeTable.$endXml;
 }
+
+function getInfoTable($event){
+  /*
+
+  $event->shortdescription = $shortdescription;
+  $event->comments_on = $comments_on;
+  $event->registration_ended = $registration_ended;
+  $event->registration_needed = $registration_needed;
+  $event->show_attendees = $show_attendees;
+  $event->hide_owner_block = $hide_owner_block;
+  $event->notify_onsignup = $notify_onsignup;
+  $event->max_attendees = $max_attendees;
+  $event->waiting_list = $waiting_list;
+  $event->twitter_hash = $twitter_hash;
+  $event->region = $region;
+  $event->website = $website;
+  $event->event_type = $event_type;
+  $event->organizer = $organizer;
+  $event->fee = $fee;
+  */
+
+}
+
 function getContactTable($event){
       //Contact Table
       $contactHeaderXml = '
@@ -666,8 +649,8 @@ function getGroupEventXMLOriginal(){
     </WorksheetOptions>
    </Worksheet>
   </Workbook>
-';
-  return $xml;
+  ';
+    return $xml;
 }
 
 
