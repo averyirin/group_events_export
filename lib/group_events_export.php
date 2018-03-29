@@ -270,10 +270,12 @@ function getEventTable($event){
         $eventDataXml .='<Cell ss:StyleID="s30"><Data ss:Type="Number">'.(int)count($peopleResponded).'</Data></Cell>';
     }
     $eventHeaderXml .= '</Row>';
+    $eventDataXml .= '</Row>';
     $eventHeaderTitle = '
      <Row>
      <Cell ss:MergeAcross="'.($eventColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">'.$event->title.' Overview</Data></Cell>
      </Row>';
+
      return $eventHeaderTitle.$eventGeneralHeaderXml.$eventHeaderXml.$eventDataXml.'<Row></Row>';
 }
 function group_events_export_sheet($event){
