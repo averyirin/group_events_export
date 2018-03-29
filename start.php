@@ -64,7 +64,7 @@ function group_events_export_pagesetup()
           elgg_register_menu_item('title', array(
                   'name' => "export",
                   'href' => "action/group_events_export/export?groupGuid=".$page_owner->getGuid(),
-                  'text' => $uri,
+                  'text' => 'Export Group Events',
                   'link_class' => 'elgg-button elgg-button-action',
                   'is_action' => true
                   ));
