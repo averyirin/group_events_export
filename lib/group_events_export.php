@@ -396,12 +396,17 @@ function getDescriptionTable($event){
   return $descTable;
 }
 
-function placeTable($tableData, $tableOrientation, $startRow, $startCol){
+function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableXml = '';
-
-for($r=$startRow;$r < ($startRow+3); $r++){
-      echo "[".$r.",".$startCol."]"."<br/>";
-}
+  if($orientation == 'vertical'){
+    for($r=$startRow;$r < ($startRow+3); $r++){
+          echo "[".$r.",".$startCol."]"."<br/>";
+    }
+  }else{
+    for($c=$startCol;$c < ($startCol+3); $c++){
+          echo "[".$c.",".$startCol."]"."<br/>";
+    }
+  }
 
   exit();
 }
