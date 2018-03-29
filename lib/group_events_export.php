@@ -428,7 +428,16 @@ function getInfoTable($event){
         <Cell ss:StyleID="s30"><Data ss:Type="String">'.$event->fee.'</Data></Cell>
         </Row>';
         $infoColTotal = 11;
-        $infoGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
+        $infoGeneralHeaderXml = '<Row><Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s29"><Data ss:Type="String"></Data></Cell></Row>';
         $infoHeaderTitle = '<Row ss:StyleID="s23">
        <Cell ss:MergeAcross="'.($infoColTotal-1).'" ss:StyleID="s28"><Data ss:Type="String">Info</Data></Cell>
        </Row>';
