@@ -401,7 +401,7 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableData = array('status'=>
   array(
   'location'=>'Borden',
-  'Venue'=>'LSC'
+  'Venue'=>'LSC',
   'Services' => array('CAF'=>'','RCAF'=>'x')
  )
 );
