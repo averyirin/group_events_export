@@ -405,6 +405,15 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   'services' => array('CAF'=>'','RCAF'=>'x')
  )
 );
+$altTableData = array('title'=> 'status',
+'headings'=> array('location','venue','services' => array('CAF','RCAF')),
+'data'=> array('Borden','LSC', array('','x'))
+);
+
+  //echo var_dump($tableData)."<br/>";
+  echo $altTableData['title']."<br/>";
+  echo $altTableData['headings']."<br/>";
+  echo $altTableData['data']."<br/>";
 
 
   //echo var_dump($tableData)."<br/>";
@@ -419,6 +428,7 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
       }
     }
   }
+
 
   if($orientation == 'vertical'){
     for($r=$startRow;$r < ($startRow+3); $r++){
