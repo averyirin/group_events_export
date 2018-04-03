@@ -410,6 +410,8 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   //echo var_dump($tableData)."<br/>";
   foreach($tableData as $tHeading => $tValue){
     echo "Table Title: ".$tHeading."<br/>";
+      echo $tValue[$tHeading];
+        echo $tHeading[$tValue];
     foreach($tValue[$tHeading] as $heading => $value){
       echo $heading." ".$value."<br/>";
 
