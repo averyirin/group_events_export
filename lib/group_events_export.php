@@ -412,9 +412,10 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
     echo "Table Title: ".$tHeading."<br/>";
     foreach($tableData[$tHeading] as $heading => $value){
       echo $heading." ".$value."<br/>";
-
       if(is_array($value)){
-        echo "is array"."<br/>";
+      foreach($value as $iHeading => $iValue){
+        echo " >".$iHeading." ".$iValue."<br/>";
+      }
       }
     }
   }
