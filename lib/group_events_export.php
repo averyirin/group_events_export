@@ -408,9 +408,9 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
 
 
   //echo var_dump($tableData)."<br/>";
-  foreach($tableData as $table){
-    echo "Table Title: ".$table."<br/>";
-    foreach($table as $heading => $value){
+  foreach($tableData as $tHeading => $tValue){
+    echo "Table Title: ".$tHeading."<br/>";
+    foreach($tValue[$tHeading] as $heading => $value){
       echo $heading." ".$value."<br/>";
 
       if(is_array($value)){
