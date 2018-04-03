@@ -401,16 +401,18 @@ function placeTable($tableData, $orientation, $startRow, $startCol){
   $tableData = array('status'=>
   array(
   'location'=>'Borden',
-  'Venue'=>'LSC',
-  'Services' => array('CAF'=>'','RCAF'=>'x')
+  'venue'=>'LSC',
+  'services' => array('CAF'=>'','RCAF'=>'x')
  )
 );
 
 
-  echo var_dump($tableData)."<br/>";
+  //echo var_dump($tableData)."<br/>";
   foreach($tableData as $table){
+    echo "Table Title: ".$table."<br/>"
     foreach($table as $heading => $value){
       echo $heading." ".$value."<br/>";
+      
       if(is_array($value)){
         echo "is array"."<br/>";
       }
